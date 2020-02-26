@@ -1,0 +1,129 @@
+/**
+ * Slick
+ **/
+
+.slick-holder {
+    position: relative;
+}
+
+.slick-track {
+    display: flex;
+    align-items: stretch;
+    margin-left: 0;
+}
+
+.slick-indicators .slick-dots {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+
+.slick-indicators .slick-dots li {
+    display: inline-block;
+}
+
+.slick-indicators .slick-dots li span {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin: 0 0.25rem;
+    background-color: $color-violet;
+    opacity: 0.2;
+    cursor: pointer;
+}
+
+.slick-indicators .slick-dots li.slick-active span {
+    opacity: 1;
+}
+
+.slick-navigation-aside .slick-control-prev {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0.8rem;
+    height: 120px;
+}
+
+.slick-navigation-aside .slick-control-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0.8rem;
+    height: 120px;
+}
+
+.slick-navigation-aside .slick-control-prev span,
+.slick-navigation-aside .slick-control-next span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 72px;
+    height: 120px;
+    opacity: 0.75;
+    background-color: $color-violet;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $color-white;
+    transition: opacity 0.15s ease-in-out;
+}
+
+.slick-navigation-aside .slick-control-prev:hover span,
+.slick-navigation-aside .slick-control-next:hover span {
+    opacity: 1;
+}
+
+.slick-navigation-right .slick-control-next {
+    position: absolute;
+    right: 0.8rem;
+    top: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 72px;
+    height: 72px;
+    margin-top: -37px;
+}
+
+.slick-navigation-right .slick-control-prev {
+    position: absolute;
+    right: 0.8rem;
+    top: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 72px;
+    height: 72px;
+    margin-top: 37px;
+}
+
+.slick-navigation-right .slick-control-prev span,
+.slick-navigation-right .slick-control-next span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 72px;
+    height: 72px;
+    opacity: 0.75;
+    background-color: $color-violet;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $color-white;
+    transition: opacity 0.15s ease-in-out;
+}
+
+.slick-navigation-right .slick-control-prev:hover span,
+.slick-navigation-right .slick-control-next:hover span {
+    opacity: 1;
+}
+
+@media (min-width: 768px) {
+    .slick-list {
+        margin-right: -30px;
+    }
+
+    .slick-slide {
+        margin-right: 30px;
+    }
+}

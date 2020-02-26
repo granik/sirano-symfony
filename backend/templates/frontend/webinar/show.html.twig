@@ -1,0 +1,174 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block body %}
+    <nav class="breadcrumb-wrapper">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('index') }}">Главная</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('webinars') }}">Вебинары</a>
+                </li>
+                <li class="breadcrumb-item">
+                    {{ webinar.name }}
+                </li>
+            </ol>
+        </div>
+    </nav>
+
+    <section class="page-webinar-item mb-4 mb-lg-5 mt-4 mt-lg-5">
+        <div class="container">
+            <div class="page-webinar-item__header-caption">
+                <div class="page-webinar-item__header-label">Вебинар</div>
+                <div class="page-webinar-item__header-direction">{{ webinar.directionName }}</div>
+            </div>
+
+            <h1>{{ webinar.name }}</h1>
+
+            {% if webinar.subject is defined %}
+                <div class="page-webinar-item__subject">{{ webinar.subject }}</div>
+            {% endif %}
+
+            <div class="page-webinar-item__header {% if webinar.isComplete %}past{% elseif webinar.isSubscribed %}active{% endif %}">
+                <div class="page-webinar-item__header-date">
+                    <div class="d-flex align-items-center">
+                        <span class="d-flex align-items-center">
+                            <img class="calendar" alt="" src="/lib/images/icons/calendar.svg"/>
+                            {{ webinar.startDate }}
+                        </span>
+                        <span class="d-flex align-items-center">
+                            <img class="clock" alt="" src="/lib/images/icons/clock.svg"/>
+                            {{ webinar.startTime }}
+                        </span>
+                    </div>
+                </div>
+                {% if app.user %}
+                    <div class="page-webinar-item__header-buttons">
+                        {% if webinar.isSubscribed %}
+                            <form class="w-100 h-100" method="POST" action="{{ path('webinar_unsubscribe') }}">
+                                <input type="hidden" name="id" value="{{ webinar.id }}">
+                                <div class="d-flex align-items-center flex-wrap flex-md-nowrap">
+                                    <button data-type="webinar-unsubscribe" type="submit" class="btn-thin mb-3 mb-md-0 mr-lg-3">Отменить регистрацию</button>
+                                    <div class="registered">Вы зарегистрированы <br />на онлайн-трансляцию</div>
+                                </div>
+                            </form>
+                        {% else %}
+                            <form class="w-100" method="POST" action="{{ path('webinar_subscribe') }}">
+                                <input type="hidden" name="id" value="{{ webinar.id }}">
+                                <div class="d-flex align-items-stretch h-100">
+                                    <a data-type="webinar-subscribe" href="#" class="btn d-flex align-items-center {% if webinar.score == 0 %}justify-content-center text-center{% endif %}">
+                                        <div>Зарегистрироваться на <br class="{% if webinar.score == 0 %}d-none{% endif %}" />онлайн-трансляцию</div>
+                                        {% if webinar.score != 0 %}
+                                            <div class="score text-center">
+                                                <div>+{{ webinar.score }}</div>баллов
+                                            </div>
+                                        {% endif %}
+                                    </a>
+                                </div>
+                            </form>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="page-webinar-item__player">
+                {% if webinar.isSubscribed %}
+                    <div id="webinar-soon" class="page-webinar-item__player-screen page-webinar-item__player-screen_timer-holder {% if webinar.isNotStarted %}d-flex{% else %}d-none{% endif %}">
+                        <div class="text-center page-webinar-item__player-screen_timer">
+                            <h4>До начала трансляции осталось:</h4>
+
+                            <div id="webinar-countdown" class="d-flex justify-content-between"></div>
+                        </div>
+                    </div>
+
+                    <div id="webinar-over" class="page-webinar-item__player-screen page-webinar-item__player-screen_timer-holder {% if webinar.isComplete %}d-flex{% else %}d-none{% endif %}">
+                        <h4>Трансляция завершена</h4>
+                    </div>
+
+                    <div id="webinar-player" class="page-webinar-item__player-screen d-none">
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <div id="player"></div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div id="webinar-not-registered" class="page-webinar-item__player-screen page-webinar-item__player-screen_timer-holder d-flex">
+                        <h4>Вы не зарегистрированы на вебинар</h4>
+                    </div>
+                {% endif %}
+
+                <div class="page-webinar-item__player-notes">
+                    <ul>
+                        <li>Трансляция будет проходить по Московскому времени</li>
+                        <li>Просмотр видео контролируется</li>
+                        <li>Ждем Ваши вопросы</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="page-webinar-item__body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 col-lg-3 page-webinar-item__body-title">
+                            <h3>Описание вебинара</h3>
+                        </div>
+                        <div class="col-12 col-lg-9 page-webinar-item__body-text">
+                            {{ webinar.description|raw }}
+                        </div>
+                    </div>
+                <div class="row">
+                    <div class="col-12 page-webinar-item__body-line"><hr /></div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-lg-3 page-webinar-item__body-title">
+                        <h3>Задать вопрос лектору</h3>
+                    </div>
+                    <div class="col-12 col-lg-9 page-webinar-item__body-block">
+                        <div class="position-relative">
+                            <form autocomplete="off" id="webinar-message" method="POST" action="{{ path('webinar_message') }}">
+                                <div class="row">
+                                    <div class="col-12 col-lg-8 mb-3 mb-lg-0">
+                                        <h4>Ваш вопрос</h4>
+                                        <input type="hidden" name="id" value="{{ webinar.id }}"/>
+                                        <input required="required" type="text" name="question" id="question" placeholder="Введите Ваш вопрос лектору касательно данного вебинара" />
+                                    </div>
+                                    <div class="col-12 col-lg-4">
+                                        <div class="d-flex align-items-end h-100">
+                                            <button type="submit">Отправить</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block modals %}
+    {{ parent() }}
+
+    {% include 'frontend/partials/modals/webinar-check.html.twig' %}
+    {% include 'frontend/partials/modals/message-sent.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        var UPDATE_INTERVAL = 50000;
+        var webinar = {
+            id: {{ webinar.id }},
+            youtubeCode: '{{ webinar.youtubeCode }}',
+            startTime:  {{ webinar.jsStartDatetime }},
+            finishTime: {{ webinar.jsEndDatetime }},
+            popupTime1: {{ webinar.jsConfirmationTime1 }},
+            popupTime2: {{ webinar.jsConfirmationTime2 }},
+            popupTime3: {{ webinar.jsConfirmationTime3 }},
+            isStarted:  {% if webinar.isStarted %}true{% else %}false{% endif %},
+            confirmUrl: '{{ path('webinar_confirm') }}',
+            getTimes: '{{ path('webinar_get_times') }}',
+            message: '{{ path('webinar_message') }}',
+        };
+    </script>
+    <script type="text/javascript" src="/lib/scripts/webinar.js"></script>
+{% endblock %}

@@ -1,0 +1,126 @@
+/**
+ * Empty list
+ **/
+
+.page-empty-list {
+    width: 100%;
+    position: relative;
+    background-color: #f0eee4;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+}
+
+.page-empty-list__text {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.63;
+    color: #9b9b9b;
+    text-align: center;
+}
+
+@media (min-width: 992px) {
+    .page-empty-list {
+        height: 400px;
+        padding-left: 400px;
+        padding-right: 100px;
+    }
+
+    .page-empty-list::before {
+        position: absolute;
+        content: "";
+        width: 300px;
+        top: 32px;
+        bottom: 0;
+        left: 50px;
+        background-image: resolve('images/sirano/sorry.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+}
+
+@media (min-width: 1200px) {
+    .page-empty-list {
+        height: 440px;
+        padding-left: 600px;
+        padding-right: 200px;
+    }
+
+    .page-empty-list::before {
+        width: 400px;
+        left: 200px;
+    }
+}
+
+/**
+ * Empty list profile
+ **/
+
+.page-empty-list-profile {
+    width: 100%;
+    position: relative;
+    background-color: #f0eee4;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+}
+
+.page-empty-list-profile__text {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.63;
+    color: #9b9b9b;
+    text-align: center;
+}
+
+.page-empty-list-profile__text .btn {
+    margin-top: 2rem;
+}
+
+@media (min-width: 992px) {
+    .page-empty-list-profile {
+        height: 300px;
+        padding-left: 450px;
+        padding-right: 50px;
+        align-items: flex-start;
+    }
+
+    .page-empty-list-profile::before {
+        position: absolute;
+        content: "";
+        width: 500px;
+        top: 32px;
+        bottom: 0;
+        left: 50px;
+        background-image: resolve('images/sirano/profile-empty.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
+    .page-empty-list-profile__text .btn {
+        display: inline-block;
+        width: auto;
+        margin-top: 32px;
+        padding-left: 45px;
+        padding-right: 45px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .page-empty-list-profile {
+        height: 440px;
+        padding-left: 600px;
+        padding-right: 100px;
+        align-items: center;
+    }
+
+    .page-empty-list-profile::before {
+        width: 530px;
+        top: 111px;
+        left: 100px;
+    }
+
+    .page-empty-list-profile__text .btn {
+        margin-top: 56px;
+    }
+}

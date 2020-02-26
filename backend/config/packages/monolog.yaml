@@ -1,0 +1,2 @@
+monolog:
+    channels: ['confirmSend', 'webinarReminder']

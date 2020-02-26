@@ -1,0 +1,22 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Domain\Entity\Article\Article" table="articles">
+        <id name="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
+
+        <field name="name" type="string" />
+        <many-to-one field="direction" target-entity="App\Domain\Entity\Direction\Direction">
+            <join-column name="direction_id" referenced-column-name="id" />
+        </many-to-one>
+        <many-to-one field="category" target-entity="App\Domain\Entity\Direction\Category">
+            <join-column name="category_id" referenced-column-name="id" nullable="true"/>
+        </many-to-one>
+        <field name="author" type="string" />
+        <field name="file" type="string" nullable="true" />
+        <field name="isActive" type="boolean" />
+    </entity>
+</doctrine-mapping>

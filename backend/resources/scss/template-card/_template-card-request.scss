@@ -1,0 +1,52 @@
+/**
+ * Template request card
+ **/
+
+.template-request__item-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: $color-white;
+}
+
+.template-request__body {
+    flex-grow: 1;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 1rem;
+    line-height: 1.5;
+}
+
+.template-request__body a {
+    color: $color-dark;
+}
+
+.template-request__footer {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    padding: 0 1rem 1rem 1rem;
+}
+
+@media (min-width: 768px) {
+    .template-request__body {
+        font-size: 18px;
+        padding: 1.5rem;
+        line-height: 1.44;
+    }
+
+    .template-request__footer {
+        padding: 0 1.5rem 1.5rem 1.5rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .template-request__body {
+        padding: 2rem;
+    }
+
+    .template-request__footer {
+        padding: 0 2rem 2rem 2rem;
+    }
+}

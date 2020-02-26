@@ -1,0 +1,17 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Entity\ClinicalAnalyzesArticles" table="clinical_analyzes_articles">
+        <id name="clinicalAnalysis" association-key="true" />
+        <id name="article" association-key="true" />
+
+        <many-to-one field="clinicalAnalysis" target-entity="App\Domain\Entity\ClinicalAnalysis\ClinicalAnalysis">
+            <join-column name="clinical_analysis_id" referenced-column-name="id" on-delete="CASCADE" />
+        </many-to-one>
+        <many-to-one field="article" target-entity="App\Domain\Entity\Article\Article">
+            <join-column name="article_id" referenced-column-name="id" on-delete="CASCADE"/>
+        </many-to-one>
+    </entity>
+</doctrine-mapping>

@@ -1,0 +1,211 @@
+* {
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    outline: none;
+    -webkit-text-size-adjust: none;
+}
+
+html, body {
+    background-color: $color-gray;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+}
+
+/**
+ * Sticky Footer
+ */
+ 
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+#site-wrapper {
+    flex: 1 0 auto;
+}
+
+/**
+ * 1. Correct the line height in all browsers.
+ * 2. Prevent adjustments of font size after orientation changes in
+ * IE on Windows Phone and in iOS.
+ */
+
+html {
+    line-height: 1.5; /* 1 */
+    -ms-text-size-adjust: 100%; /* 2 */
+    -webkit-text-size-adjust: 100%; /* 2 */
+}
+
+html {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: normal;
+    color: $color-dark;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    line-height: 1.5;
+    font-size: 1rem;
+}
+
+/**
+ * Add the correct font style in Android 4.3-.
+ */
+
+dfn {
+    font-style: italic;
+}
+
+em, i {
+    font-style: italic;
+}
+
+/**
+ * 1. Remove the gray background on active links in IE 10.
+ * 2. Remove gaps in links underline in iOS 8+ and Safari 8+.
+ */
+
+a {
+    color: $color-violet;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+a:hover {
+    color: $color-violet;
+    text-decoration: underline;
+}
+
+a:not([href]):not([tabindex]) {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:not([href]):not([tabindex]):hover, a:not([href]):not([tabindex]):focus {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:not([href]):not([tabindex]):focus {
+    outline: 0;
+}
+
+hr {
+    -webkit-box-sizing: content-box;
+            box-sizing: content-box;
+    height: 0;
+    overflow: visible;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+p:last-child {
+    margin-bottom: 0;
+}
+
+small {
+    font-size: 80%;
+}
+
+article,
+aside,
+dialog,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section {
+    display: block;
+}
+
+.capital {
+    text-transform: capitalize;
+}
+
+.required {
+    padding-right: 0.5rem;
+    position: relative;
+}
+
+.required::after {
+    content: "*";
+    position: relative;
+    margin-left: 2px;
+    color: $color-violet;
+}
+
+.text-grey {
+    color: $color-gray-dark !important;
+}
+
+.text-violet {
+    color: $color-violet !important;
+}
+
+hr {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid $color-grayish-yellow;
+    margin: 1rem 0;
+}
+
+.error-text {
+    display: block;
+    width: 100%;
+    padding-top: 0.2rem;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: $color-error;
+}
+
+/**
+ * Alt padding row
+ **/
+
+.alt-padding-row-modal {
+    .alt-padding-col-right {
+        padding-left: 24px;
+    }
+    .alt-padding-col-left {
+        padding-right: 24px;
+    }
+}
+
+@media (min-width: 992px) {
+    .alt-padding-row-modal {
+        .alt-padding-col-right {
+            padding-left: 37px;
+        }
+        .alt-padding-col-left {
+            padding-right: 30px;
+        }
+    }
+}
+
+@media (min-width: 1200px) {
+    .alt-padding-row {
+        .alt-padding-col-right {
+            padding-left: 37px;
+        }
+        .alt-padding-col-left {
+            padding-right: 30px;
+        }
+    }
+}

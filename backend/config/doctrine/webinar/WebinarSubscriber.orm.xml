@@ -1,0 +1,19 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Webinar\WebinarSubscriber" table="webinar_subscribers">
+        <id name="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
+
+        <many-to-one field="webinar" target-entity="App\Webinar\Webinar" inversed-by="subscribers">
+            <join-column name="webinar_id" referenced-column-name="id" on-delete="CASCADE" />
+        </many-to-one>
+        <many-to-one field="customer" target-entity="App\Domain\Entity\Customer\Customer">
+            <join-column name="customer_id" referenced-column-name="id" on-delete="CASCADE" />
+        </many-to-one>
+        <field name="confirmNumber" type="integer" nullable="true" />
+    </entity>
+</doctrine-mapping>

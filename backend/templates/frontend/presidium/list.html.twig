@@ -1,0 +1,47 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block body %}
+    <nav class="breadcrumb-wrapper">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('index') }}">Главная</a>
+                </li>
+                <li class="breadcrumb-item">
+                    Президиум 
+                </li>
+            </ol>
+        </div>
+    </nav>
+
+    <div class="page-deck">
+        <div class="page-deck__bg">
+            <img alt="" src="/lib/images/deck/presidium.png" />
+        </div>
+        <div class="page-deck__text">
+            <div class="container">
+                <h2>Президиум</h2>
+            </div>
+        </div>
+    </div>
+
+    <section class="page-presidium mt-4 mb-4 mt-md-5 mb-md-5">
+        <div class="container">
+            <div class="row">
+                {% for item in list %}
+                    <div class="col-12 col-md-6 col-lg-4 mb-4 mb-lg-0">
+                        <div class="page-presidium__item-card">
+                            <div class="page-presidium__item-image">
+                                <img alt="" src="{{ item.photo }}" />
+                            </div>
+                            <div class="page-presidium__item-body">
+                                <h3>{{ item.name }}</h3>
+                                <p>{{ item.desription }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

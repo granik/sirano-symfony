@@ -1,0 +1,75 @@
+{#
+    Parameters:
+        * id (int): conference id
+        * url (string): conference href link
+        * title (string): conference title
+        * direction (string): direction title
+        * address (string): conference address
+        * startDate (string): conference start date
+        * startTime (string): conference start time
+        * isSubscribed (bool): is user subscribed for conference
+        * score (int): conference score
+        * class (string): additional classes
+        * bodyClass (string): additional body classes
+        * isArchive (bool): is conference end or not
+#}
+
+<div
+    id="conference-card-{{ id }}"
+    class="template-conference__item-card {{ class|default('') }} {% if isArchive is defined and isArchive %}past{% elseif isSubscribed is defined and isSubscribed %}active{% endif %}"
+>
+    <div class="template-conference__caption">
+        <div class="template-conference__label">Конференция</div>
+        <div class="template-conference__direction">{{ direction }}</div>
+    </div>
+    <div class="template-conference__body {{ bodyClass|default('') }}">
+        <a data-title href="{{ url }}">{{ title }}</a>
+    </div>
+
+    {% if address is defined %}
+        <div class="template-conference__address">
+            {{ address }}
+        </div>
+    {% endif %}
+
+    <div class="template-conference__footer">
+        <div class="template-conference__footer-dates">
+            <span><img class="calendar" alt="" src="/lib/images/icons/calendar.svg" />{{ startDate }}</span>
+            <span><img class="clock" alt="" src="/lib/images/icons/clock.svg" />{{ startTime }}</span>
+        </div>
+
+        {% if (isArchive is defined and isArchive != true) or (isArchive is not defined) %}
+            <div class="template-conference__footer-buttons">
+                {% if app.user and isSubscribed is defined and isSubscribed %}
+                    <div class="registered">
+                        Вы зарегистрированы<br />на посещение
+                    </div>
+                {% elseif app.user %}
+                    <form method="POST" action="{{ path('conference_subscribe') }}">
+                        <input type="hidden" name="id" value="{{ id }}">
+                        <a data-type="conference-subscribe-card" href="#" class="btn h-100 d-flex align-items-center {% if score == 0 %}justify-content-center text-center{% endif %}">
+                            <div>Зарегистрироваться<br />на посещение</div>
+                            {% if score != 0 %}
+                                <div class="score text-center">
+                                    <div>+{{ score }}</div>баллов
+                                </div>
+                            {% endif %}
+                        </a>
+                    </form>
+                {% else %}
+                    <a
+                        class="btn h-100 d-flex align-items-center {% if score == 0 %}justify-content-center text-center{% endif %}"
+                        href="{{ path('login', {'_target_path': path('conference', {'id': id}) }) }}"
+                    >
+                        <div>Зарегистрироваться<br />на посещение</div>
+                        {% if score != 0 %}
+                            <div class="score text-center">
+                                <div>+{{ score }}</div>баллов
+                            </div>
+                        {% endif %}
+                    </a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</div>

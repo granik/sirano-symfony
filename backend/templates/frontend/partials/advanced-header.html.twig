@@ -1,0 +1,307 @@
+{#
+    Parameters:
+      * title (string): header title
+      * showPeriod (bool): calendar period block
+      * showLimit (bool): entries per page block
+      * showSearch (bool): search block
+      * showDirections (bool): directions and categories block
+      * directions (array): array with directions and categories
+#}
+
+<form method="GET" action="" autocomplete="off">
+    <div class="d-flex flex-row flex-wrap flex-lg-nowrap align-items-end page-header-advanced
+               {% if showDirections is defined and showDirections == true %}mb-4 mb-lg-3-5{% else %}mb-4 mb-lg-5{% endif %}">
+        {% if title is defined and title %}
+            <h2>{{ title|raw }}</h2>
+        {% endif %}
+
+        {% if showSearch is defined and showSearch == true %}
+            <input value="{{ app.request.query.get('s') }}"
+                   name="s"
+                   class="search-form"
+                   type="text"
+                   placeholder="Поиск"
+            />
+        {% endif %}
+
+        <div class="flex-fill"></div>
+
+        <div class="page-header-advanced__filters-toggler pl-3 d-block d-lg-none">
+            <a class="d-flex" href="#">
+                <img alt="" src="/lib/images/icons/filter.svg" />
+            </a>
+        </div>
+
+        <div class="page-header-advanced__filters">
+            <div class="d-flex flex-wrap flex-lg-nowrap pt-4 pt-lg-0">
+                {% if showPeriod is defined and showPeriod == true %}
+                    <div class="d-flex align-items-center pb-4 pb-lg-0 bl-dark pl-0 pl-lg-3 ml-0 ml-lg-3">
+                        <span class="label mr-3">
+                            {% if isArchive is defined and isArchive == true %}
+                                События за прошедший:
+                            {% else %}
+                                События на ближайший(ую):
+                            {% endif %}
+                        </span>
+                        {% if isArchive is defined and isArchive == true %}
+                            <label for="period-month" class="styled-radio">
+                                <input id="period-month" type="radio" name="period" value="month"
+                                    {% if period == 'month' %}checked{% endif %}>
+                                <span>Месяц</span>
+                            </label>
+                            <label for="period-year" class="styled-radio">
+                                <input id="period-year" type="radio" name="period" value="year"
+                                    {% if period == 'year' %}checked{% endif %}>
+                                <span>Год</span>
+                            </label>
+                            <label for="period-all" class="styled-radio">
+                                <input id="period-all" type="radio" name="period" value="all"
+                                    {% if period == 'all' %}checked{% endif %}>
+                                <span>Все</span>
+                            </label>
+                        {% else %}
+                            <label for="period-week" class="styled-radio">
+                                <input id="period-week" type="radio" name="period" value="week"
+                                    {% if period == 'week' %}checked{% endif %}>
+                                <span>Неделю</span>
+                            </label>
+                            <label for="period-month" class="styled-radio">
+                                <input id="period-month" type="radio" name="period" value="month"
+                                    {% if period == 'month' %}checked{% endif %}>
+                                <span>Месяц</span>
+                            </label>
+                            <label for="period-year" class="styled-radio">
+                                <input id="period-year" type="radio" name="period" value="year"
+                                    {% if period == 'year' %}checked{% endif %}>
+                                <span>Год</span>
+                            </label>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                {% if showLimit is defined and showLimit == true %}
+                    <div class="d-flex align-items-center pb-4 pb-lg-0 bl-dark pl-0 pl-lg-3 ml-0 ml-lg-3">
+                        <label class="label" for="limit">Показывать на странице:</label>
+                        <select name="limit" id="limit">
+                            <option value="12" {% if limit == 12 %}selected{% endif %}>12</option>
+                            <option value="24" {% if limit == 24 %}selected{% endif %}>24</option>
+                            <option value="36" {% if limit == 36 %}selected{% endif %}>36</option>
+                        </select>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% if showDirections is defined and showDirections == true %}
+        <div class="d-none d-lg-block page-header-advanced__additions mb-3-5">
+            <div class="row">
+                <div class="col-6 page-header-advanced__direction">
+                    <div>
+                        <div class="d-flex align-items-center w-100">
+                            <label class="label" for="filter-direction">
+                                <span class="d-none d-lg-inline">Выберите направление:</span>
+                                <span class="d-inline d-lg-none">Направление:</span>
+                            </label>
+                            <select class="blue" name="direction" id="filter-direction">
+                                <option value="0" {% if selectedDirection is same as(null) %}selected{% endif %}>Все направления</option>
+                                {% for directionItem in directions %}
+                                    <option value="{{ directionItem.id }}" {% if selectedDirection and selectedDirection.id == directionItem.id %}selected{% endif %}>{{ directionItem.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 page-header-advanced__category">
+                    <div>
+                        <div class="d-flex align-items-center w-100">
+                            {% if category %}
+                                <label class="label" for="filter-category">
+                                    <span class="d-none d-lg-inline">Выберите категорию:</span>
+                                    <span class="d-inline d-lg-none">Категория:</span>
+                                </label>
+                                <select class="blue" name="category" id="filter-category">
+                                    <option value="0" {% if selectedCategory is same as(null) %}selected{% endif %}>Все категории</option>
+                                    {% for categoryItem in category %}
+                                        <option value="{{ categoryItem.id }}" {% if selectedCategory and selectedCategory.id == categoryItem.id %}selected{% endif %}>{{ categoryItem.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            {% else %}
+                                <label class="label disabled" for="filter-category">Выберите категорию:</label>
+                                <select class="blue disabled" name="category" id="filter-category" disabled="disabled">
+                                    <option value="0" selected="">Все категории</option>
+                                </select>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</form>
+
+<!-- Mobile block-->
+<form method="GET" action="" autocomplete="off">
+    {% if showSearch is defined and showSearch == true %}
+        <input value="{{ app.request.query.get('s') }}"
+               name="s"
+               type="hidden"
+        />
+    {% endif %}
+    <div class="page-header-advanced__filters-mobile d-lg-none">
+        <div class="page-header-advanced__filters-mobile__fade d-none d-md-block d-lg-none"></div>
+        <div class="page-header-advanced__filters-mobile__block">
+            <div class="container h-100">
+                <div class="d-flex flex-column w-100 h-100">
+                    <div>
+                        <h3>Сортировка</h3>
+                        <span class="page-header-advanced__filters-mobile__close">
+                            <img alt="" src="/lib/images/icons/close-grey.svg" />
+                        </span>
+                    </div>
+
+                    {% if showPeriod is defined and showPeriod == true %}
+                        <div>
+                            {% if isArchive is defined and isArchive == true %}
+                                <h4>События за прошедший</h4>
+                            {% else %}
+                                <h4>События на ближайший(ую)</h4>
+                            {% endif %}
+
+                            <div class="radio-dropdown">
+                                <a href="#" class="radio-dropdown__link">
+                                    Выберите период
+                                </a>
+                                <div class="radio-dropdown__submenu">
+                                    <label for="mobile-period-month">
+                                        <input id="mobile-period-month" type="radio" name="period" value="month"
+                                               {% if period == 'month' %}checked{% endif %}>
+                                        <span>Месяц</span>
+                                    </label>
+                                    <label for="mobile-period-year">
+                                        <input id="mobile-period-year" type="radio" name="period" value="year"
+                                               {% if period == 'year' %}checked{% endif %}>
+                                        <span>Год</span>
+                                    </label>
+                                    <label for="mobile-period-all">
+                                        <input id="mobile-period-all" type="radio" name="period" value="all"
+                                               {% if period == 'all' %}checked{% endif %}>
+                                        <span>Все</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if showLimit is defined and showLimit == true %}
+                        <div>
+                            <h4>Показывать на странице</h4>
+
+                            <div class="radio-dropdown">
+                                <a href="#" class="radio-dropdown__link">
+                                    Выберите количество
+                                </a>
+                                <div class="radio-dropdown__submenu">
+                                    <label for="mobile-limit-12">
+                                        <input id="mobile-limit-12" type="radio" name="limit" value="12"
+                                               {% if limit == 12 %}checked{% endif %}>
+                                        <span>12</span>
+                                    </label>
+                                    <label for="mobile-limit-24">
+                                        <input id="mobile-limit-24" type="radio" name="limit" value="24"
+                                               {% if limit == 24 %}checked{% endif %}>
+                                        <span>24</span>
+                                    </label>
+                                    <label for="mobile-limit-36">
+                                        <input id="mobile-limit-36" type="radio" name="limit" value="36"
+                                               {% if limit == 36 %}checked{% endif %}>
+                                        <span>36</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if showDirections is defined and showDirections == true and directions %}
+                        <div class="mobile-direction-filter">
+                            <h4>Направление</h4>
+
+                            <div class="radio-dropdown" data-category-url="{{ path('direction_get_categories') }}">
+                                <a href="#" class="radio-dropdown__link">
+                                    Выберите направление
+                                </a>
+                                <div class="radio-dropdown__submenu">
+                                    <label for="mobile-direction-filter-0">
+                                        <input id="mobile-direction-filter-0" type="radio" name="direction" value="0"
+                                        {% if selectedDirection is same as(null) %}checked{% endif %}>
+                                        <span>Все направления</span>
+                                    </label>
+                                    {% for directionItem in directions %}
+                                        <label for="mobile-direction-filter-{{ directionItem.id }}">
+                                            <input id="mobile-direction-filter-{{ directionItem.id }}" type="radio" name="direction" value="{{ directionItem.id }}"
+                                            {% if selectedDirection and selectedDirection.id == directionItem.id %}checked{% endif %}>
+                                            <span>{{ directionItem.name }}</span>
+                                        </label>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if showDirections is defined and showDirections == true %}
+                        <div class="mobile-category-filter">
+                            {% if category %}
+                                <div>
+                                    <h4>Категория</h4>
+
+                                    <div class="radio-dropdown">
+                                        <a href="#" class="radio-dropdown__link">
+                                            Выберите категорию
+                                        </a>
+                                        <div class="radio-dropdown__submenu">
+                                            <label for="mobile-category-filter-0">
+                                                <input id="mobile-category-filter-0" type="radio" name="category" value="0"
+                                                {% if selectedCategory is same as(null) %}checked{% endif %}>
+                                                <span>Все категории</span>
+                                            </label>
+                                            {% for categoryItem in category %}
+                                                <label for="mobile-category-filter-{{ categoryItem.id }}">
+                                                    <input id="mobile-category-filter-{{ categoryItem.id }}" type="radio" name="category" value="{{ categoryItem.id }}"
+                                                    {% if selectedCategory and selectedCategory.id == categoryItem.id %}checked{% endif %}>
+                                                    <span>{{ categoryItem.name }}</span>
+                                                </label>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="faded">
+                                    <h4>Категория</h4>
+
+                                    <div class="radio-dropdown radio-dropdown__disabled">
+                                        <a href="#" class="radio-dropdown__link">
+                                            Выберите категорию
+                                        </a>
+                                        <div class="radio-dropdown__submenu">
+                                            <label for="mobile-category-filter-0">
+                                                <input disabled="disabled" id="mobile-category-filter-0" type="radio" name="category" value="0" checked="checked">
+                                                <span>Все категории</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+
+                    <div class="flex-fill"></div>
+
+                    <div class="page-header-advanced__filters-mobile__button">
+                        <button type="submit">Применить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- End of mobile block-->

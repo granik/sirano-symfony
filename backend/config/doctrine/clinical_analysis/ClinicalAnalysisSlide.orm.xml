@@ -1,0 +1,18 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Domain\Entity\ClinicalAnalysis\ClinicalAnalysisSlide" table="clinical_analisis_slides">
+        <id name="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
+
+        <many-to-one field="clinicalAnalysis" target-entity="App\Domain\Entity\ClinicalAnalysis\ClinicalAnalysis">
+            <join-column name="clinical_analisis_id" referenced-column-name="id" on-delete="CASCADE" />
+        </many-to-one>
+        <field name="name" type="string" />
+        <field name="number" type="integer" />
+        <field name="image" type="string" nullable="true"/>
+    </entity>
+</doctrine-mapping>

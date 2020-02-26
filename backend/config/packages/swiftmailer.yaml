@@ -1,0 +1,9 @@
+swiftmailer:
+    default_mailer: main_mailer
+    mailers:
+        main_mailer:
+            url: '%env(MAILER_URL)%'
+            spool: { type: 'memory' }
+        webinar_mailer:
+            url: '%env(WEBINAR_MAILER_URL)%'
+            spool: { type: 'memory' }

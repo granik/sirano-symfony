@@ -1,0 +1,109 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block body %}
+    <nav class="breadcrumb-wrapper">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('index') }}">Главная</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('webinars') }}">Вебинары</a>
+                </li>
+                <li class="breadcrumb-item">
+                    {{ report.name }}
+                </li>
+            </ol>
+        </div>
+    </nav>
+
+    <div class="page-deck">
+        <div class="page-deck__bg">
+            {% if report.image %}
+                <img alt="" src="{{ report.image }}" />
+            {% endif %}
+        </div>
+    </div>
+
+    <section class="page-webinar-archive mb-4 mb-lg-5">
+        <div class="container">
+            <div class="d-flex flex-column position-relative">
+                <div class="page-webinar-archive__header">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-webinar-archive__header-caption">
+                                <div class="page-webinar-archive__header-label">Вебинар</div>
+                                <div class="page-webinar-archive__header-direction">{{ report.directionName }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-webinar-archive__header-title">
+                                <h1>{{ report.name }}</h1>
+
+                                <div class="page-webinar-archive__subject">{{ report.subject }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-webinar-archive__meta">
+                                <span class="d-flex align-items-center">
+                                    <img class="calendar" alt="" src="/lib/images/icons/calendar.svg" />{{ report.startDate }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if report.subtitle %}
+                    <div class="page-webinar-archive__body">
+                        <h2>{{ report.subtitle }}</h2>
+
+                        {% if report.youtubeCode %}
+                            <div class="page-webinar-archive__body-player embed-responsive embed-responsive-16by9">
+                                <iframe width="560"
+                                        height="315"
+                                        src="https://www.youtube.com/embed/{{ report.youtubeCode }}"
+                                        frameborder="0"
+                                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                        allowfullscreen
+                                ></iframe>
+                            </div>
+                        {% endif %}
+
+                        <p>{{ report.description|raw }}</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    {% if recommend is not same as(null) %}
+        <section class="recommend-block mb-4 mb-lg-5">
+            <div class="container">
+                <div class="recommend-block__wrapper">
+                    <div class="row">
+                        <div class="col-12 col-lg-6 pb-3 pb-lg-0">
+                            Рекомендуем
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="recommend-block__wrapper-main">
+                                <div class="mb-2 mb-lg-3">{{ recommend.name }}</div>
+                                <div class="mb-2 mb-lg-4 recommend-block__wrapper-main-subject">{{ recommend.subject }}</div>
+                                <div class="d-flex align-items-center mb-3 mb-lg-4 recommend-block__wrapper-main-meta">
+                                    <img class="calendar" alt="" src="/lib/images/icons/calendar.svg" /><span>{{ recommend.startDate }}</span>
+                                </div>
+                                <div>
+                                    <a class="btn" href="{{ path('webinar', { id: recommend.id}) }}">Перейти к вебинару</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <img class="sirano" alt="" src="/lib/images/sirano/recommend.png" />
+                </div>
+            </div>
+        </section>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block body %}
+    <nav class="breadcrumb-wrapper">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('index') }}">Главная</a>
+                </li>
+                <li class="breadcrumb-item">
+                    Документы
+                </li>
+            </ol>
+        </div>
+    </nav>
+
+    <div class="page-deck">
+        <div class="page-deck__bg">
+            <img alt="" src="/lib/images/deck/documents.png" />
+        </div>
+        <div class="page-deck__text">
+            <div class="container">
+                <h2>Документы</h2>
+            </div>
+        </div>
+    </div>
+
+    <section class="page-documents mt-4 mb-4 mt-md-5 mb-md-5">
+        <div class="container">
+            {% for item in list %}
+                <div class="page-documents__item">
+                    <div class="page-documents__item-text">
+                        <a target="_blank" href="{{ item.file }}">
+                            {{ item.name }}
+                        </a>
+                    </div>
+                    <div class="page-documents__item-type">
+                        <img alt="" src="/lib/images/icons/type-pdf.svg" />
+                        <span>{{ item.fileSize }}</span>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

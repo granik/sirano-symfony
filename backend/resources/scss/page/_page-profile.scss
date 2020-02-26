@@ -1,0 +1,347 @@
+/**
+ * Profile page
+ **/
+
+.page-profile__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.page-profile h2 {
+    font-size: 18px;
+    line-height: 1.33;
+    margin-bottom: 0;
+}
+
+.page-profile__wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-left: -15px;
+    margin-right: -15px;
+    background-color: $color-white;
+}
+
+.page-profile__body {
+    padding: 1.5rem 0;
+}
+
+.page-profile__avatar {
+    background-color: #f9f9f9;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+}
+
+.page-profile__avatar-image {
+    width: 50%;
+}
+
+.page-profile__avatar-image > div {
+    width: 102px;
+    height: 102px;
+    border-radius: 50%;
+    border: 2px solid $color-white;
+    overflow: hidden;
+}
+
+.page-profile__avatar-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.page-profile__avatar-text {
+    width: 50%;
+    position: relative;
+    overflow: hidden;
+}
+
+.page-profile__avatar-text > * {
+    cursor: pointer;
+}
+
+.page-profile__avatar-text input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    z-index: 2;
+}
+
+.page-profile__bottom {
+    padding: 1.5rem 1rem;
+    border-top: 1px solid $color-gray;
+}
+
+@media (min-width: 576px) {
+    .page-profile__wrapper {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+@media (min-width: 768px) {
+    .page-profile h2 {
+        font-size: 20px;
+        line-height: 1.6;
+    }
+
+    .page-profile__body {
+        padding: 2.5rem;
+    }
+
+    .page-profile__bottom {
+        padding: 2rem 2.5rem;
+    }
+
+    .page-profile__bottom button,
+    .page-profile__bottom a.btn {
+        width: 33%;
+    }
+}
+
+@media (min-width: 992px) {
+    .page-profile__body {
+        padding: 3.5rem;
+    }
+
+    .page-profile__avatar {
+        margin-bottom: 0;
+    }
+
+    .page-profile__avatar-image {
+        width: 100%;
+    }
+
+    .page-profile__avatar-image > div {
+        width: 140px;
+        height: 140px;
+    }
+
+    .page-profile__avatar-text {
+        width: 100%;
+    }
+
+    .page-profile__bottom {
+        padding: 3rem 3.5rem;
+    }
+}
+
+/**
+ * Page profile top block
+ **/
+
+.page-profile-top {
+    background-color: $color-white;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.page-profile-top .left > div {
+    border-bottom: 1px dashed $color-gray-light;
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.page-profile-top__avatar-wrapper {
+    width: 69px;
+    height: 69px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.page-profile-top__avatar-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.page-profile-top__avatar-text {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.page-profile-top__person {
+    overflow: hidden;
+}
+
+.page-profile-top__person h3 {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.33;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.page-profile-top__specialization {
+    color: $color-gray-dark;
+    line-height: 1.6;
+    font-size: 15px;
+}
+
+@media (min-width: 768px) {
+    .page-profile-top .left > div {
+        border-bottom: none;
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
+
+    .page-profile-top .left {
+        border-right: 1px dashed $color-gray-light;
+    }
+}
+
+@media (min-width: 992px) {
+    .page-profile-top {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+    }
+
+    .page-profile-top__avatar-wrapper {
+        width: 115px;
+        height: 115px;
+        border: 2px solid $color-white;
+        -webkit-box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.08);
+                box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.08);
+        margin-bottom: 1.5rem;
+    }
+
+    .page-profile-top__person h3 {
+        font-size: 26px;
+        font-weight: 600;
+        line-height: 1;
+        margin-bottom: 1rem;
+    }
+}
+
+/**
+ * Page profile top results
+ **/
+
+.page-profile-top__results .text {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+.page-profile-top__results .tube .label {
+    display: block;
+    width: 100%;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.35;
+    text-align: center;
+    padding-bottom: 0.5rem;
+    color: $color-violet;
+}
+
+.page-profile-top__results .tube .bar-holder {
+    display: flex;
+    align-items: flex-end;
+    height: 60px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.page-profile-top__results .tube .bar {
+    position: relative;
+    width: 64px;
+    background-color: $color-grayish-yellow-light;
+}
+
+.page-profile-top__results .tube .bar::before {
+    content: "";
+    width: 100%;
+    height: 25px;
+    position: absolute;
+    top: -13px;
+    left: 0;
+    border-radius: 50px/20px;
+    background-color: #ede7d2;
+    z-index: 2;
+}
+
+.page-profile-top__results .tube .bar::after {
+    content: "";
+    width: 100%;
+    height: 25px;
+    position: absolute;
+    bottom: -13px;
+    left: 0;
+    border-radius: 50px/20px;
+    background-color: $color-grayish-yellow-light;
+    z-index: 1;
+}
+
+@media (min-width: 768px) {
+    .page-profile-top__results .text span {
+        -webkit-writing-mode:tb-rl;
+            -ms-writing-mode:tb-rl;
+                writing-mode:tb-rl;
+        -webkit-transform:rotate(180deg);
+        -ms-transform:rotate(180deg);
+        transform: rotate(180deg);
+    }
+
+    .page-profile-top__results .text {
+        margin-bottom: 0;
+    }
+
+    .page-profile-top__results .text {
+        width: 40%;
+    }
+
+    .page-profile-top__results .tube {
+        width: 60%;
+    }
+}
+
+@media (min-width: 992px) {
+    .page-profile-top__results .text,
+    .page-profile-top__results .tube {
+        width: 50%;
+    }
+}
+
+/**
+ * Page profile empty
+ **/
+
+.page-profile__empty {
+    display: flex;
+    height: 100%;
+    background-color: #f2f0e8;
+    padding: 1.5rem;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.63;
+    text-align: center;
+    color: $color-gray-dark;
+}
+
+.page-profile__empty a {
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.page-profile__empty .left {
+    border-bottom: 1px solid $color-grayish-yellow;
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .page-profile__empty .left {
+        border-bottom: none;
+        border-right: 1px solid $color-grayish-yellow;
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
+}

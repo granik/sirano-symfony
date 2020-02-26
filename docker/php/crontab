@@ -1,0 +1,2 @@
+30 * * * * php /var/www/symfony/bin/console app:send-confirm-emails >> /var/log/script.log
+00 * * * * php /var/www/symfony/bin/console app:send-webinar-reminder >> /var/log/script.log

@@ -1,0 +1,161 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    upload_directory: '%kernel.project_dir%/public/uploads'
+    upload_url: '/uploads'
+    storage_directory: '%kernel.project_dir%/var/yandex'
+    locale: 'ru'
+    translator:
+        fallbacks: ['en']
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    #    App\Controller\:
+    #        resource: '../src/Controller'
+    #        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+    App\Service\FileUploader:
+        arguments:
+            $targetDirectory: '%upload_directory%'
+
+    App\Domain\Backend\Interactor\DirectionInteractor:
+        arguments:
+            $targetDirectory: '%upload_directory%'
+
+    App\Backend\Form\ImageType:
+        arguments:
+            $targetDirectory: '%upload_directory%'
+
+    App\Backend\Form\FileType:
+        arguments:
+            $targetDirectory: '%upload_directory%'
+
+    App\Domain\Backend\Interactor\FileUploader:
+        arguments:
+            $targetDirectory: '%upload_directory%'
+
+    App\Domain\Entity\Article\Frontend\DTO\ArticleDtoAssembler:
+        arguments:
+            $fileUrlPrefix: '%upload_url%'
+            $uploadDirectory: '%upload_directory%'
+
+    App\Domain\Entity\Module\Frontend\DTO\ModuleDtoAssembler:
+        arguments:
+            $fileUrlPrefix: '%upload_url%'
+
+    App\Domain\Entity\ClinicalAnalysis\Frontend\DTO\ClinicalAnalysisDtoAssembler:
+        arguments:
+            $fileUrlPrefix: '%upload_url%'
+
+    App\Domain\Entity\News\Frontend\DTO\NewsDtoAssembler:
+        arguments:
+            $fileUrlPrefix: '%upload_url%'
+
+    App\Domain\Entity\PresidiumMember\Frontend\DTO\PresidiumMemberDtoAssembler:
+        arguments:
+            $fileUrlPrefix: '%upload_url%'
+
+    App\Domain\Entity\Document\Frontend\DTO\DocumentDtoAssembler:
+        arguments:
+            $fileUrlPrefix: '%upload_url%'
+            $uploadDirectory: '%upload_directory%'
+
+    App\Domain\Entity\AdvertBanner\Frontend\DTO\AdvertBannerDtoAssembler:
+        arguments:
+            $fileUrlPrefix: '%upload_url%'
+
+    App\Domain\Entity\Banner\Frontend\DTO\BannerDtoAssembler:
+        arguments:
+            $fileUrlPrefix: '%upload_url%'
+
+    App\Service\YandexCounter:
+        arguments:
+            $storagePath: '%storage_directory%'
+            $id: '%env(YANDEX_ID)%'
+            $token: '%env(YANDEX_TOKEN)%'
+
+    App\Domain\Entity\Customer\Frontend\DTO\CustomerProfileDtoAssembler:
+        arguments:
+            $fileUrlPrefix: '%upload_url%'
+
+    App\Webinar\DTO\WebinarReportFromWebinarDtoAssembler:
+        arguments:
+            $fileUrlPrefix: '%upload_url%'
+
+    App\Backend\Controller\NewsController:
+        arguments:
+            $targetDirectory: '%upload_directory%'
+            $fileUrlPrefix: '%upload_url%'
+
+    App\Domain\Entity\Direction\DTO\DirectionDtoAssembler:
+        arguments:
+            $fileUrlPrefix: '%upload_url%'
+
+    App\Backend\Controller\SettingsController:
+        arguments:
+            $targetDirectory: '%upload_directory%'
+            $fileUrlPrefix: '%upload_url%'
+
+    App\Domain\Entity\Conference\Frontend\DTO\ConferenceSeriesDtoAssembler:
+        arguments:
+            $fileUrlPrefix: '%upload_url%'
+
+    Symfony\Bridge\Monolog\Processor\WebProcessor:
+        tags: ['monolog.processor']
+
+    App\Domain\Interactor\UserInteractor:
+        arguments:
+            $logger: '@monolog.logger.confirmSend'
+
+    App\Service\Dadata\SuggestClient:
+        arguments:
+            $token: '%env(DADATA_TOKEN)%'
+
+    App\Logger\GlobalsProcessor:
+        tags:
+            - { name: monolog.processor, handler: main }
+
+    App\Interfaces\Mailer:
+        arguments:
+            $mailer: '@swiftmailer.mailer.main_mailer'
+            $fromAddress: '%env(MAILER_FROM_ADDRESS)%'
+            $from: '%env(MAILER_FROM)%'
+
+    app.webinar_reminder_mailer:
+        class: App\Interfaces\Mailer
+        arguments:
+            $mailer: '@swiftmailer.mailer.webinar_mailer'
+            $fromAddress: '%env(WEBINAR_MAILER_FROM_ADDRESS)%'
+            $from: '%env(MAILER_FROM)%'
+
+    App\Webinar\Frontend\Interactor\WebinarReminderInteractor:
+        arguments:
+            $logger: '@monolog.logger.webinarReminder'
+            $mailer: '@app.webinar_reminder_mailer'
+
+    app.webinar_interactor_with_webinar_mailer:
+        class: App\Webinar\Frontend\Interactor\WebinarInteractor
+        arguments:
+            $mailer: '@app.webinar_reminder_mailer'
+
+    app.webinar_controller_with_webinar_mailer:
+        class: App\Frontend\Controller\WebinarController
+        arguments:
+            $interactor: '@app.webinar_interactor_with_webinar_mailer'

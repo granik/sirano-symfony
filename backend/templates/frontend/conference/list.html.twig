@@ -1,0 +1,83 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block body %}
+    <nav class="breadcrumb-wrapper">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('index') }}">Главная</a>
+                </li>
+                <li class="breadcrumb-item">
+                    Конференции
+                </li>
+            </ol>
+        </div>
+    </nav>
+
+    <section class="page-conference mt-4 mb-4 mt-md-5 mb-md-5">
+        <div class="container">
+            <div class="d-flex mb-3 mb-lg-4">
+                <ul class="d-flex justify-content-around d-lg-inline-block list-unstyled list-inline tab-switcher">
+                    <li class="list-inline-item flex-grow-1 flex-shrink-0">
+                        <a href="{{ path('conferences') }}" class="active">План&nbsp;<span class="d-none d-lg-inline">конференций</span></a>
+                    </li>
+                    <li class="list-inline-item flex-grow-1 flex-shrink-0">
+                        <a href="{{ path('conferences_archive') }}" class="">Прошедшие&nbsp;<span class="d-none d-lg-inline">конференции</span></a>
+                    </li>
+                </ul>
+            </div>
+
+            {% set vars = {
+                'title': 'План конференций',
+                'showPeriod': true,
+                'showLimit': true,
+            } %}
+            {% include 'frontend/partials/advanced-header.html.twig' with vars %}
+
+            <div class="row">
+                {% if list|length %}
+                    {% for item in list %}
+                        {% set vars = {
+                            'id': item.id,
+                            'url': path('conference', {'id': item.id}),
+                            'title': item.name,
+                            'startDate': item.startDate,
+                            'startTime': item.startTime,
+                            'direction': item.directionName,
+                            'address': item.address,
+                            'isSubscribed': item.isSubscribed,
+                            'score': item.score,
+                            'bodyClass': 'tiny',
+                            'isArchive': item.isArchive,
+                        } %}
+                        <div class="col-12 col-md-6 mb-4">
+                            {% include 'frontend/partials/card/conference.html.twig' with vars %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-12">
+                        <div class="page-empty-list">
+                            <div class="page-empty-list__text">
+                                На ближайшее время у нас нет запланированных мероприятий, но они обязательно появятся. Следите за новостями на нашем портале.
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    {% set vars = {
+        'nbPages': pages,
+        'currentPage': page,
+        'url': 'conferences',
+        'query': { period: period, limit: limit },
+    } %}
+    {% include 'frontend/partials/pagination.html.twig' with vars %}
+{% endblock %}
+
+{% block modals %}
+    {{ parent() }}
+
+    {% include 'frontend/partials/modals/conference-register-success.html.twig' %}
+{% endblock %}

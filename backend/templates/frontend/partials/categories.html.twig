@@ -1,0 +1,39 @@
+{% if categories %}
+    <div>
+        <h4>Категория</h4>
+
+        <div class="radio-dropdown">
+            <a href="#" class="radio-dropdown__link">
+                Выберите категорию
+            </a>
+            <div class="radio-dropdown__submenu">
+                <label for="mobile-category-filter-0">
+                    <input id="mobile-category-filter-0" type="radio" name="category" value="0">
+                    <span>Все категории</span>
+                </label>
+                {% for categoryItem in categories %}
+                    <label for="mobile-category-filter-{{ categoryItem.id }}">
+                        <input id="mobile-category-filter-{{ categoryItem.id }}" type="radio" name="category" value="{{ categoryItem.id }}">
+                        <span>{{ categoryItem.name }}</span>
+                    </label>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="faded">
+        <h4>Категория</h4>
+
+        <div class="radio-dropdown radio-dropdown__disabled">
+            <a href="#" class="radio-dropdown__link">
+                Выберите категорию
+            </a>
+            <div class="radio-dropdown__submenu">
+                <label for="mobile-category-filter-0">
+                    <input disabled="disabled" id="mobile-category-filter-0" type="radio" name="category" value="0" checked="checked">
+                    <span>Все категории</span>
+                </label>
+            </div>
+        </div>
+    </div>
+{% endif %}

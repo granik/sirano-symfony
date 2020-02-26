@@ -1,0 +1,44 @@
+{% extends 'backend/base.html.twig' %}
+
+{% block top %}
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-12">
+            <h2>Расписание уведомлений</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('cms') }}">Главная</a>
+                </li>
+                <li class="breadcrumb-item active">
+                    <strong>Расписание уведомлений</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-12">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>Расписание уведомлений</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <form action="{{ path('cms_settings_email_schedule') }}" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="maxTries">Количество уведомлений (шт.)</label>
+                                <input type="number" class="form-control" id="maxTries" name="maxTries" value="{{ maxTries }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="hoursToConfirm">Временной интервал (часы)</label>
+                                <input type="number" class="form-control" id="hoursToConfirm" name="hoursToConfirm" value="{{ hoursToConfirm }}">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Сохранить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

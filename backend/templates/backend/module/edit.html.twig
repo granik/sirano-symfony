@@ -1,0 +1,228 @@
+{% extends 'backend/base.html.twig' %}
+
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block top %}
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-12">
+            <h2>Изменить модуль</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('cms') }}">Главная</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('cms_modules') }}">Модули</a>
+                </li>
+                <li class="breadcrumb-item active">
+                    <strong>Изменить модуль</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-12">
+                {% for message in app.flashes('notice') %}
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+
+                {{ form_start(form) }}
+
+                    <div class="tabs-container mb-3">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li><a class="nav-link active" data-toggle="tab" href="#home">Информация о модуле</a></li>
+                            <li><a class="nav-link" data-toggle="tab" href="#slides">Слайды модуля</a></li>
+                            <li><a class="nav-link" data-toggle="tab" href="#articles">Статьи модуля</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div role="tabpanel" id="home" class="tab-pane active">
+                                <div class="panel-body">
+                                    {{ form_row(form.name) }}
+                                    {{ form_row(form.direction, {
+                                        attr: {
+                                            'data-category-url': path('cms_module_get_category'),
+                                            'class': 'js-form-direction'
+                                        }
+                                    }) }}
+                                    <div class="js-form-category">
+                                        {% if form.category is defined %}
+                                            {{ form_row(form.category) }}
+                                        {% endif %}
+                                    </div>
+                                    {{ form_row(form.number) }}
+                                    {{ form_row(form.youtubeCode) }}
+                                    {{ form_row(form.isActive) }}
+                                </div>
+                            </div>
+
+                            <div role="tabpanel" id="slides" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="slides"
+                                         data-prototype="<div class='card mb-3'><div class='card-body'>{{ form_widget(form.slides.vars.prototype)|e('html_attr') }}<a class='btn btn-danger delete' href='#' role='button'>Удалить</a></div></div>">
+                                        {% for slide in form.slides %}
+                                            <div>
+                                                <div class="card mb-3">
+                                                    <div class="card-body">
+                                                        {{ form_row(slide.name) }}
+                                                        {{ form_row(slide.number) }}
+                                                        {{ form_row(slide.imageFile) }}
+                                                        <a class="btn btn-danger delete" href="#" role="button">Удалить</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div role="tabpanel" id="articles" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="articles"
+                                         data-prototype="<div class='card mb-3'><div class='card-body'>{{ form_widget(form.articles.vars.prototype)|e('html_attr') }}<a class='btn btn-danger delete mt-3' href='#' role='button'>Удалить</a></div></div>"
+                                         data-widget-counter="{{ form.articles.children|length }}"
+                                    >
+                                        {% for article in form.articles %}
+                                            <div>
+                                                <div class="card mb-3">
+                                                    <div class="card-body">
+                                                        {{ form_row(article) }}
+                                                        <a class="btn btn-danger delete" href="#" role="button">Удалить</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <div>
+                                        <button type="button"
+                                                class="btn btn-primary add-article"
+                                                data-list-selector="#email-fields-list">Добавить статью</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                {{ form_end(form) }}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        var $collectionHolder;
+
+        // setup an "add a tag" link
+        var $addTagButton = $('<button type="button" class="btn btn-primary">Добавить</button>');
+        var $newLinkLi = $('<div></div>').append($addTagButton);
+
+        jQuery(document).ready(function () {
+            // Get the ul that holds the collection of tags
+            $collectionHolder = $('div.slides');
+
+            // add the "add a tag" anchor and li to the tags ul
+            $collectionHolder.append($newLinkLi);
+
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+            $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+            $addTagButton.on('click', function (e) {
+                // add a new tag form (see next code block)
+                addTagForm($collectionHolder, $newLinkLi);
+            });
+
+            $('button.add-article').click(function (e) {
+                var list = $('div.articles');
+                // Try to find the counter of the list or use the length of the list
+                var counter = list.data('widget-counter') | list.children().length;
+
+                // grab the prototype template
+                var newWidget = list.attr('data-prototype');
+                // replace the "__name__" used in the id and name of the prototype
+                // with a number that's unique to your emails
+                // end name attribute looks like name="contact[emails][2]"
+                newWidget = newWidget.replace(/__name__/g, counter);
+                // Increase the counter
+                counter++;
+                // And store it, the length cannot be used if deleting widgets is allowed
+                list.data('widget-counter', counter);
+
+                // create a new list element and add it to the list
+                var newElem = $('<div></div>').html(newWidget);
+                newElem.appendTo(list);
+
+                $('.select2').select2();
+            });
+
+            $('div#slides').on('click', 'a.delete', function (e) {
+                $(this).closest('div.card').remove();
+            });
+
+            $('div#articles').on('click', 'a.delete', function (e) {
+                $(this).closest('div.card').remove();
+            });
+        });
+
+        function addTagForm($collectionHolder, $newLinkLi) {
+            // Get the data-prototype explained earlier
+            var prototype = $collectionHolder.data('prototype');
+
+            // get the new index
+            var index = $collectionHolder.data('index');
+
+            var newForm = prototype;
+            // You need this only if you didn't set 'label' => false in your tags field in TaskType
+            // Replace '__name__label__' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            // newForm = newForm.replace(/__name__label__/g, index);
+
+            // Replace '__name__' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            newForm = newForm.replace(/__name__/g, index);
+
+            // increase the index with one for the next item
+            $collectionHolder.data('index', index + 1);
+
+            // Display the form in the page in an li, before the "Add a tag" link li
+            var $newFormLi = $('<div></div>').append(newForm);
+            $newLinkLi.before($newFormLi);
+        }
+
+        $(document).ready(function () {
+            var $directionSelect = $('.js-form-direction');
+            var $categoryTarget = $('.js-form-category');
+
+            $directionSelect.on('change', function (e) {
+                $.ajax({
+                    url: $directionSelect.data('categoryUrl'),
+                    data: {
+                        direction: $directionSelect.val()
+                    },
+                    success: function (html) {
+                        if (!html) {
+                            $categoryTarget.find('select').remove();
+                            $categoryTarget.addClass('d-none');
+
+                            return;
+                        }
+                        // Replace the current field and show
+                        $categoryTarget
+                            .html(html)
+                            .removeClass('d-none')
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

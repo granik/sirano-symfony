@@ -1,0 +1,82 @@
+{% extends 'backend/base.html.twig' %}
+
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block top %}
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-12">
+            <h2>Создать статью</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('cms') }}">Главная</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('cms_articles') }}">Библиотека</a>
+                </li>
+                <li class="breadcrumb-item active">
+                    <strong>Создать статью</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-12">
+                <div class="ibox">
+                    <div class="ibox-content">
+                        {{ form_start(form) }}
+                            {{ form_row(form.name) }}
+                            {{ form_row(form.direction, {
+                                attr: {
+                                    'data-category-url': path('cms_article_get_category'),
+                                    'class': 'js-form-direction'
+                                }
+                            }) }}
+                            <div class="js-form-category">
+                                {% if form.category is defined %}
+                                    {{ form_row(form.category) }}
+                                {% endif %}
+                            </div>
+                            {{ form_row(form.author) }}
+                            {{ form_row(form.fileFile) }}
+                            {{ form_row(form.isActive) }}
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $( document ).ready(function () {
+            var $directionSelect = $( '.js-form-direction' );
+            var $categoryTarget  = $( '.js-form-category' );
+
+            $directionSelect.on( 'change', function ( e ) {
+                $.ajax({
+                    url: $directionSelect.data( 'categoryUrl' ),
+                    data: {
+                        direction: $directionSelect.val()
+                    },
+                    success: function (html) {
+                        if ( !html ) {
+                            $categoryTarget.find( 'select' ).remove();
+                            $categoryTarget.addClass( 'd-none' );
+
+                            return;
+                        }
+
+                        $categoryTarget
+                            .html( html )
+                            .removeClass( 'd-none' )
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

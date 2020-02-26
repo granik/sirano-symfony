@@ -1,0 +1,67 @@
+<nav class="mobile-menu">
+    <ul class="mobile-menu-categories list-unstyled">
+        {{ render(controller('App\\Frontend\\Controller\\DirectionController::mobileList')) }}
+        {% if app.user and app.user.user.customerId %}
+            <li class="menu-element arrow menu-profile">
+                <div class="container">
+                    <a href="#" class="menu-element__link">
+                        {{ render(controller('App\\Frontend\\Controller\\TemplateBlockController::mobileProfile')) }}
+                    </a>
+                    <div class="submenu">
+                        <a href="{{ path('profile_dashboard') }}">Личный кабинет</a>
+                        <a href="{{ path('profile') }}">Профайл</a>
+                        <a href="{{ path('profile_conferences') }}">Конференции</a>
+                        <a href="{{ path('profile_webinars') }}">Вебинары</a>
+                        <a href="{{ path('profile_modules') }}">Модули</a>
+                        <a href="{{ path('logout') }}">Выход</a>
+                    </div>
+                </div>
+            </li>
+        {% else %}
+            <li class="menu-element menu-login">
+                <div class="container">
+                    <a href="#" class="menu-element__link" data-toggle="modal" data-target="#modal-login">
+                        <span class="icon"></span>Войти
+                    </a>
+                </div>
+            </li>
+        {% endif %}
+        <li class="menu-element arrow">
+            <div class="container">
+                <a href="#" class="menu-element__link">
+                    Ассоциация
+                </a>
+                <div class="submenu">
+                    <a href="{{ path('documents') }}">Документы</a>
+                    <a href="{{ path('chukaeva') }}">Памяти И.И. Чукаевой</a>
+                    <a href="{{ path('presidium') }}">Президиум</a>
+                    <a href="{{ path('members') }}">Члены ассоциации</a>
+                    <a href="{{ path('news') }}">Новости</a>
+                </div>
+            </div>
+        </li>
+        <li class="menu-element arrow">
+            <div class="container">
+                <a href="#" class="menu-element__link">
+                    Образовательная программа
+                </a>
+                <div class="submenu">
+                    <a href="{{ path('conferences') }}">Конференции</a>
+                    <a href="{{ path('webinars') }}">Вебинары</a>
+                </div>
+            </div>
+        </li>
+        <li class="menu-element arrow">
+            <div class="container">
+                <a href="#" class="menu-element__link">
+                    Электронное обучение
+                </a>
+                <div class="submenu">
+                    <a href="{{ path('modules') }}">Модули</a>
+                    <a href="{{ path('clinical_analyzes') }}">Клинические разборы</a>
+                    <a href="{{ path('articles') }}">Библиотека</a>
+                </div>
+            </div>
+        </li>
+    </ul>
+</nav>

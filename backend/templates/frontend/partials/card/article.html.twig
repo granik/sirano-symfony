@@ -1,0 +1,28 @@
+{#
+    Parameters:
+        * file (string): library item file location
+        * title (string): library item title
+        * author (string): library item author
+        * type (string): library item type
+        * direction (string): library direction name
+        * category (string): direction category title
+#}
+
+<div
+    class="template-article__item-card {{ class|default('') }}"
+>
+    <div class="template-article__caption">
+        <div class="template-article__label">Библиотека</div>
+        <div class="template-article__direction">
+            {{ direction }}{% if category is defined and category %}<span class="template-article__direction-category">{{ category }}</span>{% endif %}
+        </div>
+    </div>
+    <div class="template-article__body {{ bodyClass|default('') }}">
+        <a target="_blank" href="{{ file }}">
+            {{ title }}
+        </a>
+    </div>
+    <div class="template-article__footer">
+        {{ author }}
+    </div>
+</div>

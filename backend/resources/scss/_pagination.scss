@@ -1,0 +1,30 @@
+/**
+ * Pagination
+ **/
+
+.pagination {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.pagination li {
+    display: inline-block;
+    line-height: 1.71;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.pagination li a,
+.pagination li span {
+    display: block;
+    color: $color-dark;
+    padding: 0 0.5rem;
+}
+
+.pagination li.active span {
+    color: $color-yellow;
+    box-shadow: 0 8px 16px 0 rgba(117, 78, 127, 0.48);
+    background-color: $color-violet;
+}

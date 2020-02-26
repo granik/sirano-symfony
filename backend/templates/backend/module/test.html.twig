@@ -1,0 +1,81 @@
+{% extends 'backend/base.html.twig' %}
+
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block top %}
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-12">
+            <h2>Тест для модуля</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('cms') }}">Главная</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('cms_modules') }}">Модули</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('cms_module_edit', {id: id}) }}">Модуль</a>
+                </li>
+                <li class="breadcrumb-item active">
+                    <strong>Тест для модуля</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-12">
+                {% for message in app.flashes('notice') %}
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+
+                {{ form_start(form) }}
+
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            {{ form_row(form.name) }}
+                        </div>
+                    </div>
+
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            <h5>Список вопросов</h5>
+                        </div>
+
+                        <div class="ibox-content">
+                            <div class="questions mb-3">
+                                {% for question in form.questions %}
+                                    <div>
+                                        <div class="card mb-3">
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    {{ form_label(question.question) }} №{{ loop.index }}
+                                                    {{ form_widget(question.question) }}
+                                                </div>
+
+                                                {{ form_row(question.answer1) }}
+                                                {{ form_row(question.answer2) }}
+                                                {{ form_row(question.answer3) }}
+                                                {{ form_row(question.answer4) }}
+                                                {{ form_row(question.rightAnswer) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

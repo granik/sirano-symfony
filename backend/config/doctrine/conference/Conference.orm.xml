@@ -1,0 +1,34 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Domain\Entity\Conference\Conference" table="conferences">
+        <id name="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
+
+        <field name="name" type="string" />
+        <many-to-one field="direction" target-entity="App\Domain\Entity\Direction\Direction">
+            <join-column name="direction_id" referenced-column-name="id" />
+        </many-to-one>
+        <many-to-one field="series" target-entity="App\Domain\Entity\Conference\ConferenceSeries">
+            <join-column name="series_id" referenced-column-name="id" nullable="true" on-delete="SET NULL" />
+        </many-to-one>
+        <many-to-one field="city" target-entity="App\Domain\Entity\City">
+            <join-column name="city_id" referenced-column-name="id" />
+        </many-to-one>
+        <field name="address" type="string" />
+        <field name="startDateTime" type="datetime" />
+        <field name="endDateTime" type="datetime" />
+        <field name="score" type="integer" />
+        <field name="onlineScore" type="integer">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="description" type="string" nullable="true" length="600" />
+        <field name="isActive" type="boolean" />
+        <one-to-many field="subscribers" target-entity="App\Domain\Entity\Conference\ConferenceSubscriber" mapped-by="conference" />
+    </entity>
+</doctrine-mapping>

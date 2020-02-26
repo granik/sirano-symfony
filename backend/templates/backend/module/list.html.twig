@@ -1,0 +1,110 @@
+{% extends 'backend/base.html.twig' %}
+
+{% block top %}
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-12">
+            <h2>Модули</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('cms') }}">Главная</a>
+                </li>
+                <li class="breadcrumb-item active">
+                    <strong>Модули</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-12">
+                <div class="ibox">
+                    <div class="ibox-title pb-3">
+                        <h5 class="mb-1 mt-1">Список</h5>
+                        <div class="ibox-tools">
+                            <a class="btn btn-primary btn-sm" href="{{ path('cms_module_create') }}" role="button">Создать</a>
+                        </div>
+                    </div>
+
+                    <div class="ibox-content">
+                        <div class="project-list">
+                            <form>
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th width="10%">Номер</th>
+                                            <th>Название</th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <input type="text" class="form-control" name="number" value="{{ number }}" />
+                                                </td>
+                                                <td class="project-title">
+                                                    <input type="text" class="form-control" name="name" value="{{ name }}" />
+                                                </td>
+                                                <td></td>
+                                                <td class="project-actions">
+                                                    <a href="#" class="btn btn-light reset"><i class="fa fa-times"></i></a>
+                                                    <button type="submit" class="btn btn-light"><i class="fa fa-search"></i></button>
+                                                </td>
+                                            </tr>
+                                            {% if list|length %}
+                                                {% for item in list %}
+                                                    <tr>
+                                                        <td>{{ item.number }}</td>
+                                                        <td class="project-title">{{ item.name }}</td>
+                                                        <td>
+                                                            <a href="{{ path('cms_module_test', {'id': item.id}) }}">Тест</a>
+                                                        </td>
+                                                        <td class="project-actions">
+                                                            <a class="btn btn-white btn-sm" href="{{ path('cms_module_edit', {'id': item.id}) }}">
+                                                                <i class="fa fa-pencil"></i>
+                                                            </a>
+                                                            <a class="btn btn-danger btn-sm delete" href="{{ path('cms_module_delete') }}" data-id="{{ item.id }}">
+                                                                <i class="fa fa-trash"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </tbody>
+                                </table>
+                            </form>
+                        </div>
+
+                        {% include 'backend/partials/pagination.html.twig' with {
+                            'url': 'cms_modules',
+                            'query': {
+                                number: number,
+                                name: name,
+                            }
+                        } %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {% include 'backend/partials/delete.html.twig' %}
+    <script>
+        $(function () {
+            $('a.reset').click(function () {
+                var $form = $(this).closest('form');
+
+                $form.find('input[name="number"]').val('');
+                $form.find('input[name="name"]').val('');
+
+                return false;
+            })
+        });
+    </script>
+{% endblock %}

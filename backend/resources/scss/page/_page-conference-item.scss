@@ -1,0 +1,317 @@
+/**
+ * Conference item page
+ **/
+
+.page-conference-item__header-caption {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.page-conference-item__header-label {
+    flex-grow: 0;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 2;
+    text-transform: uppercase;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 1px solid $color-gray-dark;
+    margin-right: 1rem;
+    color: $color-gray-dark;
+}
+
+.page-conference-item__header-direction {
+    flex-grow: 1;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.23;
+    text-transform: uppercase;
+    color: $color-blue-dark;
+}
+
+.page-conference-item h1 {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+}
+
+.page-conference-item__header {
+    position: relative;
+    width: 100%;
+    background-color: $color-white;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.08);
+    z-index: 2;
+}
+
+.active.page-conference-item__header {
+    border-left: 4px solid $color-violet;
+}
+
+.past.page-conference-item__header {
+    border-left: 4px solid $color-dark;
+}
+
+.page-conference-item__header-date {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid $color-gray-light;
+    padding: 1rem;
+    color: $color-gray-dark;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.71;
+}
+
+
+.page-conference-item__header-date span {
+    margin-right: 1rem;
+}
+
+.page-conference-item__header-date span:last-child {
+    margin-right: 0;
+}
+
+.page-conference-item__header-date img {
+    margin-right: 0.5rem;
+}
+
+.page-conference-item__header-address {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid $color-gray-light;
+    padding: 1rem;
+    font-size: 14px;
+    line-height: 1.43;
+}
+
+.page-conference-item__header-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding: 1rem;
+}
+
+.page-conference-item__header-buttons .registered {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    border: 1px solid $color-violet;
+    padding: 10px 48px 10px 16px;
+    color: $color-violet;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5;
+    text-transform: uppercase;
+}
+
+.page-conference-item__header-buttons .registered::after {
+    content: "";
+    height: 100%;
+    width: 1rem;
+    top: 0;
+    right: 1rem;
+    position: absolute;
+    background-image: resolve('images/icons/check-violet.svg');
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+
+.page-conference-item__header-buttons button,
+.page-conference-item__header-buttons a.btn {
+    height: auto;
+    font-size: 12px;
+    text-align: left;
+    line-height: 1.5;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    justify-content: space-between;
+}
+
+.page-conference-item__header-buttons a.btn .score {
+    font-weight: 600;
+    line-height: 1rem;
+    font-size: 12px;
+    text-transform: lowercase;
+}
+
+.page-conference-item__header-buttons a.btn .score > div {
+    font-size: 1rem;
+}
+
+.page-conference-item__body {
+    position: relative;
+    background-color: $color-grayish-yellow-alt;
+    padding: 1.5rem 1rem 1rem 1rem;
+}
+
+.page-conference-item__body h2 {
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    width: 100%;
+    font-size: 18px;
+    line-height: 1.33;
+    border-bottom: 1px solid $color-grayish-yellow;
+}
+
+.page-conference-item__body img {
+    max-width: 100%;
+    height: auto;
+}
+
+.page-conference-item__body iframe,
+.page-conference-item__body video {
+    max-width: 100%;
+}
+
+.page-conference-item__body .row {
+    border-bottom: 1px dashed $color-grayish-yellow;
+    margin-bottom: 1.5rem;
+}
+
+.page-conference-item__body .row:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.page-conference-item__body-date {
+    color: $color-gray-dark;
+    font-size: 14px;
+    line-height: 1.71;
+    font-weight: 600;
+}
+
+.page-conference-item__body-date img {
+    margin-right: 1rem;
+}
+
+.page-conference-item__body-address {
+    line-height: 1.43;
+    font-size: 14px;
+}
+
+.page-conference-item__body-comment {
+    color: $color-gray-dark;
+    font-size: 14px;
+    line-height: 1.71;
+    font-weight: 600;
+}
+
+@media (min-width: 768px) {
+    .page-conference-item h1 {
+        font-size: 28px;
+        margin-bottom: 2.5rem;
+    }
+
+    .active.page-conference-item__header {
+        border-left: 6px solid $color-violet;
+    }
+
+    .past.page-conference-item__header {
+        border-left: 6px solid $color-dark;
+    }
+
+    .page-conference-item__header-date {
+        padding: 1.5rem;
+    }
+
+    .page-conference-item__header-date span {
+        margin-right: 1.5rem;
+    }
+
+    .page-conference-item__header-date img {
+        margin-right: 1rem;
+    }
+
+    .page-conference-item__header-address {
+        padding: 1.5rem;
+    }
+
+    .page-conference-item__header-buttons {
+        padding: 1.5rem;
+    }
+
+    .page-conference-item__body {
+        padding: 1.5rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .active.page-conference-item__header {
+        border-left: 8px solid $color-violet;
+    }
+
+    .past.page-conference-item__header {
+        border-left: 8px solid $color-dark;
+    }
+
+    .page-conference-item h1 {
+        font-size: 36px;
+        line-height: 1.33;
+        letter-spacing: 0.4px;
+        margin-bottom: 3rem;
+    }
+
+    .page-conference-item__header-date {
+        border-bottom: none;
+        padding: 2rem;
+        font-size: 18px;
+        line-height: 1.44;
+    }
+
+    .page-conference-item__header-date span {
+        margin-right: 0;
+        margin-bottom: 1.5rem;
+        width: 100%;
+    }
+
+    .page-conference-item__header-date span:last-child {
+        margin-bottom: 0;
+    }
+
+    .page-conference-item__header-address {
+        border-bottom: none;
+        border-left: 1px solid $color-gray-light;
+        padding: 2rem;
+        font-size: 18px;
+        line-height: 1.44;
+    }
+
+    .page-conference-item__header-buttons {
+        border-left: 1px solid $color-gray-light;
+        padding: 2rem;
+    }
+
+    .page-conference-item__header-buttons .registered {
+        padding: 19px 48px 19px 30px;
+    }
+
+    .page-conference-item__header-buttons button,
+    .page-conference-item__header-buttons a.btn {
+        padding: 19px 30px;
+    }
+
+    .page-conference-item__body {
+        padding: 2.5rem;
+    }
+
+    .page-conference-item__body-date {
+        font-size: 16px;
+        line-height: 1.75;
+    }
+
+    .page-conference-item__body-address {
+        line-height: 1.44;
+        font-size: 18px;
+    }
+
+    .page-conference-item__body-comment {
+        font-size: 16px;
+        line-height: 1.5;
+    }
+}

@@ -1,0 +1,9 @@
+<div class="additional-menu__directions">
+    <a href="#" data-toggle="modal" data-target="#modal-directions">
+        {% if directionName is same as(null) %}
+            Все направления
+        {% else %}
+            {{ directionName }}
+        {% endif %}
+    </a>
+</div>

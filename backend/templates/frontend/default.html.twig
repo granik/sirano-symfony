@@ -1,0 +1,388 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block body_class %}header-transparent{% endblock %}
+
+{% block body %}
+    <div class="frontpage-deck {% if selectedDirection %}with-direction{% endif %}">
+        {% if selectedDirection %}
+            <div class="bg">
+                <img alt="" src="{{ selectedDirection.image }}" />
+            </div>
+        {% else %}
+            <div class="bg">
+                <video muted="" autoplay="" playsinline="" loop="" src="/uploads/main_page/main_page_video.mp4" />
+            </div>
+        {% endif %}
+        <div class="container">
+            <div class="d-flex flex-row flex-wrap position-relative">
+                <div class="frontpage-deck__left d-flex flex-column text-left">
+                    <div class="frontpage-deck__left-titles position-relative d-flex flex-column align-items-start justify-content-center flex-grow-1 flex-shrink-0">
+                        {% if selectedDirection %}
+                            <div class="frontpage-deck__left-subtitle">
+                                Ассоциация врачей<br />первичного звена
+                            </div>
+                            <div class="frontpage-deck__left-title">
+                                {{ selectedDirection.name }}
+                            </div>
+                        {% else %}
+                            <div class="frontpage-deck__left-subtitle">
+                                Ассоциация врачей
+                            </div>
+                            <div class="frontpage-deck__left-title">
+                                первичного звена
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if banners|length %}
+                    <div class="frontpage-deck__right d-flex justify-content-center justify-content-md-start">
+                        <div class="d-flex d-md-none align-items-center justify-content-center w-100">
+                            <div id="carouselMobileAds" class="carousel slide w-100" data-ride="carousel" data-interval="5000">
+                                <div class="carousel-inner">
+                                    {% for key, banner in banners %}
+                                        <div class="carousel-item {% if key == 0 %}active{% endif %}"
+                                             {% if banner.backgroundColor is defined and banner.backgroundColor %}style="background-color: {{ banner.backgroundColor }}"{% endif%}>
+                                            <a target="_blank" class="d-flex justify-content-center" href="{{ banner.link }}">
+                                                <img alt="" src="{{ banner.mobileImage }}" />
+                                            </a>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="container position-relative">
+                                    <div class="carousel-indicators carousel-indicators-absolute d-flex flex-row justify-content-center">
+                                        {% for key, banner in banners %}
+                                            <span data-target="#carouselMobileAds" data-slide-to="{{ key }}" class="{% if key == 0 %}active{% endif %}"></span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-none d-md-flex justify-content-end pb-3 pt-3 pl-0 pl-md-3 text-center position-relative frontpage-deck__right-container">
+                            <div id="carouselDesktopAds" class="carousel slide" data-ride="carousel" data-interval="5000">
+                                <div class="carousel-inner">
+                                    {% for key, banner in banners %}
+                                        <div class="carousel-item {% if key == 0 %}active{% endif %}">
+                                            <a target="_blank" href="{{ banner.link }}">
+                                                <img alt="" src="{{ banner.desktopImage }}" />
+                                            </a>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="carousel-indicators carousel-indicators-white mt-4 d-flex flex-row justify-content-center">
+                                    {% for key, banner in banners %}
+                                        <span data-target="#carouselDesktopAds" data-slide-to="{{ key }}" class="{% if key == 0 %}active{% endif %}"></span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="frontpage-directions">
+        <div class="container">
+            <div class="d-flex position-relative">
+                <div class="frontpage-directions__wrapper">
+                    <a href="#" class="frontpage-directions__text d-block d-md-none" data-toggle="modal" data-target="#modal-directions">
+                        Выберите интересующее направление
+                    </a>
+                    <div class="frontpage-directions__text-desktop d-none d-md-block">
+                        Выберите интересующее направление:
+                    </div>
+                    <div class="frontpage-directions__icons">
+                        <ul class="w-100 list-unstyled d-flex flex-row align-items-stretch justify-content-between">
+                            {% set isDirectionActive = false %}
+                            {% if selectedDirection is same as(null) %}
+                                {% set isDirectionActive = true %}
+                            {% endif %}
+
+                            {% for directionItem in directions %}
+                                <li class="d-flex flex-column flex-grow-1 flex-shrink-1 align-items-end justify-content-center
+                                          {% if selectedDirection and directionItem.id is same as(selectedDirection.id) %}active{% endif %}"
+                                >
+                                    <a class="d-flex flex-column justify-content-around direction" href="#" data-id="{{ directionItem.id }}">
+                                        <div class="flex-grow-1 flex-shrink-1 frontpage-directions__icons-img d-flex align-items-center justify-content-center">
+                                            {% if selectedDirection and directionItem.id is same as(selectedDirection.id) and directionItem.activeIcon %}
+                                                <img alt="" src="{{ directionItem.activeIcon }}" />
+                                            {% else %}
+                                                <img alt="" src="{{ directionItem.icon }}" />
+                                            {% endif %}
+                                        </div>
+                                        <div class="flex-grow-0 flex-shrink-0 d-flex align-items-center justify-content-center frontpage-directions__icons-text">
+                                            <div class="text-truncate pl-3 pr-3">
+                                                {{ directionItem.name }}
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                {% if isDirectionActive is same as(false) and selectedDirection and directionItem.id is same as(selectedDirection.id) %}
+                                    {% set isDirectionActive = true %}
+                                {% endif %}
+                            {% endfor %}
+
+                            <li class="d-flex flex-column flex-grow-1 flex-shrink-1 align-items-end justify-content-center
+                                      {% if isDirectionActive is same as(false) %}active{% endif %}"
+                            >
+                                <a class="d-flex flex-column justify-content-around" href="#" data-toggle="modal" data-target="#modal-directions">
+                                    <div class="flex-grow-1 flex-shrink-1 frontpage-directions__icons-img d-flex align-items-center justify-content-center">
+                                        {% if isDirectionActive is same as(false) %}
+                                            <img alt="" src="/lib/images/directions/all-active.svg" />
+                                        {% else %}
+                                            <img alt="" src="/lib/images/directions/all.svg" />
+                                        {% endif %}
+                                    </div>
+                                    <div class="flex-grow-0 flex-shrink-0 d-flex flex-column align-items-center justify-content-center frontpage-directions__icons-text">
+                                        <div class="text-truncate pl-3 pr-3">
+                                            Другие
+                                        </div>
+                                        {% if isDirectionActive is same as(false) %}
+                                            <span>({{ selectedDirection.name }})</span>
+                                        {% endif %}
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if webinars|length or conferences|length or conferenceSeries|length %}
+            <div class="frontpage-events">
+                <div class="container">
+                    <div class="d-flex flex-column flex-md-row align-items-left align-items-md-center mb-4 frontpage-events__header">
+                        <h2 class="mb-3 mr-md-3 mb-md-0">Ближайшие</h2>
+                        <div class="flex-grow-0 flex-lg-grow-1">
+                            <ul class="d-flex justify-content-around d-lg-inline-block list-unstyled list-inline tab-switcher nav nav-tabs" role="tablist">
+                                {% if conferences|length or conferenceSeries|length %}
+                                    <li class="list-inline-item flex-grow-1 flex-shrink-0">
+                                        <a class="active" data-toggle="tab" href="#carouselConference" role="tab" aria-controls="conference" aria-selected="true">конференции</a>
+                                    </li>
+                                {% endif %}
+                                {% if webinars|length %}
+                                    <li class="list-inline-item flex-grow-1 flex-shrink-0">
+                                        <a class="{% if conferences|length == 0 and conferenceSeries|length == 0 %}active{% endif %}" data-toggle="tab" href="#carouselWebinar" role="tab" aria-controls="webinar" aria-selected="true">вебинары</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                        <div class="d-none d-lg-block bl-dark pl-3 button__all">
+                            {% if conferences|length or conferenceSeries|length %}
+                                <a id="all-conference" class="d-block" href="{{ path('conferences') }}">Все конференции</a>
+                            {% endif %}
+                            {% if webinars|length %}
+                                <a id="all-webinar" class="{% if conferences|length == 0 and conferenceSeries|length == 0 %}d-block{% else %}d-none{% endif %}" href="{{ path('webinars') }}">Все вебинары</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content">
+                    {% if conferences|length or conferenceSeries|length %}
+                        <div class="slick-navigation-right slick-holder tab-pane active" id="carouselConference" role="tabpanel" aria-labelledby="conference-tab">
+                            <div class="container">
+                                <div id="conference-slider"
+                                     class="slick-slider mb-4 mb-lg-0
+                                            {% if conferenceSeries|length %}with-schedule{% endif %}">
+
+                                    {% if conferenceSeries|length %}
+                                        {% for conferenceSeriesItem in conferenceSeries %}
+                                            <div class="conference-schedule">
+                                                <div class="conference-schedule__wrapper">
+                                                    <div class="conference-schedule__image">
+                                                        <img alt="" src="{{ conferenceSeriesItem.image }}" />
+                                                        <div class="conference-schedule__caption">
+                                                            <div class="conference-schedule__label">Конференция</div>
+                                                            <div class="conference-schedule__direction">{{ conferenceSeriesItem.directionName }}</div>
+                                                        </div>
+                                                        <div class="conference-schedule__title">
+                                                            <span>
+                                                                {{ conferenceSeriesItem.name }}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="conference-schedule__list-wrapper">
+                                                        <ul class="list-unstyled conference-schedule__list">
+                                                            {% for conferenceSeriesItemConference in conferenceSeriesItem.conferences %}
+                                                                <li id="conference-list-{{ conferenceSeriesItemConference.id }}"
+                                                                    class="{% if conferenceSeriesItemConference.isArchive is same as(true) %}past{% endif %}">
+                                                                    <div class="date">
+                                                                        {{ conferenceSeriesItemConference.startDateTime|date('d.m.Y') }}
+                                                                    </div>
+                                                                    <div class="name">
+                                                                        <a href="{{ path('conference', {'id': conferenceSeriesItemConference.id}) }}">
+                                                                            {{ conferenceSeriesItemConference.cityName }}
+                                                                        </a>
+                                                                    </div>
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+
+                                    {% for conference in conferences %}
+                                        {% set vars = {
+                                            'id': conference.id,
+                                            'url': path('conference', {'id': conference.id}),
+                                            'title': conference.name,
+                                            'startDate': conference.startDate,
+                                            'startTime': conference.startTime,
+                                            'direction': conference.directionName,
+                                            'address': conference.address,
+                                            'score': conference.score,
+                                        } %}
+                                        <div class="conference-slide">
+                                            {% include 'frontend/partials/card/conference.html.twig' with vars %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="d-flex flex-row justify-content-between d-lg-none">
+                                    <div>&nbsp;</div>
+                                    <div id="conference-indicators" class="slick-indicators"></div>
+                                    <div class="bl-dark pl-3 button__all">
+                                        <a class="d-block" href="{{ path('conferences') }}">Все&nbsp;<span class="d-none d-md-inline">конференции</span></a>
+                                    </div>
+                                </div>
+
+                                <a id="conference-control-prev" class="slick-control-prev" href="#">
+                                    <span aria-hidden="true">←</span>
+                                </a>
+                                <a id="conference-control-next" class="slick-control-next" href="#">
+                                    <span aria-hidden="true">→</span>
+                                </a>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if webinars|length %}
+                        <div class="tab-pane slick-navigation-right slick-holder {% if conferences|length == 0 and conferenceSeries|length == 0 %}active{% endif %}" id="carouselWebinar" role="tabpanel" aria-labelledby="webinar-tab">
+                            <div class="container">
+                                <div id="webinar-slider" class="slick-slider mb-4 mb-lg-0">
+                                    {% for webinar in webinars %}
+                                        {% set vars = {
+                                            'id': webinar.id,
+                                            'url': path('webinar', {'id': webinar.id}),
+                                            'title': webinar.name,
+                                            'startDate': webinar.startDate,
+                                            'startTime': webinar.startTime,
+                                            'direction': webinar.directionName,
+                                            'subject': webinar.subject,
+                                        } %}
+                                        <div class="webinar-slide">
+                                            {% include 'frontend/partials/card/webinar.html.twig' with vars %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="d-flex flex-row justify-content-between d-lg-none">
+                                    <div>&nbsp;</div>
+                                    <div id="webinar-indicators" class="slick-indicators"></div>
+                                    <div class="bl-dark pl-3 button__all">
+                                        <a class="d-block" href="{{ path('webinars') }}">Все&nbsp;<span class="d-none d-md-inline">вебинары</span></a>
+                                    </div>
+                                </div>
+
+                                <a id="webinar-control-prev" class="slick-control-prev" href="#">
+                                    <span aria-hidden="true">←</span>
+                                </a>
+                                <a id="webinar-control-next" class="slick-control-next" href="#">
+                                    <span aria-hidden="true">→</span>
+                                </a>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    {% if news|length %}
+        <div class="frontpage-news__container">
+            <div id="carouselNews" class="frontpage-news pb-4 pt-4 pb-lg-5 pt-lg-5 slick-navigation-right slick-holder">
+                <div class="container">
+                    <div class="d-flex flex-row align-items-center mb-3 mb-md-4">
+                        <h2>Новости</h2>
+                        <div class="flex-fill"></div>
+                        <div class="d-none d-lg-block bl-dark pl-3 button__all">
+                            <a class="d-block" href="{{ path('news') }}">Все новости</a>
+                        </div>
+                    </div>
+
+                    <div id="news-slider" class="slick-slider mb-4 mb-lg-0">
+                        {% for newsPost in news %}
+                            {% set vars = {
+                                'id': newsPost.id,
+                                'url': path('news_post', {'id': newsPost.id}),
+                                'title': newsPost.name,
+                                'date': newsPost.createdAt,
+                                'direction': newsPost.directionName,
+                                'image': newsPost.announceImage,
+                            } %}
+                            <div class="news-slide">
+                                {% include 'frontend/partials/card/news.html.twig' with vars %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="d-flex flex-row justify-content-between d-lg-none">
+                        <div>&nbsp;</div>
+                        <div id="news-indicators" class="slick-indicators"></div>
+                        <div class="bl-dark pl-3 button__all">
+                            <a class="d-block" href="{{ path('news') }}">Все&nbsp;<span class="d-none d-md-inline">новости</span></a>
+                        </div>
+                    </div>
+
+                    <a id="news-control-prev" class="slick-control-prev" href="#">
+                        <span aria-hidden="true">←</span>
+                    </a>
+                    <a id="news-control-next" class="slick-control-next" href="#">
+                        <span aria-hidden="true">→</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if adBanners %}
+        <div id="carouselBanners" class="frontpage-banners pb-4 pt-4 pb-lg-5 pt-lg-5 carousel slide carousel-navigation-aside" data-ride="carousel" data-interval="5000">
+            <div class="container">
+                <div class="carousel-inner mb-4 mb-lg-0">
+                    {% for key, adBanner in adBanners %}
+                        <div class="carousel-item {% if key == 0 %}active{% endif %}">
+                            <a target="_blank" href="{{ adBanner.link }}">
+                                <img class="d-block d-md-none w-100" alt="" src="{{ adBanner.mobileImage }}" />
+                                <img class="d-none d-md-block w-100" alt="" src="{{ adBanner.desktopImage }}" />
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="carousel-indicators d-flex flex-row justify-content-center d-lg-none">
+                    {% for key, adBanner in adBanners %}
+                        <span data-target="#carouselBanners" data-slide-to="{{ key }}" class="{% if key == 0 %}active{% endif %}"></span>
+                    {% endfor %}
+                </div>
+
+                {% if adBanners|length > 1 %}
+                    <a class="d-none d-lg-flex carousel-control-prev" href="#carouselBanners" role="button" data-slide="prev">
+                        <span aria-hidden="true">←</span>
+                    </a>
+                    <a class="d-none d-lg-flex carousel-control-next" href="#carouselBanners" role="button" data-slide="next">
+                        <span aria-hidden="true">→</span>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="/lib/scripts/frontpage.js"></script>
+{% endblock %}

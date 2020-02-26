@@ -1,0 +1,93 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block body %}
+    <nav class="breadcrumb-wrapper">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('index') }}">Главная</a>
+                </li>
+                <li class="breadcrumb-item">
+                    Авторизация
+                </li>
+            </ol>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section id="page-login" class="mt-0 mb-0 mt-md-4 mb-md-4 mt-lg-5 mb-lg-5">
+            <div class="page-login__wrapper">
+                <div class="page-login__image">
+                    <img alt="" src="/lib/images/sirano/restricted.png">
+                    <div class="text">
+                        <div class="page-login__image-subtitle">
+                            {% if targetPath is defined %}
+                                Для регистрации на конференцию Вам необходимо
+                            {% else %}
+                                Для просмотра данной страницы Вам необходимо
+                            {% endif %}
+                        </div>
+                        <div class="page-login__image-title">
+                            войти в систему
+                        </div>
+                    </div>
+                </div>
+                <div class="page-login__block">
+                    <form method="post" action="{{ path('login') }}">
+                        {% if targetPath is defined %}
+                            <input type="hidden" name="_target_path" value="{{ targetPath }}">
+                        {% endif %}
+                        <h5 class="page-login__block-title">Авторизация</h5>
+
+                        <div class="d-block mb-4">
+                            {% for notification in notifications|default([]) %}
+                                <li class="text-danger">{{ notification }}</li>
+                            {% endfor %}
+                        </div>
+
+                        <div class="d-block mb-4">
+                            <label class="font-weight-bold required" for="login">E-mail</label><br />
+                            <input autofocus value="{{ last_username|default('') }}" required="required" type="text" name="login" id="login" placeholder="Введите ваш E-mail" />
+                        </div>
+                        <div class="d-block mb-4">
+                            <label class="font-weight-bold required" for="password">Пароль</label><br />
+                            <input required="required" type="password" name="password" id="password" placeholder="Введите ваш пароль" />
+                        </div>
+                        <div class="d-block mb-4">
+                            <div class="row alt-padding-row">
+                                <div class="col-5 alt-padding-col-left br-grey">
+                                    <div class="d-flex justify-content-left align-items-center h-100">
+                                        <a class="text-uppercase" href="#" data-toggle="modal" data-target="#modal-recovery">
+                                            Забыли пароль?
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-7 alt-padding-col-right text-center">
+                                    <button type="submit">
+                                        Войти
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-block bt-dsh-grey pt-4">
+                            <div class="row">
+                                <div class="col-12 col-xl-5">
+                                    <div class="w-100 h-100 d-flex align-items-center justify-content-center justify-content-xl-start pb-4 pb-xl-0">
+                                        Нет аккаунта?
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-7 pl-xl-0">
+                                    <a class="btn btn-bordered" href="#" data-toggle="modal" data-target="#modal-register">
+                                        Зарегистрироваться
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

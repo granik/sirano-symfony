@@ -1,0 +1,183 @@
+{% extends 'backend/base.html.twig' %}
+
+{% block top %}
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-12">
+            <h2>Пользователи</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('cms') }}">Главная</a>
+                </li>
+                <li class="breadcrumb-item active">
+                    <strong>Пользователи</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-12">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>Загрузить из файла</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <form class="form-inline" method="post" action="{{ path('cms_customer_upload') }}" enctype="multipart/form-data">
+                            <div class="input-group">
+                                <input type="file" name="list">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Загрузить</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="ibox">
+                    <div class="ibox-title pb-3">
+                        <h5 class="mb-1 mt-1">Список (<a href="{{ path('cms_customer_download', {
+                                email: email,
+                                name: name,
+                                addedFrom: addedFrom,
+                                registeredAt: registeredAt,
+                                isActive: isActive,
+                                sendingCounter: sendingCounter,
+                                sendingDateTime: sendingDateTime,
+                            }) }}">Скачать</a>)</h5>
+                        Всего: {{ total }}
+                    </div>
+
+                    <div class="ibox-content">
+                        <div class="project-list">
+                            <form>
+                                <table class="table table-hover table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th>ФИО</th>
+                                            <th>Email</th>
+                                            <th>Регистрация</th>
+                                            <th>Дата регистрации</th>
+                                            <th>Профиль</th>
+                                            <th>№ уведомления</th>
+                                            <th>Дата отправки</th>
+                                            <th width="1%"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="project-title">
+                                                <input type="text" class="form-control" name="name" value="{{ name }}" />
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" name="email" value="{{ email }}" />
+                                            </td>
+                                            <td>
+                                                <select class="form-control" name="addedFrom">
+                                                    <option value="" {% if addedFrom is empty %}selected{% endif %}>Все</option>
+                                                    <option value="1" {% if addedFrom == 1 %}selected{% endif %}>Сайт</option>
+                                                    <option value="2" {% if addedFrom == 2 %}selected{% endif %}>Файл</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="date" class="form-control" name="registeredAt" value="{{ registeredAt }}" />
+                                            </td>
+                                            <td>
+                                                <select class="form-control" name="isActive">
+                                                    <option value="" {% if isActive is null %}selected{% endif %}>Все</option>
+                                                    <option value="1" {% if isActive == 1 %}selected{% endif %}>Активирован</option>
+                                                    <option value="0" {% if isActive is same as(0) %}selected{% endif %}>Не активирован</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control" name="sendingCounter">
+                                                    <option value="" {% if sendingCounter is null %}selected{% endif %}>Все</option>
+                                                    <option {% if sendingCounter is same as(0) %}selected{% endif %}>0</option>
+                                                    <option {% if sendingCounter == 1 %}selected{% endif %}>1</option>
+                                                    <option {% if sendingCounter == 2 %}selected{% endif %}>2</option>
+                                                    <option {% if sendingCounter == 3 %}selected{% endif %}>3</option>
+                                                    <option {% if sendingCounter == 4 %}selected{% endif %}>4</option>
+                                                    <option {% if sendingCounter == 5 %}selected{% endif %}>5</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="date" class="form-control" name="sendingDateTime" value="{{ sendingDateTime }}" />
+                                            </td>
+                                            <td class="project-actions text-nowrap">
+                                                <a href="#" class="btn btn-light reset"><i class="fa fa-times"></i></a>
+                                                <button type="submit" class="btn btn-light"><i class="fa fa-search"></i></button>
+                                            </td>
+                                        </tr>
+
+                                        {% if list|length %}
+                                            {% for item in list %}
+                                                <tr>
+                                                    <td class="project-title">
+                                                        {{ item.lastname }}
+                                                        {{ item.name }}
+                                                        {{ item.middlename }}
+                                                    </td>
+                                                    <td>{{ item.email }}</td>
+                                                    <td>{{ item.addedFrom }}</td>
+                                                    <td>{{ item.registeredAt }}</td>
+                                                    <td>{{ item.isActive }}</td>
+                                                    <td>{{ item.sendingCounter }}</td>
+                                                    <td>{{ item.sendingDateTime }}</td>
+                                                    <td class="project-actions text-nowrap">
+                                                        <a class="btn btn-white btn-sm" href="{{ path('cms_customer_edit', {'id': item.id}) }}">
+                                                            <i class="fa fa-pencil"></i>
+                                                        </a>
+                                                        <a class="btn btn-white btn-sm" href="{{ path('cms_customer_password_update', {'id': item.id}) }}">
+                                                            <i class="fa fa-key"></i>
+                                                        </a>
+                                                        <a class="btn btn-danger btn-sm delete" href="{{ path('cms_customer_delete') }}" data-id="{{ item.id }}">
+                                                            <i class="fa fa-trash"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+
+                        {% include 'backend/partials/pagination.html.twig' with {
+                            'url': 'cms_customers',
+                            'query': {
+                                email: email,
+                                name: name,
+                                addedFrom: addedFrom,
+                                registeredAt: registeredAt,
+                                isActive: isActive,
+                                sendingCounter: sendingCounter,
+                                sendingDateTime: sendingDateTime,
+                            }
+                        } %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {% include 'backend/partials/delete.html.twig' %}
+    <script>
+        $(function () {
+           $('a.reset').click(function () {
+               var $form = $(this).closest('form');
+
+               $form.find('input[name="name"]').val('');
+               $form.find('input[name="email"]').val('');
+               $form.find('input[name="registeredAt"]').val('');
+               $form.find('input[name="sendingDateTime"]').val('');
+               $form.find('select[name="addedFrom"]').val('');
+               $form.find('select[name="isActive"]').val('');
+               $form.find('select[name="sendingCounter"]').val('');
+
+               return false;
+           })
+        });
+    </script>
+{% endblock %}

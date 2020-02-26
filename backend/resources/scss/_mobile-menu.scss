@@ -1,0 +1,181 @@
+/**
+ * Mobile menu
+ **/
+
+.mobile-menu {
+    display: none;
+    position: fixed;
+    top: 72px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 20;
+    border-top: 1px solid $color-violet-dark;
+    background-color: $color-violet;
+    color: $color-white;
+}
+
+.mobile-menu-categories {
+    width: 100%;
+    overflow-y: auto;
+}
+
+.mobile-menu-categories .menu-element {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid $color-violet-dark;
+    font-size: 18px;
+    line-height: 24px;
+}
+
+.mobile-menu-categories .menu-element .menu-element__link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0.75rem 0;
+    font-weight: 600;
+    color: $color-white;
+}
+
+.mobile-menu-categories .menu-element.arrow .menu-element__link {
+    position: relative;
+    padding-right: 50px;
+}
+
+.mobile-menu-categories .menu-element.arrow .menu-element__link::after {
+    position: absolute;
+    content: "";
+    height: 100%;
+    top: 0;
+    right: 0;
+    background-image: resolve('images/icons/arrow-down.svg');
+    width: 50px;
+    background-repeat: no-repeat;
+    background-position: center right;
+}
+
+.mobile-menu-categories .menu-element.menu-directions .menu-element__link {
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 400;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+    border-bottom: 1px solid $color-gray-light;
+}
+
+.mobile-menu-categories .menu-element.menu-directions.submenu-opened .menu-element__link {
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+.mobile-menu-categories .menu-element.menu-directions .submenu {
+    background-color: $color-white;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.08);
+    padding: 0 1rem;
+}
+
+.mobile-menu-categories .menu-element.menu-directions .submenu a {
+    color: $color-dark;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.14;
+    padding: 1rem 0;
+    border-bottom: 1px solid $color-gray-light;
+}
+
+.mobile-menu-categories .menu-element.menu-directions .submenu label {
+    display: block;
+    width: 100%;
+}
+
+.mobile-menu-categories .menu-element.menu-directions .submenu label > span {
+    display: block;
+    cursor: pointer;
+    color: $color-dark;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.14;
+    padding: 1rem 0;
+    border-bottom: 1px solid $color-gray-light;
+}
+
+.mobile-menu-categories .menu-element.menu-directions .submenu label > input {
+    left: -99999px;
+    position: fixed;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.mobile-menu-categories .menu-element.menu-directions .submenu label > input:checked ~ span {
+    color: $color-yellow;
+    font-weight: 500;
+}
+
+.mobile-menu-categories .menu-login .icon,
+.mobile-menu-categories .menu-profile .icon {
+    width: 56px;
+    height: 56px;
+    vertical-align: middle;
+    margin-right: 1rem;
+    border-radius: 50%;
+    border: 3px solid $color-white;
+}
+
+.mobile-menu-categories .menu-login .icon {
+    background-color: $color-white;
+    background-image: resolve('images/icons/login-purple.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.mobile-menu-categories .submenu {
+    display: none;
+}
+
+.mobile-menu-categories .menu-profile .submenu {
+    padding-left: 72px;
+}
+
+.mobile-menu-categories .submenu a {
+    display: block;
+    padding: 0.75rem 0;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.14;
+    color: $color-white;
+}
+
+.mobile-menu-categories .menu-element.submenu-opened .menu-element__link {
+    color: $color-yellow;
+}
+
+.mobile-menu-categories .menu-element.submenu-opened .menu-element__link::after {
+    background-image: resolve('images/icons/arrow-up-yellow.svg');
+}
+
+body.menu-mobile-opened {
+    overflow: hidden;
+}
+
+body.menu-mobile-opened #site-header {
+    z-index: 20;
+    position: fixed;
+    background-color: $color-violet;
+}
+
+body.menu-mobile-opened .mobile-menu {
+    display: flex;
+}
+
+body.menu-mobile-opened #site-header .mobile-menu-close {
+    display: flex;
+}
+
+body.menu-mobile-opened #site-header .mobile-menu-open {
+    display: none;
+}
+
+@media (min-width: 992px) {
+    .mobile-menu {
+        top: 106px;
+    }
+}

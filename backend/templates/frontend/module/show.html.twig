@@ -1,0 +1,159 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block body %}
+    <nav class="breadcrumb-wrapper">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('index') }}">Главная</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('modules') }}">Модули</a>
+                </li>
+                <li class="breadcrumb-item">
+                    {{ entity.name }}
+                </li>
+            </ol>
+        </div>
+    </nav>
+
+    <section class="page-module-item mt-4 mt-lg-5">
+        <div class="container">
+            <div class="page-module-item__header-caption">
+                <div class="page-module-item__header-label">Модуль</div>
+                <div class="page-module-item__header-direction">
+                    {{ entity.directionName }}{% if entity.category %}<span class="page-module-item__header-direction-category">{{ entity.category }}</span>{% endif %}
+                </div>
+            </div>
+
+            <h1>{{ entity.name }}</h1>
+
+            <div class="page-module-item__header-meta {% if entity.isTested %}active{% endif %}">
+                {{ entity.number }} модуль
+                {% if entity.hasTest %}
+                    <span>(тест: {{ entity.correctAnswers }}/10)</span>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <section class="page-module-item__body mb-3">
+        <div class="container">
+            {% if entity.slides|length %}
+                <div id="carouselBanners" class="page-module-item__body-banners carousel slide carousel-navigation-aside" data-ride="carousel" data-interval="0">
+                    <div class="carousel-inner mb-4 mb-lg-0">
+                        {% for key, slide in entity.slides %}
+                            <div class="carousel-item {% if key == 0 %}active{% endif %}">
+                                <img class="d-block w-100" alt="" src="{{ slide }}" />
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="carousel-indicators d-flex flex-row justify-content-center d-lg-none">
+                        {% for key, slide in entity.slides %}
+                            <span data-target="#carouselBanners" data-slide-to="{{ key }}" class="{% if key == 0 %}active{% endif %}"></span>
+                        {% endfor %}
+                    </div>
+
+                    {% if entity.slides|length > 1 %}
+                        <a class="d-none d-lg-flex carousel-control-prev" href="#carouselBanners" role="button" data-slide="prev">
+                            <span aria-hidden="true">←</span>
+                        </a>
+                        <a class="d-none d-lg-flex carousel-control-next" href="#carouselBanners" role="button" data-slide="next">
+                            <span aria-hidden="true">→</span>
+                        </a>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            {% if entity.youtubeCode is defined and entity.youtubeCode %}
+                <div class="page-module-item__body-video mb-4 mb-lg-5">
+                    <h2>Видео к модулю</h2>
+
+                    <div class="page-module-item__body-video-player embed-responsive embed-responsive-16by9">
+                        <iframe width="560"
+                                height="315"
+                                src="https://www.youtube.com/embed/{{ entity.youtubeCode }}"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen
+                        ></iframe>
+                    </div>
+                </div>
+            {% else %}
+                <div class="mb-4 mb-lg-5"></div>
+            {% endif %}
+
+            {% if entity.articles|length or clinicalAnalysisDto|length %}
+                <div class="mb-4 mb-lg-5">
+                    {% if entity.articles|length %}
+                        <h3 class="mb-4 mb-lg-5">Материалы по теме модуля</h3>
+                    {% endif %}
+
+                    <div class="row">
+                        {% if entity.articles|length %}
+                            {% for article in entity.articles %}
+                                {% set vars = {
+                                    'file': article.file,
+                                    'title': article.name,
+                                    'author': article.author,
+                                    'direction': article.direction,
+                                    'category': article.category,
+                                    'class': 'slim',
+                                } %}
+                                <div class="col-12 col-md-6 mb-4">
+                                    {% include 'frontend/partials/card/article.html.twig' with vars %}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        {% if clinicalAnalysisDto|length %}
+                            {% set vars = {
+                                'id': clinicalAnalysisDto.id,
+                                'url': path('clinical_analysis', {'id': clinicalAnalysisDto.id}),
+                                'title': clinicalAnalysisDto.name,
+                                'direction': clinicalAnalysisDto.directionName,
+                                'category': clinicalAnalysisDto.category,
+                                'number': clinicalAnalysisDto.number,
+                                'class': 'slim',
+                            } %}
+                            <div class="col-12 col-md-6 mb-4">
+                                {% include 'frontend/partials/card/clinical.html.twig' with vars %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if entity.hasTest %}
+                <div class="mb-4 mb-lg-5">
+                    <h3 class="mb-4 mb-lg-5">Тест по теме модуля</h3>
+
+                    <div class="row">
+                        <div class="col-12 mb-4">
+                            <div class="template-test__item-card {% if entity.isTested %}active{% endif %}">
+                                <div class="template-test__body">
+                                    <div class="template-test__body-subtitle">{{ entity.number }} модуль</div>
+                                    <div class="template-test__body-title">{{ entity.testName }}</div>
+                                </div>
+                                <div class="template-test__result">
+                                    <div class="d-inline"><span>{{ entity.correctAnswers }}/10</span> правильных ответов</div>
+                                </div>
+                                <div class="template-test__buttons">
+                                    {% if entity.isTested %}
+                                        {% if entity.isPassed %}
+                                            <div class="passed">Вы прошли тест</div>
+                                        {% else %}
+                                            <div class="passed">Вы не прошли тест</div>
+                                        {% endif %}
+                                    {% else %}
+                                        <a class="btn" href="{{ path('module_test', {id: entity.id}) }}">Пройти тест</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

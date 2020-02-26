@@ -1,0 +1,14 @@
+{% block image_widget %}
+    {% spaceless %}
+        <div class="media">
+            {% if image is defined %}
+                <img src="{{ image }}" width="128px" class="mr-3" style="background-color: darkgray;">
+            {% endif %}
+            <div class="media-body">
+                <div class="form-group">
+                    <input type="file" class="form-control-file" {{ block('widget_attributes') }}>
+                </div>
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock %}

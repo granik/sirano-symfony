@@ -1,0 +1,32 @@
+{#
+    Parameters:
+        * id (int): news id
+        * url (string): news href link
+        * image (string): news background image
+        * title (string): news title
+        * direction (string): direction title
+        * class (string): additional classes
+        * date (string): news date
+        * bodyClass (string): additional body classes
+#}
+
+<div class="template-news__item-card {{ class|default('') }}">
+    <div class="template-news__item-image">
+        {% if image is defined %}
+            <img alt="" src="{{ image }}" />
+        {% endif %}
+    </div>
+    <div class="template-news__caption">
+        <div class="template-news__label">Новость</div>
+        <div class="template-news__direction">{{ direction }}</div>
+    </div>
+    <div class="template-news__body {{ bodyClass|default('') }}">
+        <a href="{{ url }}">
+            {{ title }}
+        </a>
+    </div>
+    <div class="template-news__footer">
+        <img alt="" src="/lib/images/icons/calendar.svg" />
+        {{ date }}
+    </div>
+</div>

@@ -1,0 +1,68 @@
+/**
+ * Chukaeva memorial page
+ **/
+
+.page-chukaeva__img > div {
+    position: relative;
+    height: 264px;
+    overflow: hidden;
+}
+
+.page-chukaeva__img img {
+    position: absolute;
+    top: 0;
+    max-width: 100%;
+    height: auto;
+}
+
+.page-chukaeva__text > div {
+    padding: 1rem;
+    background-color: $color-white;
+}
+
+.page-chukaeva__text h6 {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+.page-chukaeva__text p {
+    font-size: 14px;
+    line-height: 1.71;
+}
+
+@media (min-width: 768px) {
+    .page-chukaeva__img > div {
+        height: 100%;
+    }
+
+    .page-chukaeva__img img {
+        position: relative;
+        object-fit: cover;
+        top: 0;
+        max-width: 100%;
+        width: 100%;
+        height: 100%;
+    }
+
+    .page-chukaeva__text > div {
+        padding: 2rem;
+    }
+
+    .page-chukaeva__text h6 {
+        font-size: 18px;
+        line-height: 1.44;
+        margin-bottom: 1.5rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .page-chukaeva__text > div {
+        padding: 4rem;
+    }
+
+    .page-chukaeva__text h6 {
+        margin-bottom: 2rem;
+    }
+}

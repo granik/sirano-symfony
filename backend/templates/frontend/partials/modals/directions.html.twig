@@ -1,0 +1,52 @@
+<!-- Directions modal -->
+<div class="modal fade" id="modal-directions" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form method="POST" id="directions_form" autocomplete="off">
+                <div class="modal-header">
+                    <h5 class="modal-title">Выберите интересующее направление</h5>
+                    <span class="close" data-dismiss="modal" aria-label="Close">
+                        <img alt="" src="/lib/images/icons/close-grey.svg"/>
+                    </span>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 mb-3 mb-lg-4">
+                            <label for="modal-direction-all">
+                                <input
+                                    type="radio"
+                                    name="direction"
+                                    value="0"
+                                    id="modal-direction-all"
+                                    {% if selectedDirection is same as(null) %} checked {% endif %}
+                                />
+                                <span>Все направления</span>
+                            </label>
+                        </div>
+                        {% for item in list %}
+                            <div class="col-sm-12 col-lg-6 mb-3 mb-lg-4">
+                                <label for="modal-direction-{{ item.id }}">
+                                    <input
+                                        type="radio"
+                                        name="direction"
+                                        value="{{ item.id }}"
+                                        id="modal-direction-{{ item.id }}"
+                                        {% if selectedDirection is not same as(null) and selectedDirection.id == item.id %} checked {% endif %}
+                                    />
+                                    <span>{{ item.name }}</span>
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="submit">Продолжить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    var DIRECTION_DROP_SELECTED = '{{ path('direction_drop_selected') }}';
+    var DIRECTION_SELECT = '{{ path('direction_select') }}';
+</script>

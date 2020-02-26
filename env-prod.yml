@@ -1,0 +1,9 @@
+version: '3.3'
+
+services:
+
+    mysql:
+        env_file: .env-prod
+
+    php:
+        env_file: .env-prod

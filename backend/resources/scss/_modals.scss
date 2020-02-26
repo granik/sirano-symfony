@@ -1,0 +1,396 @@
+/**
+ * Modals
+ **/
+
+.modal-backdrop {
+    background-color: rgba(35, 18, 39, 0.7);
+}
+
+.modal-backdrop.show {
+    opacity: 1;
+}
+
+.modal-title {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24px;
+    color: $color-dark;
+}
+
+.modal-content {
+    border-radius: 0;
+}
+
+.modal-header {
+    background-color: $color-white;
+    z-index: 1;
+    justify-content: left;
+    text-align: left;
+}
+
+.modal-header .close {
+    cursor: pointer;
+}
+
+.modal-footer {
+    background-color: $color-white;
+    z-index: 1;
+}
+
+.modal-body {
+    background-color: $color-gray;
+    box-shadow: inset 0 8px 16px 0 rgba(0, 0, 0, 0.08), inset 0 -8px 16px 0 rgba(0, 0, 0, 0.08);
+    z-index: 0;
+}
+
+.modal-body p {
+    font-size: 14px;
+    line-height: 24px;
+}
+
+.modal-solid .modal-header {
+    background-color: $color-white;
+    border-bottom: none;
+    padding: 1.5rem 3rem 1rem 1rem;
+}
+
+.modal-header .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1rem;
+    margin: 0;
+}
+
+.modal-solid .modal-header .close {
+    padding: 1.5rem 1rem 1rem 1rem;
+}
+
+.modal-solid .modal-body {
+    background-color: $color-white;
+    box-shadow: none;
+}
+
+.modal-solid .modal-footer {
+    padding: 1rem 1rem 1.5rem 1rem;
+    background-color: $color-white;
+    border-top: none;
+}
+
+#modal-directions .modal-content label {
+    display: block;
+    width: 100%;
+}
+
+#modal-directions .modal-content label > input {
+    left: -99999px;
+    position: fixed;
+    opacity: 0;
+    visibility: hidden;
+}
+
+#modal-directions .modal-content label > span {
+    position: relative;
+    display: block;
+    font-weight: 500;
+    line-height: 1.5;
+    color: $color-dark;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: $color-white;
+    padding: 1rem 3rem 1rem 1rem;
+    border-left: 4px solid transparent;
+}
+
+#modal-directions .modal-content label > span::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 1rem;
+    width: 1rem;
+    height: 100%;
+    background-image: resolve('images/icons/radiobutton-off.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+#modal-directions .modal-content label > input:checked ~ span {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.08);
+    border-left: 4px solid $color-violet;
+}
+
+#modal-directions .modal-content label > input:checked ~ span::after {
+    background-image: resolve('images/icons/radiobutton-on.svg');
+}
+
+#modal-login .modal-footer {
+    font-size: 15px;
+    line-height: 1.53;
+}
+
+#modal-login .modal-footer a:not(.btn) {
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 600;
+}
+
+#modal-login .modal-body label {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 600;
+}
+
+#modal-login .modal-body a {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+#modal-register .modal-footer a {
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 600;
+}
+
+#modal-register .modal-register-accept {
+    font-size: 13px;
+    line-height: 20px;
+}
+
+#modal-register .modal-register-accept .styled-checkbox {
+    margin: 0.2rem;
+    margin-right: 1rem;
+}
+
+#modal-recovery-sent .modal-body,
+#modal-register-success .modal-body,
+#modal-message-sent .modal-body,
+#modal-clinical-feedback-sent .modal-body {
+    height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#modal-recovery-sent .modal-body p,
+#modal-register-success .modal-body p,
+#modal-message-sent .modal-body p,
+#modal-clinical-feedback-sent .modal-body p {
+    font-size: 20px;
+    line-height: 1.6;
+    font-weight: 600;
+    text-align: center;
+}
+
+@media (min-width: 992px) {
+    .modal-header {
+        padding: 2rem 3rem 1rem 1.5rem;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .modal-header .close {
+        padding: 1rem;
+    }
+
+    .modal-body {
+        padding: 1.5rem;
+    }
+
+    .modal-footer {
+        padding: 2rem;
+    }
+
+    .modal-footer button {
+        min-width: 270px;
+        width: auto;
+    }
+
+    .modal-solid .modal-header {
+        padding: 3.5rem 3rem 1rem 3rem;
+    }
+
+    .modal-solid .modal-body {
+        padding: 1.5rem 3.5rem;
+    }
+
+    .modal-solid .modal-footer {
+        padding: 0 3.5rem 1.5rem 3.5rem;
+    }
+
+    #modal-register .modal-register-left {
+        border-right: 1px solid $color-gray-light;
+    }
+
+    #modal-recovery .modal-content {
+        padding-left: 150px;
+        margin-left: 150px;
+    }
+
+    #modal-recovery .modal-content::before {
+        position: absolute;
+        content: "";
+        width: 400px;
+        top: -5px;
+        bottom: 0;
+        left: -250px;
+        background-image: resolve('images/sirano/recovery.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
+    #modal-recovery-sent .modal-content,
+    #modal-register-success .modal-content,
+    #modal-message-sent .modal-content,
+    #modal-clinical-feedback-sent .modal-content {
+        padding-left: 150px;
+        margin-left: 150px;
+    }
+
+    #modal-recovery-sent .modal-content::before,
+    #modal-register-success .modal-content::before,
+    #modal-message-sent .modal-content::before,
+    #modal-clinical-feedback-sent .modal-content::before {
+        position: absolute;
+        content: "";
+        width: 600px;
+        top: -5px;
+        bottom: 0;
+        left: -270px;
+        background-image: resolve('images/sirano/recovery-sent.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        z-index: 2;
+    }
+
+    #modal-recovery-sent .modal-body p,
+    #modal-message-sent .modal-body p,
+    #modal-clinical-feedback-sent .modal-body p {
+        margin-top: -180px;
+    }
+
+    #modal-register-success .modal-body p {
+        margin-top: -150px;
+    }
+
+    #modal-recovery-sent .modal-footer,
+    #modal-register-success .modal-footer,
+    #modal-message-sent .modal-footer,
+    #modal-clinical-feedback-sent .modal-footer {
+        z-index: 3;
+    }
+
+    #modal-event-register-success .modal-content {
+        padding-left: 150px;
+        margin-left: 150px;
+    }
+
+    #modal-event-register-success .modal-content::before {
+        position: absolute;
+        content: "";
+        width: 350px;
+        top: -70px;
+        bottom: 0;
+        left: -150px;
+        background-image: resolve('images/sirano/event-register-success.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        z-index: 2;
+    }
+
+    #modal-test-wrong-answer .modal-content {
+        padding-left: 120px;
+        margin-left: 150px;
+    }
+
+    #modal-test-wrong-answer .modal-content::before {
+        position: absolute;
+        content: "";
+        width: 300px;
+        top: -140px;
+        bottom: 0;
+        left: -130px;
+        background-image: resolve('images/sirano/test-wrong-answer.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        z-index: 2;
+    }
+
+    #modal-test-failure .modal-content {
+        padding-left: 120px;
+        margin-left: 150px;
+    }
+
+    #modal-test-failure .modal-content::before {
+        position: absolute;
+        content: "";
+        width: 300px;
+        top: -140px;
+        bottom: 0;
+        left: -130px;
+        background-image: resolve('images/sirano/test-wrong-answer.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        z-index: 2;
+    }
+
+    #modal-test-success .modal-content {
+        padding-left: 80px;
+        margin-left: 120px;
+    }
+
+    #modal-test-success .modal-content::before {
+        position: absolute;
+        content: "";
+        width: 260px;
+        top: -100px;
+        bottom: 0;
+        left: -120px;
+        background-image: resolve('images/sirano/test-success.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        z-index: 2;
+    }
+
+    #modal-webinar-check .modal-dialog {
+        width: 370px;
+    }
+
+    #modal-webinar-check .modal-header {
+        padding-bottom: 0;
+    }
+
+    #modal-webinar-check .modal-title {
+        font-size: 20px;
+        line-height: 1.6;
+    }
+
+    #modal-webinar-check .modal-body {
+        padding-bottom: 2rem;
+    }
+
+    #modal-webinar-check .modal-footer {
+        padding-bottom: 3.5rem;
+    }
+
+    #modal-clinical-feedback .modal-content {
+        padding-left: 150px;
+        margin-left: 150px;
+    }
+
+    #modal-clinical-feedback .modal-content::before {
+        position: absolute;
+        content: "";
+        width: 400px;
+        top: -5px;
+        bottom: 0;
+        left: -250px;
+        background-image: resolve('images/sirano/recovery.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
+    #modal-clinical-feedback .modal-filler {
+        height: 50px;
+    }
+}

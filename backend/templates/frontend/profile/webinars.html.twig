@@ -1,0 +1,78 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block body %}
+    <nav class="breadcrumb-wrapper">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('index') }}">Главная</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('profile_dashboard') }}">Личный кабинет</a>
+                </li>
+                <li class="breadcrumb-item">
+                    Ваши вебинары
+                </li>
+            </ol>
+        </div>
+    </nav>
+
+    <section class="page-profile mt-4 mb-4 mt-md-5 mb-md-5">
+        <div class="container">
+            {% set vars = {
+                'title': 'Ваши вебинары',
+                'showPeriod': true,
+                'showLimit': true,
+            } %}
+            {% include 'frontend/partials/advanced-header.html.twig' with vars %}
+
+            <div class="row">
+                {% if list|length %}
+                    {% for item in list %}
+                        {% set vars = {
+                            'id': item.id,
+                            'url': path('webinar', {'id': item.id}),
+                            'title': item.name,
+                            'startDate': item.startDate,
+                            'startTime': item.startTime,
+                            'direction': item.directionName,
+                            'subject': item.subject,
+                            'isSubscribed': item.isSubscribed,
+                            'score': item.score,
+                            'bodyClass': 'tiny',
+                        } %}
+                        <div class="col-12 col-md-6 mb-4">
+                            {% include 'frontend/partials/card/webinar.html.twig' with vars %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-12">
+                        <div class="page-empty-list-profile">
+                            <div class="page-empty-list-profile__text">
+                                <div>
+                                    Зарегистрируйтесь на интересующие Вас мероприятия и они станут доступными в личном кабинете. Будем всегда рады видеть Вас на наших мероприятиях!
+                                </div>
+
+                                <a class="btn text-center" href="{{ path('webinars') }}">Перейти к мероприятиям</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    {% set vars = {
+        'nbPages': pages,
+        'currentPage': page,
+        'url': 'profile_webinars',
+        'query': { period: period, limit: limit },
+    } %}
+    {% include 'frontend/partials/pagination.html.twig' with vars %}
+{% endblock %}
+
+{% block modals %}
+    {{ parent() }}
+
+    {% include 'frontend/partials/modals/webinar-register-success.html.twig' %}
+{% endblock %}

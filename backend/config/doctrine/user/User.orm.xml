@@ -1,0 +1,27 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Domain\Interactor\User\User" table="users">
+        <id name="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
+
+        <field name="login" type="string" length="180" unique="true"/>
+        <field name="password" type="string" />
+        <field name="isAdmin" type="boolean" />
+        <field name="customerId" type="integer" nullable="true" />
+        <field name="activationCode" nullable="true" />
+        <field name="activationDate" type="datetime" nullable="true" />
+        <field name="addedFrom" type="integer" />
+        <field name="isActive" type="boolean" />
+        <field name="registeredAt" type="datetime" />
+        <field name="sendingCounter" type="integer">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="sendingDateTime" type="datetime" nullable="true" />
+    </entity>
+</doctrine-mapping>

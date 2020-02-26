@@ -1,0 +1,37 @@
+{#
+    Parameters:
+        * id (int): webinar id
+        * url (string): webinar href link
+        * image (string): webinar background image
+        * title (string): webinar title
+        * direction (string): direction title
+        * subject (string): webinar subject
+        * startDate (string): webinar start date
+#}
+
+<div id="webinar-archive-card-{{ id }}" class="template-past-webinar__item-card">
+    <div class="template-past-webinar__item-image">
+        {% if image is defined %}
+            <img alt="" src="{{ image }}" />
+        {% endif %}
+    </div>
+    <div class="template-past-webinar__caption">
+        <div class="template-past-webinar__label">Вебинар</div>
+        <div class="template-past-webinar__direction">{{ direction }}</div>
+    </div>
+    <div class="template-past-webinar__body">
+        <a href="{{ url }}">
+            {{ title }}
+        </a>
+
+        {% if subject is defined %}
+            <div class="template-webinar__body-subject">
+                {{ subject }}
+            </div>
+        {% endif %}
+    </div>
+    <div class="template-past-webinar__footer">
+        <img alt="" src="/lib/images/icons/calendar.svg" />
+        {{ startDate }}
+    </div>
+</div>

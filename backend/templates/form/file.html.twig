@@ -1,0 +1,14 @@
+{% block sirano_file_widget %}
+    {% spaceless %}
+        <div class="media">
+            <div class="media-body">
+                {% if file is defined %}
+                    <h5 class="mt-0"><a class="btn btn-primary" href="{{ file }}" role="button">Скачать</a></h5>
+                {% endif %}
+                <div class="form-group">
+                    <input type="file" class="form-control-file" {{ block('widget_attributes') }}>
+                </div>
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock %}

@@ -1,0 +1,132 @@
+{{ form_start(form) }}
+<div class="my-custom-class-for-errors">
+    {{ form_errors(form) }}
+</div>
+{{ form_widget(form._token) }}
+
+<div class="modal-header">
+    <h5 class="modal-title">Регистрация</h5>
+    <span class="close" data-dismiss="modal" aria-label="Close">
+        <img alt="" src="/lib/images/icons/close-grey.svg"/>
+    </span>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-12 col-lg-6 mb-4">
+            {{ form_label(form.lastname, 'Фамилия', { 'label_attr': {'class': 'font-weight-bold required' }}) }}<br/>
+            {{ form_widget(form.lastname, { 'attr': { placeholder: 'Фамилия' }}) }}
+            <div class="error-text"></div>
+        </div>
+        <div class="col-12 col-lg-6 mb-4">
+            {{ form_label(form.name, 'Имя', { 'label_attr': { 'class': 'font-weight-bold required' }}) }}<br/>
+            {{ form_widget(form.name, { 'attr': { placeholder: 'Имя' }}) }}
+            <div class="error-text"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-lg-6 mb-4">
+            {{ form_label(form.middlename, 'Отчество', { 'label_attr': { 'class': 'font-weight-bold' }}) }}<br/>
+            {{ form_widget(form.middlename, { 'attr': { placeholder: 'Отчество' }}) }}
+            <div class="error-text"></div>
+        </div>
+        <div class="col-12 col-lg-6 mb-4">
+            {{ form_label(form.cityName, 'Населённый пункт', { 'label_attr': { 'class': 'font-weight-bold required' }}) }}<br/>
+            <input id="address" name="address" placeholder="Населённый пункт" type="text" required />
+            <div class="styled-checkbox-wrapper mt-3">
+                <label class="styled-checkbox">
+                    <input autocomplete="off" id="dadata-foreign-city" type="checkbox" />
+                    <span class="checkmark"></span>
+                </label>
+                <label class="styled-checkbox-label" for="dadata-foreign-city">Иностранное государство</label>
+            </div>
+            <div class="error-text"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-lg-6 mb-4">
+            {{ form_label(form.email, 'E-mail', { 'label_attr': { 'class': 'font-weight-bold required' }}) }}<br/>
+            {{ form_widget(form.email, { 'attr': { placeholder: 'E-mail' }}) }}
+            <div class="error-text"></div>
+        </div>
+        <div class="col-12 col-lg-6 mb-4">
+            {{ form_label(form.phone, 'Телефон', { 'label_attr': { 'class': 'font-weight-bold required' }}) }}<br/>
+            {{ form_widget(form.phone, { 'attr': { placeholder: 'Телефон' }}) }}
+            <div class="error-text"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-lg-6 mb-4">
+            {{ form_label(form.mainSpecialtyId, 'Специальность', { 'label_attr': { 'class': 'font-weight-bold required' }}) }}<br/>
+            {{ form_widget(form.mainSpecialtyId, { 'attr': { 'data-placeholder': 'Выберите специальность', class: 'select2' }}) }}
+            <div class="error-text"></div>
+        </div>
+        <div class="col-12 col-lg-6 mb-4">
+            {{ form_label(form.additionalSpecialtyId, 'Ученая степень', { 'label_attr': { 'class': 'font-weight-bold required' }}) }}<br/>
+            {{ form_widget(form.additionalSpecialtyId, { 'attr': { 'data-placeholder': 'Выберите степень', class: 'select2' }}) }}
+            <div class="error-text"></div>
+        </div>
+        <div class="col-12 col-lg-6 mb-4">
+            {{ form_label(form.directionId, 'Направление', { 'label_attr': { 'class': 'font-weight-bold' }}) }}<br/>
+            {{ form_widget(form.directionId, { 'attr': { 'data-placeholder': 'Выберите направление', class: 'select2' }}) }}
+            <div class="error-text"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-lg-6 mb-4">
+            {{ form_label(form.password.first, 'Придумайте пароль', { 'label_attr': { 'class': 'font-weight-bold required' }}) }}<br/>
+            {{ form_widget(form.password.first, { 'attr': { placeholder: 'Придумайте пароль' }}) }}
+            <div class="error-text"></div>
+        </div>
+        <div class="col-12 col-lg-6 mb-4">
+            {{ form_label(form.password.second, 'Повторите пароль', { 'label_attr': { 'class': 'font-weight-bold required' }}) }}<br/>
+            {{ form_widget(form.password.second, { 'attr': { placeholder: 'Повторите пароль' }}) }}
+            <div class="error-text"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="modal-register-accept d-flex flex-row align-items-start align-items-lg-center">
+                <label class="styled-checkbox">
+                    {{ form_widget(form.agreeTerms) }}
+                    <span class="checkmark"></span>
+                </label>
+                <div>
+                    Я согласен на обработку <a href="#">персональных данных</a> и ознакомился с <a href="#">правилами</a>
+                </div>
+            </div>
+            <div class="error-text"></div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="w-100">
+        <div class="row">
+            <div class="modal-register-left col-12 col-lg-6">
+                <div class="d-flex flex-row justify-content-around text-center p-3 bordered-grey mb-3 mb-lg-0">
+                    <div>Есть аккаунт?</div>
+                    <div>
+                        <a class="text-uppercase small" href="#" data-dismiss="modal" data-toggle="modal"
+                           data-target="#modal-login">Войти</a>
+                    </div>
+                </div>
+                <div class="d-flex d-lg-none mb-3 bb-grey"></div>
+            </div>
+            <div class="modal-register-right col-12 col-lg-6">
+                <button class="w-100 text-center" type="submit">Зарегистрироваться и войти</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{ form_end(form) }}
+
+{% block javascripts %}
+    <script>
+        var checkUserEmailPath = '{{ path('check_user_email') }}';
+        var registerUserPath = '{{ path('register') }}';
+        var cityInputId = 'address';
+        var dadataToken = '{{ dadata_token }}';
+        var formPrefix = 'customer';
+        var dadataGeoLocation = true;
+    </script>
+{% endblock %}

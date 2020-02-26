@@ -1,0 +1,9 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    form_themes:
+        - 'form/image.html.twig'
+        - 'form/file.html.twig'
+    globals:
+        dadata_token: '%env(DADATA_TOKEN)%'

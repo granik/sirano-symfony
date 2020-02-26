@@ -1,0 +1,68 @@
+{#
+    Parameters:
+      * nbPages (int): number of pages
+      * currentPage (int): current pages
+      * url (string): route name & query (string): route parameter
+        ex: list/page-5?q=myFilter (5 = page and query = myFilter)
+#}
+
+{% spaceless %}
+    {% if nbPages > 1 %}
+
+        {# Number of page around current page+1 #}
+        {% set nearbyPagesLimit = 2 %}
+
+        <section class="page-pagination mt-4 mb-4 mt-md-5 mb-md-5 text-center">
+            <div class="container">
+                <ul class="pagination">
+                    {% if currentPage != 1 %}
+                        <li>
+                            <a href="{{ path(url, { 'page': currentPage - 1 }|merge(query)) }}"><img alt="" src="/lib/images/icons/arrow-left-violet.svg" /></a>
+                        </li>
+                    {% endif %}
+                    {% if currentPage > nearbyPagesLimit %}
+                        <li>
+                            <a href="{{ path(url, { 'page': 1 }|merge(query)) }}">1</a>
+                        </li>
+                    {% endif %}
+
+                    {% for i in 1..nbPages %}
+                        {% if 0 == (currentPage - nearbyPagesLimit) - loop.index %} {# dot before #}
+                            {% if (nbPages > nearbyPagesLimit) and (currentPage > nearbyPagesLimit + 1 ) %}
+                                <li><span>...</span></li>
+                            {% endif %}
+                        {% elseif 0 == (currentPage + nearbyPagesLimit) - loop.index %} {# dot after #}
+                            {% if (nbPages > nearbyPagesLimit) and (currentPage < nbPages - nearbyPagesLimit) %}
+                                <li><span>...</span></li>
+                            {% endif %}
+                        {% elseif 0 < (currentPage - nearbyPagesLimit) - loop.index %} {# hide all before #}
+                        {% elseif 0 > (currentPage + nearbyPagesLimit) - loop.index %} {# hide all after #}
+                        {% else %}
+                            {% if currentPage == loop.index %}
+                                <li class="active">
+                                    <span>{{ loop.index }}</span>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="{{ path(url, { 'page': loop.index }|merge(query)) }}">{{ loop.index }}</a>
+                                </li>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if currentPage < (nbPages - nearbyPagesLimit + 1) %}
+                        <li>
+                            <a href="{{ path(url, { 'page': nbPages }|merge(query)) }}">{{ nbPages }}</a>
+                        </li>
+                    {% endif %}
+
+                    {% if currentPage < nbPages %}
+                        <li>
+                            <a href="{{ path(url, { 'page': currentPage + 1 }|merge(query)) }}"><img alt="" src="/lib/images/icons/arrow-right-violet.svg" /></a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </section>
+    {% endif %}
+{% endspaceless %}

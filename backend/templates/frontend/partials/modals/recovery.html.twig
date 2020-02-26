@@ -1,0 +1,54 @@
+<!-- Recovery main -->
+<div class="modal fade" id="modal-recovery" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-solid" role="document">
+        <div class="modal-content">
+            <form name="recovery" method="POST" action="{{ path('recovery') }}">
+                <div class="modal-header">
+                    <h5 class="modal-title">Восстановление пароля</h5>
+                    <span class="close" data-dismiss="modal" aria-label="Close">
+                        <img alt="" src="/lib/images/icons/close-grey.svg" />
+                    </span>
+                </div>
+                <div class="modal-body text-left text-lg-center">
+                    <p class="mb-4">Для  того, чтобы восстановить пароль укажите адрес своей электронной почты. Вам на почту будет отправлено письмо с инструкциями по  восстановлению пароля.</p>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <label class="font-weight-bold required" for="recovery-email">E-mail</label><br />
+                            <input class="text-left text-lg-center" required="required" type="email" name="recovery-email" id="recovery-email" placeholder="Введите ваш E-mail" />
+                            <div class="error-text"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="text-center w-100" type="submit">Восстановить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Recovery sent -->
+<div class="modal fade" id="modal-recovery-sent" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-solid" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" data-dismiss="modal" aria-label="Close">
+                    <img alt="" src="/lib/images/icons/close-grey.svg" />
+                </span>
+            </div>
+            <div class="modal-body text-left text-lg-center">
+                <p>Пароль отправлен вам на почту</p>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="text-center" data-dismiss="modal" type="button">Продолжить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block javascripts %}
+    <script>
+        var recoveryUserPath = '{{ path('recovery') }}';
+    </script>
+{% endblock %}

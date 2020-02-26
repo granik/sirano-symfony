@@ -1,0 +1,60 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block body %}
+    <nav class="breadcrumb-wrapper">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('index') }}">Главная</a>
+                </li>
+                <li class="breadcrumb-item">
+                    Новости
+                </li>
+            </ol>
+        </div>
+    </nav>
+
+    <section class="page-news mt-4 mb-4 mt-md-5 mb-md-5">
+        <div class="container">
+            {% set vars = {
+                'title': 'Новости',
+                'showLimit': true,
+            } %}
+            {% include 'frontend/partials/advanced-header.html.twig' with vars %}
+
+            <div class="row">
+                {% if list|length %}
+                    {% for item in list %}
+                        {% set vars = {
+                            'id': item.id,
+                            'url': path('news_post', {'id': item.id}),
+                            'title': item.name,
+                            'date': item.createdAt,
+                            'direction': item.directionName,
+                            'image': item.announceImage,
+                        } %}
+                        <div class="col-12 col-md-6 mb-4">
+                            {% include 'frontend/partials/card/news.html.twig' with vars %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-12">
+                        <div class="page-empty-list">
+                            <div class="page-empty-list__text">
+                                В данный момент по выбранному направлению мы готовим для Вас новости и в ближайшее время их опубликуем.
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    {% set vars = {
+        'nbPages': pages,
+        'currentPage': page,
+        'url': 'news',
+        'query': { limit: limit },
+    } %}
+    {% include 'frontend/partials/pagination.html.twig' with vars %}
+{% endblock %}

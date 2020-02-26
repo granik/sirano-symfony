@@ -1,0 +1,37 @@
+@charset "UTF-8";
+
+$color-white: #ffffff;
+$color-dark: #333333;
+$color-violet: #754e7f;
+$color-violet-light: #987ba0;
+$color-violet-dark: #66376b;
+$color-violet-darker: #6e3d73;
+$color-violet-magenta: #8a618a;
+$color-gray: #f6f5f0;
+$color-gray-lighter: #a9b5c1;
+$color-gray-light: #eaeaea;
+$color-gray-very-light: #dddddd;
+$color-gray-dark: #979797;
+$color-grayish-yellow: #dedcd3;
+$color-grayish-yellow-light: #d9d1b3;
+$color-grayish-yellow-alt: #eceae3;
+$color-grayish-red: #cecccc;
+$color-yellow: #d8d0b6;
+$color-cyan-dark: #2f4d54;
+$color-cyan-grayish: #788a8f;
+$color-blue-dark: #3b5a91;
+$color-green-dark: #304849;
+$color-error: #d10000;
+
+$transition-text: color 0.15s ease-in-out;
+$transition-border-color: border-color 0.15s ease-in-out;
+$transition-background-color: background-color 0.15s ease-in-out;
+$transition-opacity: opacity 0.15s ease-in-out;
+$transition-transform: transform 0.3s ease-in-out;
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1200px
+) !default;

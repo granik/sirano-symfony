@@ -1,0 +1,155 @@
+/**
+ * Template test card
+ **/
+
+.template-test__item-card {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: $color-white;
+}
+
+.active.template-test__item-card {
+    border-left: 4px solid $color-violet;
+}
+
+.template-test__body {
+    flex: 0 0 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-start;
+    border-bottom: 1px solid $color-gray-light;
+    padding: 1rem;
+}
+
+.template-test__body-subtitle {
+    color: $color-gray-dark;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    line-height: 1.71;
+    white-space: nowrap;
+    text-transform: uppercase;
+}
+
+.template-test__body-title {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.template-test__result {
+    flex: 0 0 100%;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid $color-gray-light;
+    color: $color-gray-dark;
+    font-size: 14px;
+    line-height: 1.71;
+    font-weight: 600;
+    padding: 1rem;
+}
+
+.active.template-test__item-card .template-test__result span {
+    color: $color-violet;
+}
+
+.template-test__buttons {
+    flex: 0 0 100%;
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+}
+
+.template-test__buttons .passed {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 56px;
+    line-height: 56px;
+    width: 100%;
+    border: 1px solid $color-violet;
+    padding: 0.5rem 3rem 0.5rem 1rem;
+    color: $color-violet;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5;
+    text-transform: uppercase;
+}
+
+.template-test__buttons .passed::after {
+    content: "";
+    height: 100%;
+    width: 1rem;
+    top: 0;
+    right: 1rem;
+    position: absolute;
+    background-image: resolve('images/icons/check-violet.svg');
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+
+@media (min-width: 768px) {
+    .template-test__body {
+        padding: 1.5rem;
+    }
+
+    .active.template-test__item-card {
+        border-left: 6px solid $color-violet;
+    }
+
+    .template-test__result {
+        padding: 1.5rem;
+    }
+
+    .template-test__buttons {
+        padding: 1.5rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .template-test__item-card {
+        flex-wrap: nowrap;
+    }
+
+    .active.template-test__item-card {
+        border-left: 8px solid $color-violet;
+    }
+
+    .template-test__body-subtitle {
+        margin-bottom: 0;
+        margin-right: 2rem;
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+    .template-test__body-title {
+        font-size: 18px;
+        line-height: 1.44;
+
+    }
+
+    .template-test__body {
+        flex: 0 0 50%;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: nowrap;
+        padding: 2rem;
+        border-bottom: none;
+        border-right: 1px solid $color-gray-light;
+    }
+
+    .template-test__result {
+        flex: 0 0 25%;
+        padding: 2rem;
+        font-size: 15px;
+        line-height: 1.5;
+        border-bottom: none;
+        border-right: 1px solid $color-gray-light;
+    }
+
+    .template-test__buttons {
+        flex: 0 0 25%;
+        padding: 2rem;
+    }
+}

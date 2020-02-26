@@ -1,0 +1,21 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Domain\Entity\Module\ModuleTestQuestion" table="module_test_questions">
+        <id name="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
+
+        <many-to-one field="test" target-entity="App\Domain\Entity\Module\ModuleTest">
+            <join-column name="test_id" referenced-column-name="id" on-delete="CASCADE" />
+        </many-to-one>
+        <field name="question" type="text" />
+        <field name="answer1" type="text" />
+        <field name="answer2" type="text" />
+        <field name="answer3" type="text" />
+        <field name="answer4" type="text" />
+        <field name="rightAnswer" type="integer" />
+    </entity>
+</doctrine-mapping>

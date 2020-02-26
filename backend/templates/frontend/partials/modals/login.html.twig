@@ -1,0 +1,58 @@
+<!-- Login modal -->
+<div class="modal fade" id="modal-login" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-solid" role="document">
+        <div class="modal-content">
+            <form method="POST" action="{{ path('login') }}">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                <div class="modal-header">
+                    <h5 class="modal-title">Авторизация</h5>
+                    <span class="close" data-dismiss="modal" aria-label="Close">
+                        <img alt="" src="/lib/images/icons/close-grey.svg" />
+                    </span>
+                </div>
+                <div class="modal-body">
+                    <div class="d-block mb-4">
+                        <label class="font-weight-bold required" for="login-email">E-mail</label><br />
+                        <input required="required" type="text" name="login" id="login-email" placeholder="Введите ваш E-mail" />
+                    </div>
+                    <div class="d-block mb-4">
+                        <label class="font-weight-bold required" for="login-password">Пароль</label><br />
+                        <input required="required" type="password" name="password" id="login-password" placeholder="Введите ваш пароль" />
+                    </div>
+                    <div class="d-block">
+                        <div class="row alt-padding-row-modal">
+                            <div class="col-5 alt-padding-col-left br-grey">
+                                <div class="d-flex justify-content-left align-items-center h-100">
+                                    <a class="text-uppercase" href="#" data-toggle="modal" data-target="#modal-recovery">
+                                        Забыли пароль?
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-7 alt-padding-col-right text-center">
+                                <button type="submit">
+                                    Войти
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="w-100 bt-dsh-grey pt-4">
+                        <div class="row">
+                            <div class="col-12 col-md-5">
+                                <div class="w-100 h-100 d-flex align-items-center justify-content-center justify-content-md-start pb-4 pb-md-0">
+                                    Нет аккаунта?
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-7 pl-md-0">
+                                <a class="btn btn-bordered" href="#" data-toggle="modal" data-target="#modal-register">
+                                    Зарегистрироваться
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

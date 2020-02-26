@@ -1,0 +1,134 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block body %}
+    <nav class="breadcrumb-wrapper">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('index') }}">Главная</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('conferences') }}">Конференции</a>
+                </li>
+                <li class="breadcrumb-item">
+                    {{ conference.name }}
+                </li>
+            </ol>
+        </div>
+    </nav>
+
+    <section class="page-conference-item mb-4 mb-lg-5 mt-4 mt-lg-5">
+        <div class="container">
+            <div class="page-conference-item__header-caption">
+                <div class="page-conference-item__header-label">Конференция</div>
+                <div class="page-conference-item__header-direction">{{ conference.directionName }}</div>
+            </div>
+
+            <h1>{{ conference.name }}</h1>
+
+            <div class="page-conference-item__header {% if conference.isArchive %}past{% elseif conference.isSubscribed %}active{% endif %}">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 col-lg-3 page-conference-item__header-date">
+                            <div class="d-flex flex-wrap align-items-center">
+                                <span class="d-flex align-items-center">
+                                    <img class="calendar" alt=""
+                                         src="/lib/images/icons/calendar.svg"/>{{ conference.startDate }}
+                                </span>
+                                <span class="d-flex align-items-center">
+                                    <img class="clock" alt=""
+                                         src="/lib/images/icons/clock.svg"/>{{ conference.startTime }}
+                                </span>
+                            </div>
+                        </div>
+                        <div
+                            class="col-12
+                                {% if conference.isArchive != true %}
+                                    col-lg-4
+                                {% else %}
+                                    col-lg-9
+                                {% endif %} page-conference-item__header-address"
+                        >
+                            {{ conference.address }}
+                        </div>
+                        {% if conference.isArchive != true %}
+                            <div class="col-12 col-lg-5 page-conference-item__header-buttons">
+                                {% if app.user and conference.isSubscribed %}
+                                    <form class="w-100" method="POST" action="{{ path('conference_unsubscribe') }}">
+                                        <input type="hidden" name="id" value="{{ conference.id }}">
+                                        <div class="d-flex align-items-center flex-wrap flex-md-nowrap">
+                                            <button data-type="conference-unsubscribe" type="submit" class="btn-thin mb-3 mb-md-0 mr-lg-3">Отменить регистрацию</button>
+                                            <div class="registered">
+                                                <span>Вы&nbsp;зарегистрированы <br class="d-inline d-md-none d-lg-inline" />на посещение</span>
+                                            </div>
+                                        </div>
+                                    </form>
+                                {% elseif app.user %}
+                                    <form class="w-100 h-100" method="POST" action="{{ path('conference_subscribe') }}">
+                                        <input type="hidden" name="id" value="{{ conference.id }}">
+                                        <div class="d-flex align-items-stretch flex-wrap flex-lg-nowrap h-100">
+                                            <a data-type="conference-subscribe" href="#" class="btn d-flex align-items-center {% if conference.score == 0 %}justify-content-center text-center{% endif %}">
+                                                <div>
+                                                    <span>Зарегистрироваться <br class="{% if conference.score == 0 %}d-none{% else %}d-inline d-md-none d-lg-inline{% endif %}" />на посещение</span>
+                                                </div>
+                                                {% if conference.score != 0 %}
+                                                    <div class="score text-center">
+                                                        <div>+{{ conference.score }}</div>баллов
+                                                    </div>
+                                                {% endif %}
+                                            </a>
+                                        </div>
+                                    </form>
+                                {% else %}
+                                    <div class="w-100 h-100 d-flex align-items-stretch flex-wrap flex-lg-nowrap h-100">
+                                        <a
+                                            class="btn d-flex align-items-center {% if conference.score == 0 %}justify-content-center text-center{% endif %}"
+                                            href="{{ path('login', {'_target_path': path('conference', {'id': conference.id}) }) }}"
+                                        >
+                                            <div>
+                                                <span>Зарегистрироваться <br class="{% if conference.score == 0 %}d-none{% else %}d-inline d-md-none d-lg-inline{% endif %}" />на посещение</span>
+                                            </div>
+                                            {% if conference.score != 0 %}
+                                                <div class="score text-center">
+                                                    <div>+{{ conference.score }}</div>баллов
+                                                </div>
+                                            {% endif %}
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="page-conference-item__body">
+                <h2>Программа конференции</h2>
+
+                <div class="container-fluid">
+                    {% for program in conference.programs %}
+                        <div class="row">
+                            <div class="col-12 col-md-3">
+                                <div class="mb-3 page-conference-item__body-date">
+                                    <div class="d-flex align-items-center">
+                                        <img alt="" src="/lib/images/icons/clock.svg"/>
+                                        <span>{{ program.fromTimeString }} – {{ program.tillTimeString }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-5">
+                                <div class="mb-3 page-conference-item__body-address">
+                                    {{ program.subject }}
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="mb-3 page-conference-item__body-comment">
+                                    {{ program.lecturers }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

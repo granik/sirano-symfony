@@ -1,0 +1,110 @@
+image: registry.gitlab.com/finestructure/pipeline-trigger
+
+stages:
+    - build
+    - deploy
+
+variables:
+    GITLAB_BASE_URL: "https://gitlab.com"
+    API_TOKEN: "B8bb5-arGLbfUrakm64_"
+    APP_PROJECT_ID: 12461258
+    SSH_USER: "dev"
+    DEV_SERVER: "31.184.251.211"
+    PROD_SERVER: "31.184.251.212"
+
+build develop images:
+    stage: build
+    variables:
+        BRANCH_NAME: "dev"
+        DOCKER_IMAGE_TAG: "latest"
+        BACKEND_SUBMODULE_BRANCH: "dev"
+    script:
+        - "trigger -a $API_TOKEN \
+            -p $CI_JOB_TOKEN \
+            -t master $APP_PROJECT_ID \
+            -e BRANCH_NAME=$BRANCH_NAME \
+            -e DOCKER_IMAGE_TAG=$DOCKER_IMAGE_TAG \
+            -e BACKEND_SUBMODULE_BRANCH=$BACKEND_SUBMODULE_BRANCH"
+    only:
+        - dev
+
+build stage images:
+    stage: build
+    variables:
+        BRANCH_NAME: "stage"
+        DOCKER_IMAGE_TAG: "stage"
+        BACKEND_SUBMODULE_BRANCH: "stage"
+    script:
+        - "trigger -a $API_TOKEN \
+            -p $CI_JOB_TOKEN \
+            -t master $APP_PROJECT_ID \
+            -e BRANCH_NAME=$BRANCH_NAME \
+            -e DOCKER_IMAGE_TAG=$DOCKER_IMAGE_TAG \
+            -e BACKEND_SUBMODULE_BRANCH=$BACKEND_SUBMODULE_BRANCH"
+    only:
+        - stage
+
+build production images:
+    stage: build
+    variables:
+        BRANCH_NAME: "master"
+        DOCKER_IMAGE_TAG: "production"
+        BACKEND_SUBMODULE_BRANCH: "master"
+    script:
+        - "trigger -a $API_TOKEN \
+            -p $CI_JOB_TOKEN \
+            -t master $APP_PROJECT_ID \
+            -e BRANCH_NAME=$BRANCH_NAME \
+            -e DOCKER_IMAGE_TAG=$DOCKER_IMAGE_TAG \
+            -e BACKEND_SUBMODULE_BRANCH=$BACKEND_SUBMODULE_BRANCH"
+    only:
+        - master
+
+deploy to dev:
+    image: alpine
+    stage: deploy
+    before_script:
+        - apk update && apk add openssh
+        - eval $(ssh-agent -s)
+        - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+        - mkdir -p ~/.ssh
+        - chmod 700 ~/.ssh
+        - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+        - chmod 644 ~/.ssh/known_hosts
+    script:
+        - ssh $SSH_USER@$DEV_SERVER "cd ~/sirano/ && source .docker.dev && docker-compose pull && docker-compose down && docker volume rm respiratory_symfony && docker-compose up -d"
+    only:
+        - dev
+
+deploy to stage:
+    image: alpine
+    stage: deploy
+    before_script:
+        - apk update && apk add openssh
+        - eval $(ssh-agent -s)
+        - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+        - mkdir -p ~/.ssh
+        - chmod 700 ~/.ssh
+        - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+        - chmod 644 ~/.ssh/known_hosts
+    script:
+        - ssh $SSH_USER@$DEV_SERVER "cd ~/stage.sirano/ && source .docker.stage && docker-compose pull && docker-compose down && docker volume rm respiratory_symfony && docker-compose up -d"
+    only:
+        - stage
+
+deploy to production:
+    image: alpine
+    stage: deploy
+    before_script:
+        - apk update && apk add openssh
+        - eval $(ssh-agent -s)
+        - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+        - mkdir -p ~/.ssh
+        - chmod 700 ~/.ssh
+        - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+        - chmod 644 ~/.ssh/known_hosts
+    script:
+        - ssh $SSH_USER@$PROD_SERVER "cd ~/respiratory-nmo.com/ && source .docker-prod && docker-compose pull && docker-compose down && docker volume rm respiratory_symfony && docker-compose up -d"
+    when: manual
+    only:
+        - master

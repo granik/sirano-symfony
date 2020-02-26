@@ -1,0 +1,31 @@
+{#
+    Parameters:
+        * id (int): clinical item id
+        * number (int): clinical item number
+        * url (string): clinical item href link
+        * title (string): clinical item title
+        * direction (string): direction title
+        * category (string): direction category title
+        * class (string): additional classes
+        * bodyClass (string): additional body classes
+#}
+
+<div
+    id="clinical-card-{{ id }}"
+    class="template-clinical__item-card {{ class|default('') }}"
+>
+    <div class="template-clinical__caption">
+        <div class="template-clinical__label">Клинический разбор</div>
+        <div class="template-clinical__direction">
+            {{ direction }}{% if category is defined and category %}<span class="template-clinical__direction-category">{{ category }}</span>{% endif %}
+        </div>
+    </div>
+    <div class="template-clinical__body {{ bodyClass|default('') }}">
+        <a href="{{ url }}">
+            {{ title }}
+        </a>
+    </div>
+    <div class="template-clinical__footer">
+        Клинический разбор {{ number }}
+    </div>
+</div>

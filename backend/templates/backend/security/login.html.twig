@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Вход в панель управления | СИРАНО</title>
+
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link href="/lib/assets/inspinia/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/lib/assets/inspinia/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <link href="/lib/assets/inspinia/css/animate.css" rel="stylesheet">
+    <link href="/lib/assets/inspinia/css/style.css" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen animated fadeInDown">
+        <div>
+            <div>
+                <h1 class="logo-name">
+                    <img alt="" class="mw-100 align-bottom pb-4" src="/lib/images/logo-admin.png" />
+                </h1>
+            </div>
+
+            <h3>Добро пожаловать</h3>
+            <p>Вход в панель управления сайтом СИРАНО</p>
+
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+            <form method="post" class="m-t">
+                <div class="form-group">
+                    <input type="text" value="{{ last_username }}" name="login" id="inputLogin" class="form-control" placeholder="Имя пользователя" required autofocus>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Пароль" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary block full-width m-b">Вход</button>
+
+                <input type="hidden" name="_csrf_token"
+                       value="{{ csrf_token('authenticate') }}"
+                >
+
+                <input type="hidden" name="_remember_me" value="true">
+            </form>
+            <p class="m-t"> <small>Образовательный портал "СИРАНО" &copy; 2018</small> </p>
+        </div>
+    </div>
+
+    <!-- Mainly scripts -->
+    <script src="/lib/assets/inspinia/js/jquery-3.1.1.min.js"></script>
+    <script src="/lib/assets/inspinia/js/popper.min.js"></script>
+    <script src="/lib/assets/inspinia/js/bootstrap.js"></script>
+
+</body>
+</html>

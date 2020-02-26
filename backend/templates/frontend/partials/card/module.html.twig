@@ -1,0 +1,37 @@
+{#
+    Parameters:
+        * id (int): module id
+        * number (int): module number
+        * url (string): module href link
+        * title (string): module title
+        * direction (string): direction title
+        * category (string): direction category title
+        * correctAnswers (int): number of correct answers
+        * class (string): additional classes
+        * hasTest (bool): is module has test or not
+        * isTested (bool): is module test passed or not
+        * isPassed (bool): is module test success or not
+#}
+
+<div
+    id="module-card-{{ id }}"
+    class="template-module__item-card
+           {{ class|default('') }}
+           {% if isTested %}active{% endif %}"
+>
+    <div class="template-module__caption">
+        <div class="template-module__label">Модуль</div>
+        <div class="template-module__direction">
+            {{ direction }}{% if category is defined and category %}<span class="template-module__direction-category">{{ category }}</span>{% endif %}
+        </div>
+    </div>
+    <div class="template-module__body">
+        <a data-title href="{{ url }}">{{ title }}</a>
+    </div>
+    <div class="template-module__footer">
+        {{ number }} модуль
+        {% if hasTest %}
+            <span>(тест: {{ correctAnswers }}/10)</span>
+        {% endif %}
+    </div>
+</div>

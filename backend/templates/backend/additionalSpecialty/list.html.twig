@@ -1,0 +1,78 @@
+{% extends 'backend/base.html.twig' %}
+
+{% block top %}
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-12">
+            <h2>Дополнительные специальности</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('cms') }}">Главная</a>
+                </li>
+                <li class="breadcrumb-item active">
+                    <strong>Дополнительные специальности</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-12">
+                <div class="ibox">
+                    <div class="ibox-title pb-3">
+                        <h5 class="mb-1 mt-1">Список</h5>
+                        <div class="ibox-tools">
+                            <a class="btn btn-primary btn-sm" href="{{ path('cms_additional_specialty_create') }}" role="button">Создать</a>
+                        </div>
+                    </div>
+
+                    <div class="ibox-content">
+                        <div class="project-list">
+                            <form>
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Название</th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+
+                                        <tbody>
+                                            {% if list|length %}
+                                                {% for item in list %}
+                                                    <tr>
+                                                        <td class="project-title">{{ item.name }}</td>
+                                                        <td>
+                                                        </td>
+                                                        <td class="project-actions">
+                                                            <a class="btn btn-white btn-sm" href="{{ path('cms_additional_specialty_edit', {'id': item.id}) }}">
+                                                                <i class="fa fa-pencil"></i>
+                                                            </a>
+                                                            <a class="btn btn-danger btn-sm delete" href="{{ path('cms_additional_specialty_delete') }}" data-id="{{ item.id }}">
+                                                                <i class="fa fa-trash"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </tbody>
+                                </table>
+                            </form>
+                        </div>
+
+                        {% include 'backend/partials/pagination.html.twig' with {
+                            'url': 'cms_additional_specialties',
+                        } %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {% include 'backend/partials/delete.html.twig' %}
+{% endblock %}

@@ -1,0 +1,59 @@
+{#
+    Parameters:
+      * pages (int): number of pages
+      * currentPage (int): current pages
+      * url (string): route name & query (string): route parameter
+        ex: list/page-5?q=myFilter (5 = page and query = myFilter)
+#}
+{% if pages > 1 %}
+
+    {# Number of page around current page+1 #}
+    {% set nearbyPagesLimit = 2 %}
+    {% if query is not defined %}
+        {%  set query = {} %}
+    {% endif %}
+
+    <div class="text-center">
+        <div class="btn-group">
+            {% if currentPage != 1 %}
+                <a class="btn btn-white" href="{{ path(url, { 'page': currentPage - 1 }|merge(query)) }}">
+                    <i class="fa fa-chevron-left"></i>
+                </a>
+            {% endif %}
+
+            {% if currentPage > nearbyPagesLimit %}
+                <a class="btn btn-white" href="{{ path(url, { 'page': 1 }|merge(query)) }}">1</a>
+            {% endif %}
+
+            {% for i in 1..pages %}
+                {% if 0 == (currentPage - nearbyPagesLimit) - loop.index %} {# dot before #}
+                    {% if (pages > nearbyPagesLimit) and (currentPage > nearbyPagesLimit + 1 ) %}
+                        <span class="btn btn-white">...</span>
+                    {% endif %}
+                {% elseif 0 == (currentPage + nearbyPagesLimit) - loop.index %} {# dot after #}
+                    {% if (pages > nearbyPagesLimit) and (currentPage < pages - nearbyPagesLimit) %}
+                        <span class="btn btn-white">...</span>
+                    {% endif %}
+                {% elseif 0 < (currentPage - nearbyPagesLimit) - loop.index %} {# hide all before #}
+                {% elseif 0 > (currentPage + nearbyPagesLimit) - loop.index %} {# hide all after #}
+                {% else %}
+                    {% if currentPage == loop.index %}
+                        <span class="btn btn-white active">{{ loop.index }}<span class="sr-only">(current)</span></span>
+                    {% else %}
+                        <a class="btn btn-white" href="{{ path(url, { 'page': loop.index }|merge(query)) }}">{{ loop.index }}</a>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+            {% if currentPage < (pages - nearbyPagesLimit + 1) %}
+                <a class="btn btn-white" href="{{ path(url, { 'page': pages }|merge(query)) }}">{{ pages }}</a>
+            {% endif %}
+
+            {% if currentPage < pages %}
+                <a class="btn btn-white" href="{{ path(url, { 'page': currentPage + 1 }|merge(query)) }}">
+                    <i class="fa fa-chevron-right"></i>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}

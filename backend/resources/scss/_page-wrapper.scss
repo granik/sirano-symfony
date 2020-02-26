@@ -1,0 +1,20 @@
+/**
+ * Page wrapper
+ **/
+
+#page-wrapper {
+    min-height: 72px;
+    margin-top: -72px;
+}
+
+.header-solid #page-wrapper {
+    margin-top: 0 !important;
+    min-height: 0 !important;
+}
+
+@media (min-width: 992px) {
+    #page-wrapper {
+        min-height: 123px;
+        margin-top: -123px;
+    }
+}

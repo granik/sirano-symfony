@@ -1,0 +1,23 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Domain\Entity\Customer\Customer" table="customers">
+        <id name="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
+
+        <field name="name" />
+        <field name="middlename" nullable="true"/>
+        <field name="lastname" />
+        <field name="phone" />
+        <field name="email" />
+        <field name="directionId" type="integer" nullable="true" />
+        <field name="avatar" type="string" nullable="true" />
+        <field name="cityName" type="string" />
+        <field name="cityId" type="integer" nullable="true" />
+        <field name="mainSpecialtyId" type="integer" nullable="true" />
+        <field name="additionalSpecialtyId" type="integer" nullable="true" />
+    </entity>
+</doctrine-mapping>

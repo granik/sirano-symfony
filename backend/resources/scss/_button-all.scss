@@ -1,0 +1,28 @@
+/**
+ * Button all
+ **/
+
+.button__all a {
+    position: relative;
+    color: $color-violet;
+    font-size: 14px;
+    padding-right: 1.5rem;
+    font-weight: 600;
+    line-height: 1.71;
+}
+
+.button__all a::after {
+    content: "";
+    position: absolute;
+    width: 1rem;
+    height: 100%;
+    top: 0;
+    right: 0;
+    background-image: resolve('images/icons/arrow-right-violet.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.button__all.faded {
+    opacity: 0.3;
+}

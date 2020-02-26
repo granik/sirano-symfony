@@ -1,0 +1,41 @@
+security:
+    encoders:
+        new_user:
+            algorithm: bcrypt
+        old_user:
+            id: App\Security\Md5PasswordEncoder
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            id: App\Security\UserProvider
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: true
+            provider: app_user_provider
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticator
+                entry_point: App\Security\LoginFormAuthenticator
+            logout:
+                path: logout
+            # access_denied_handler: App\Security\AccessDeniedHandler
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/cms/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/cms, roles: ROLE_ADMIN }
+        - { path: ^/webinar, roles: ROLE_USER }
+        - { path: ^/module, roles: ROLE_USER }
+        - { path: ^/clinical-analysis, roles: ROLE_USER }
+        - { path: ^/article, roles: ROLE_USER }
+        - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/news, roles: ROLE_USER }
+        - { path: ^/api/conference, roles: ROLE_USER }

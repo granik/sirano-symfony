@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Панель управления | СИРАНО</title>
+
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link href="/lib/assets/inspinia/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/lib/assets/inspinia/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <!-- Morris -->
+    <link href="/lib/assets/inspinia/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+
+    <!-- Select2 -->
+    <link href="/lib/assets/inspinia/css/plugins/select2/select2.min.css" rel="stylesheet" />
+
+    <!-- Chosen -->
+    <link href="/lib/assets/inspinia/css/plugins/chosen/bootstrap-chosen.css" rel="stylesheet" />
+
+    <link href="/lib/assets/inspinia/css/animate.css" rel="stylesheet">
+    <link href="/lib/assets/inspinia/css/style.css" rel="stylesheet">
+
+    <!-- Custom styles -->
+    <link href="/lib/style-cms.css" rel="stylesheet">
+
+    {% block stylesheets %}{% endblock %}
+
+</head>
+
+<body>
+    <div id="wrapper">
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav metismenu" id="side-menu">
+                    <li class="nav-header">
+                        <div class="text-center profile-element">
+                            <div class="text-light font-weight-bold">
+                                <a href="{{ path('cms') }}">СИРАНО</a>
+                            </div>
+                            <div>Панель управления</div>
+                        </div>
+                        <div class="logo-element">
+                            <img alt="" class="mw-100 p-2" src="/lib/images/logo-admin-small.png" />
+                        </div>
+                    </li>
+                    <li>
+                        <a href="{{ path('cms') }}"><i class="fa fa-th-large"></i> <span class="nav-label">Начало</span></a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-globe"></i> <span class="nav-label">Ассоциация</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="{{ path('cms_news') }}">Новости</a></li>
+                            <li><a href="{{ path('cms_presidiums') }}">Президиум</a></li>
+                            <li><a href="{{ path('cms_documents') }}">Документы</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-flask"></i> <span class="nav-label">Образовательная программа</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="{{ path('cms_conferences') }}">Конференции</a></li>
+                            <li><a href="{{ path('cms_webinars') }}">Вебинары</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-laptop"></i> <span class="nav-label">Электронное обучение</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="{{ path('cms_modules') }}">Модули</a></li>
+                            <li><a href="{{ path('cms_clinical_analyzes') }}">Клинические разборы</a></li>
+                            <li><a href="{{ path('cms_articles') }}">Библиотека</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-users"></i> <span class="nav-label">Пользователи</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="{{ path('cms_customers') }}">Список пользователей</a></li>
+                            <li><a href="{{ path('cms_main_specialties') }}">Список специальностей</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-cog"></i> <span class="nav-label">Настройки</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="{{ path('cms_settings_main_page') }}">Главная страница</a></li>
+                            <li><a href="{{ path('cms_banners') }}">Главный слайдер</a></li>
+                            <li><a href="{{ path('cms_cities') }}">Города</a></li>
+                            <li><a href="{{ path('cms_directions') }}">Направления</a></li>
+                            <li><a href="{{ path('cms_settings_email_schedule') }}">Расписание уведомлений</a></li>
+                            <li><a href="{{ path('cms_advert_banners') }}">Рекламный слайдер</a></li>
+                            <li><a href="{{ path('cms_conference_series') }}">Циклы конференций</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="gray-bg">
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top gray-bg" role="navigation">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#"><i class="fa fa-bars"></i></a>
+                    </div>
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            <span class="m-r-sm text-muted welcome-message">Добро пожаловать в панель управления сайтом СИРАНО.</span>
+                        </li>
+                        <li>
+                            <a href="{{ path('logout') }}">
+                                <i class="fa fa-sign-out"></i> Выход
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            {% block top %}{% endblock %}
+
+            {% block body %}{% endblock %}
+
+            <div class="footer">
+                <div>
+                    Образовательный портал "СИРАНО" &copy; 2018
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mainly scripts -->
+    <script src="/lib/assets/inspinia/js/jquery-3.1.1.min.js"></script>
+    <script src="/lib/assets/inspinia/js/popper.min.js"></script>
+    <script src="/lib/assets/inspinia/js/bootstrap.js"></script>
+    <script src="/lib/assets/inspinia/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="/lib/assets/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="/lib/assets/inspinia/js/inspinia.js"></script>
+    <script src="/lib/assets/inspinia/js/plugins/pace/pace.min.js"></script>
+
+    <!-- jQuery UI -->
+    <script src="/lib/assets/inspinia/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+    <!-- Select2 -->
+    <script src="/lib/assets/inspinia/js/plugins/select2/select2.full.min.js"></script>
+
+    <!-- Chosen -->
+    <script src="/lib/assets/inspinia/js/plugins/chosen/chosen.jquery.js"></script>
+    <script>
+        $( '.chosen-select' ).chosen({ width: '100%' });
+    </script>
+
+    {% block javascripts %}{% endblock %}
+
+</body>
+</html>

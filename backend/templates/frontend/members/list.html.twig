@@ -1,0 +1,60 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block body %}
+    <nav class="breadcrumb-wrapper">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('index') }}">Главная</a>
+                </li>
+                <li class="breadcrumb-item">
+                    Члены ассоциации
+                </li>
+            </ol>
+        </div>
+    </nav>
+
+    <div class="page-deck">
+        <div class="page-deck__bg">
+            <img alt="" src="/lib/images/deck/members.png" />
+        </div>
+        <div class="page-deck__text">
+            <div class="container">
+                <h2>Члены ассоциации</h2>
+            </div>
+        </div>
+    </div>
+
+    <section class="page-members mt-4 mb-4 mt-md-5 mb-md-5">
+        <div class="container">
+            {% set vars = {
+                'showLimit': true,
+                'showSearch': true,
+            } %}
+            {% include 'frontend/partials/advanced-header.html.twig' with vars %}
+
+            <div class="row">
+                {% for item in list %}
+                    <div class="col-12">
+                        <div class="page-members__item">
+                            <div class="page-members__item-name">
+                                {{ item.name }}
+                            </div>
+                            <div class="page-members__item-city">
+                                {{ item.cityName }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    {% set vars = {
+        'nbPages': pages,
+        'currentPage': page,
+        'url': 'members',
+        'query': { limit: limit },
+    } %}
+    {% include 'frontend/partials/pagination.html.twig' with vars %}
+{% endblock %}

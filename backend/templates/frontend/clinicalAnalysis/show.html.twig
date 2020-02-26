@@ -1,0 +1,163 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block body %}
+    <nav class="breadcrumb-wrapper">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('index') }}">Главная</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('clinical_analyzes') }}">Клинические разборы</a>
+                </li>
+                <li class="breadcrumb-item">
+                    {{ entity.name }}
+                </li>
+            </ol>
+        </div>
+    </nav>
+
+    <section class="page-clinical-item mb-4 mb-lg-5 mt-4 mt-lg-5">
+        <div class="container">
+            <div class="page-clinical-item__header-caption">
+                <div class="page-clinical-item__header-label">Клинический разбор</div>
+                <div class="page-clinical-item__header-direction">
+                    {{ entity.directionName }}{% if entity.category %}<span class="page-clinical-item__header-direction-category">{{ entity.category }}</span>{% endif %}
+                </div>
+            </div>
+
+            <h1>{{ entity.name }}</h1>
+
+            <div class="page-clinical-item__header-meta">
+                Клинический разбор {{ entity.number }}
+            </div>
+        </div>
+    </section>
+
+    <section class="page-clinical-item__body mb-3">
+        <div class="container">
+            {% if entity.slides|length %}
+                <div id="carouselBanners" class="page-clinical-item__body-banners carousel slide carousel-navigation-aside" data-ride="carousel" data-interval="0">
+                    <div class="carousel-inner mb-4 mb-lg-0">
+                        {% for key, slide in entity.slides %}
+                            <div class="carousel-item {% if key == 0 %}active{% endif %}">
+                                <img class="d-block w-100" alt="" src="{{ slide }}" />
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="carousel-indicators d-flex flex-row justify-content-center d-lg-none">
+                        {% for key, slide in entity.slides %}
+                            <span data-target="#carouselBanners" data-slide-to="{{ key }}" class="{% if key == 0 %}active{% endif %}"></span>
+                        {% endfor %}
+                    </div>
+
+                    {% if entity.slides|length > 1 %}
+                        <a class="d-none d-lg-flex carousel-control-prev" href="#carouselBanners" role="button" data-slide="prev">
+                            <span aria-hidden="true">←</span>
+                        </a>
+                        <a class="d-none d-lg-flex carousel-control-next" href="#carouselBanners" role="button" data-slide="next">
+                            <span aria-hidden="true">→</span>
+                        </a>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            <div class="mb-4 mb-lg-5">
+                {% if entity.articles|length %}
+                    <h3 class="mb-4 mb-lg-5">Материалы по теме клинического разбора</h3>
+                {% endif %}
+
+                <div class="row">
+                    {% if entity.articles|length %}
+                        {% for article in entity.articles %}
+                            {% set vars = {
+                                'file': article.file,
+                                'title': article.name,
+                                'author': article.author,
+                                'direction': article.direction,
+                                'category': article.category,
+                                'class': 'slim',
+                            } %}
+                            <div class="col-12 col-md-6 mb-4">
+                                {% include 'frontend/partials/card/article.html.twig' with vars %}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <div class="col-12 col-md-6 mb-4">
+                        <div class="template-request__item-card slim">
+                            <div class="template-request__body">
+                                <span>Связаться с фармацевтической компанией-производителем</span>
+                            </div>
+                            <div class="template-request__footer">
+                                <a class="btn" href="#" data-toggle="modal" data-target="#modal-clinical-feedback">Сделать запрос</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if entity.module|length %}
+                        {% set vars = {
+                            'id': entity.module.id,
+                            'number': entity.module.number,
+                            'url': path('module', {'id': entity.module.id}),
+                            'title': entity.module.name,
+                            'direction': entity.module.directionName,
+                            'category': entity.module.category,
+                            'correctAnswers': entity.module.correctAnswers,
+                            'hasTest': entity.module.hasTest,
+                            'isTested': entity.module.isTested,
+                            'isPassed': entity.module.isPassed,
+                            'class': 'slim',
+                        } %}
+                        <div class="col-12 col-md-6 mb-4">
+                            {% include 'frontend/partials/card/module.html.twig' with vars %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="mb-3 mb-lg-5 page-clinical-item__question">
+                <div class="row">
+                    <div class="col-12 col-lg-3 page-clinical-item__question-title">
+                        <h3>Задать вопрос лектору</h3>
+                    </div>
+                    <div class="col-12 col-lg-9 page-clinical-item__question-block">
+                        <div class="position-relative">
+                            <form autocomplete="off" id="clinical-analysis-message" method="POST" action="{{ path('clinical_analysis_message') }}">
+                                <div class="row">
+                                    <div class="col-12 col-lg-8 mb-3 mb-lg-0">
+                                        <h4>Ваш вопрос</h4>
+                                        <input type="hidden" name="id" value="{{ entity.id }}"/>
+                                        <input required="required" type="text" name="question" id="question" placeholder="Введите Ваш вопрос лектору" />
+                                    </div>
+                                    <div class="col-12 col-lg-4">
+                                        <div class="d-flex align-items-end h-100">
+                                            <button type="submit">Отправить</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block modals %}
+    {{ parent() }}
+
+    {% include 'frontend/partials/modals/clinical-feedback.html.twig' %}
+    {% include 'frontend/partials/modals/message-sent.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        var clinicalAnalysis = {
+            message: '{{ path('clinical_analysis_message') }}',
+            feedback: '{{ path('clinical_analysis_company_message') }}',
+        };
+    </script>
+    <script type="text/javascript" src="/lib/scripts/clinical-analysis.js"></script>
+{% endblock %}

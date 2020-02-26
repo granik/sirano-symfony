@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Заголовок письма</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </head>
+    <body style="margin: 0; padding: 0; background-color: #f6f5f0;">
+        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+            <tbody>
+                <tr>
+                    <td>
+                        <table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
+                            <tbody>
+                                <tr>
+                                    <td bgcolor="#754e7f" style="padding: 24px 24px 24px 24px;">
+                                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="50%" align="left">
+                                                        <img src="{{ absolute_url(asset('lib/images/email/logo.png')) }}" alt="СИРАНО" width="194" height="48" style="display: block;" border="0" />
+                                                    </td>
+                                                    <td width="50%" align="right" style="color: #ffffff; font-family: Verdana; font-size: 12px; font-weight: bold; line-height: 1.33; padding: 16px 0 16px 0;">
+                                                        <a href="{{ absolute_url(path('profile_dashboard')) }}" style="color: #ffffff; text-decoration: none;">
+                                                            <font color="#ffffff">Личный кабинет ></font>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td bgcolor="#94799b">
+                                        <table border="0" cellpadding="0" cellspacing="0" height="352" width="100%" background="{{ absolute_url(asset('lib/images/email/header-bg.jpg')) }}">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="50%" style="font-size: 0; line-height: 0;">&nbsp;</td>
+                                                    <td width="50%" valign="top" style="padding: 40px 24px 40px 0;">
+                                                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td style="color: #ffffff; font-family: Verdana; font-size: 37px; font-weight: bold; line-height: 0.86;">
+                                                                        Регистрация
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td height="8" style="font-size: 0; line-height: 0;">&nbsp;</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="color: #d8d0b6; font-family: Verdana; font-size: 20px; font-weight: bold; line-height: 1.6;">
+                                                                        на онлайн-трансляцию вебинара
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td height="24" style="font-size: 0; line-height: 0;">&nbsp;</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="color: #ffffff; font-family: Verdana; font-size: 14px; line-height: 1.71;">
+                                                                        Напоминаем, что Вы зарегистрированы на онлайн-трансляцию
+                                                                        вебинара по направлению
+                                                                        "{{ webinarRegistrationMessage.direction }}" на
+                                                                        сайте Ассоциации врачей первичного звена СИРАНО.
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td bgcolor="#ffffff" style="padding: 0 24px 0 24px;">
+                                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="50%" valign="top" style="padding: 32px 0 32px 0; color: #333333; font-family: Verdana; font-size: 14px; font-weight: bold; line-height: 1.71; border-bottom: 1px dashed #eaeaea;">
+                                                        Название вебинара
+                                                    </td>
+                                                    <td width="50%" valign="top" style="padding: 32px 0 32px 0; color: #333333; font-family: Verdana; font-size: 14px; font-weight: bold; line-height: 1.71; border-bottom: 1px dashed #eaeaea;">
+                                                        <a href="{{ webinarRegistrationMessage.link }}" style="color: #754e7f; text-decoration: underline;">
+                                                            <font color="#754e7f">{{ webinarRegistrationMessage.name }}</font>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="50%" valign="top" style="padding: 32px 0 32px 0; color: #333333; font-family: Verdana; font-size: 14px; font-weight: bold; line-height: 1.71; border-bottom: 1px dashed #eaeaea;">
+                                                        Тема вебинара
+                                                    </td>
+                                                    <td width="50%" valign="top" style="padding: 32px 0 32px 0; color: #333333; font-family: Verdana; font-size: 14px; line-height: 1.71; border-bottom: 1px dashed #eaeaea;">
+                                                        {{ webinarRegistrationMessage.subject }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="50%" valign="top" style="padding: 32px 0 32px 0; color: #333333; font-family: Verdana; font-size: 14px; font-weight: bold; line-height: 1.71; border-bottom: 1px dashed #eaeaea;">
+                                                        Дата и время проведения:
+                                                    </td>
+                                                    <td width="50%" valign="top" style="padding: 32px 0 32px 0; color: #333333; font-family: Verdana; font-size: 14px; line-height: 1.71; border-bottom: 1px dashed #eaeaea;">
+                                                        {{ webinarRegistrationMessage.date }} в
+                                                        {{ webinarRegistrationMessage.time }}<br />
+                                                        (по Московскому времени)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="50%" valign="top" style="padding: 32px 0 32px 0; color: #333333; font-family: Verdana; font-size: 14px; font-weight: bold; line-height: 1.71; border-bottom: 1px dashed #eaeaea;">
+                                                        Содержание вебинара:
+                                                    </td>
+                                                    <td width="50%" valign="top" style="padding: 32px 0 32px 0; color: #333333; font-family: Verdana; font-size: 14px; line-height: 1.71; border-bottom: 1px dashed #eaeaea;">
+                                                        {{ webinarRegistrationMessage.description }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="100%" valign="top" colspan="2" style="padding: 32px 0 32px 0;">
+                                                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td align="center" style="color: #333333; font-family: Verdana; font-size: 14px; font-weight: bold; line-height: 1.71;">
+                                                                        Для входа на вебинар перейдите по следующей ссылке:
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td height="8" style="font-size: 0; line-height: 0;">&nbsp;</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td align="center" style="color: #333333; font-family: Verdana; font-size: 14px; font-weight: bold; line-height: 1.71;">
+                                                                        <a href="{{ webinarRegistrationMessage.link }}" style="color: #754e7f; text-decoration: underline;">
+                                                                            <font color="#754e7f">{{ webinarRegistrationMessage.link }}</font>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td bgcolor="#333333" style="padding: 0 24px 0 24px;">
+                                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="padding: 32px 0 32px 0; color: #ffffff; font-family: Verdana; font-size: 14px; font-weight: bold; line-height: 1.71;">
+                                                        По всем интересующим вопросам Вы можете обратиться к нам, написав письмо на электронную почту <a href="mailto:amatiu@event-triton.com" style="color: #987ba0; text-decoration: underline;">
+                                                                <font color="#987ba0">amatiu@event-triton.com</font>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>

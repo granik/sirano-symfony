@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="">
+
+        <title>{% block title %}Ассоциация врачей первичного звена СИРАНО{% endblock %}</title>
+
+        <link rel="shortcut icon" href="/favicon.ico">
+
+        <link rel="stylesheet" id="montserrat-font-css" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800" type="text/css" media="all">
+        <link rel="stylesheet" id="scrollbar-css" href="/lib/assets/custom-scrollbar/jquery.mCustomScrollbar.css" type="text/css" media="all">
+        <link rel="stylesheet" id="slick-css" href="/lib/assets/slick/slick.css" type="text/css" media="all">
+        <link rel="stylesheet" id="suggestions" href="/lib/assets/suggestions-jquery/suggestions.min.css" type="text/css" media="all">
+        <link rel="stylesheet" id="main-css" href="/lib/style.css" type="text/css" media="all">
+        <link rel="stylesheet" id="sekect2" href="/lib/assets/select2/select2.min.css" rel="stylesheet" />
+        
+        {% block stylesheets %}{% endblock %}
+
+        <!-- Yandex.Metrika counter -->
+        <script type="text/javascript" >
+            (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+                m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+            (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+            ym(49804249, "init", {
+                clickmap:true,
+                trackLinks:true,
+                accurateTrackBounce:true,
+                webvisor:true
+            });
+        </script>
+        <!-- /Yandex.Metrika counter -->
+    </head>
+    <body class="{% block body_class %}header-solid{% endblock %}">
+        <!-- Yandex.Metrika counter -->
+        <noscript><div><img src="https://mc.yandex.ru/watch/49804249" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+        <!-- /Yandex.Metrika counter -->
+
+        <div id="site-wrapper">
+            <header id="site-header">
+                <div class="container">
+                    <div class="d-flex flex-row flex-nowrap justify-content-between align-items-center">
+                        <a href="/" class="header-logo">
+                            <img alt="SIRANO" src="/lib/images/logo.png" />
+                        </a>
+
+                        <ul class="menu-desktop list-unstyled">
+                            <li>
+                                <a href="#">
+                                    <div>Ассоциация</div>
+                                </a>
+                                <div class="menu-desktop__submenu">
+                                    <a href="{{ path('documents') }}">Документы</a>
+                                    <a href="{{ path('chukaeva') }}">Памяти И.И. Чукаевой</a>
+                                    <a href="{{ path('presidium') }}">Президиум</a>
+                                    <a href="{{ path('members') }}">Члены ассоциации</a>
+                                    <a href="{{ path('news') }}">Новости</a>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <div>Образовательная программа</div>
+                                </a>
+                                <div class="menu-desktop__submenu">
+                                    <a href="{{ path('conferences') }}">Конференции</a>
+                                    <a href="{{ path('webinars') }}">Вебинары</a>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <div>Электронное обучение</div>
+                                </a>
+                                <div class="menu-desktop__submenu">
+                                    <a href="{{ path('modules') }}">Модули</a>
+                                    <a href="{{ path('clinical_analyzes') }}">Клинические разборы</a>
+                                    <a href="{{ path('articles') }}">Библиотека</a>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <div class="spacer"></div>
+
+                        <div class="additional-menu">
+                            <div class="additional-menu__wrapper">
+                                {{ render(controller('App\\Frontend\\Controller\\TemplateBlockController::direction')) }}
+                                {% if app.user and app.user.user.customerId %}
+                                    <!-- profile-->
+                                    {{ render(controller('App\\Frontend\\Controller\\TemplateBlockController::profile')) }}
+                                    <!-- /profile -->
+                                {% else %}
+                                    <!-- login-->
+                                    <div class="additional-menu__login">
+                                        <a href="#" data-toggle="modal" data-target="#modal-login">Войти</a>
+                                    </div>
+                                    <!-- /login -->
+                                {% endif %}
+                            </div>
+
+                            {% if app.user and app.user.user.customerId %}
+                                <!-- user submenu -->
+                                <div class="additional-menu__submenu">
+                                    <a href="{{ path('profile_dashboard') }}">Личный кабинет</a>
+                                    <a href="{{ path('profile') }}">Профайл</a>
+                                    <a href="{{ path('profile_conferences') }}">Конференции</a>
+                                    <a href="{{ path('profile_webinars') }}">Вебинары</a>
+                                    <a href="{{ path('profile_modules') }}">Модули</a>
+                                    <a href="{{ path('logout') }}">Выход</a>
+                                </div>
+                                <!-- /user submenu -->
+                            {% endif %}
+                        </div>
+
+                        <a href="#" class="mobile-menu-switcher mobile-menu-open">
+                            <div>
+                                <img alt="" src="/lib/images/icons/menu.svg" width="24" height="17" />
+                            </div>
+                        </a>
+
+                        <a href="#" class="mobile-menu-switcher mobile-menu-close">
+                            <div>
+                                <img alt="" src="/lib/images/icons/close.svg" width="24" height="24" />
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </header>
+
+            {% include 'frontend/partials/mobile-menu.html.twig' %}
+
+            <div id="page-wrapper">
+
+                {% block body %}{% endblock %}
+
+            </div>
+        </div>
+
+        <footer id="site-footer">
+            <div class="footer-main">
+                <div class="container">
+                    <div class="row">
+                        <div class="d-none d-lg-flex col-8">
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="footer-main__title">Ассоциация</div>
+                                    <div class="footer-main__block">
+                                        <p><a href="{{ path('documents') }}">Документы</a></p>
+                                        <p><a href="{{ path('chukaeva') }}">Памяти И.И. Чукаевой</a></p>
+                                        <p><a href="{{ path('presidium') }}">Президиум</a></p>
+                                        <p><a href="{{ path('members') }}">Члены ассоциации</a></p>
+                                        <p><a href="{{ path('news') }}">Новости</a></p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="footer-main__title">Образовательная программа</div>
+                                    <div class="footer-main__block">
+                                        <p><a href="{{ path('conferences') }}">Конференции</a></p>
+                                        <p><a href="{{ path('webinars') }}">Вебинары</a></p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="footer-main__title">Электронное обучение</div>
+                                    <div class="footer-main__block">
+                                        <p><a href="{{ path('modules') }}">Модули</a></p>
+                                        <p><a href="{{ path('clinical_analyzes') }}">Клинические разборы</a></p>
+                                        <p><a href="{{ path('articles') }}">Библиотека</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex col-md-12 col-lg-4 mb-sm-0">
+                            <div class="footer-main__contacts d-flex flex-column flex-md-row flex-lg-column">
+                                <div class="footer-main__title">Контактная информация</div>
+                                <div class="footer-main__block d-table">
+                                    <div class="d-table-row">
+                                        <div class="footer-main__primary d-table-cell w-25 pr-3 pb-3">Адрес:</div>
+                                        <div class="footer-main__secondary d-table-cell pb-3">г. Москва, Варшавское шоссе, д.125Ж, к.6, офис 1411-1415</div>
+                                    </div>
+                                    <div class="d-table-row">
+                                        <div class="footer-main__primary d-table-cell w-25 pr-3 pb-3">E-mail:</div>
+                                        <div class="footer-main__secondary d-table-cell pb-3"><a href="mailto:sirano-portal@yandex.ru">sirano-portal@yandex.ru</a></div>
+                                    </div>
+                                    <div class="d-table-row">
+                                        <div class="footer-main__primary d-table-cell w-25 pr-3">Телефон:</div>
+                                        <div class="footer-main__secondary d-table-cell"><a href="tel:+74956657656">+ 7 (495) 665-76-56</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-md-4 mb-4 mb-md-0">
+                            <div class="d-flex">
+                                <span class="mr-3">
+                                    ©&nbsp;2018 - {{ "now"|date("Y") }}
+                                </span>
+                                <span class="">
+                                    Образовательный портал "СИРАНО".<br />Все права защищены.
+                                </span>
+                            </div>
+                        </div>
+                        {{ render(controller('App\\Frontend\\Controller\\CounterController::index')) }}
+                        <div class="col-12 col-md-4">
+                            <div class="d-flex flex-row justify-content-between justify-content-lg-end">
+                                <div class="d-flex order-1 order-md-2 justify-content-start justify-content-md-end">
+                                    <img alt="" src="/lib/images/samples/hotlog.png" />
+                                </div>
+                                <div class="d-flex order-2 order-md-1 pr-md-3 justify-content-end">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        {% include 'frontend/partials/sirano-welcome.html.twig' %}
+
+        {% block modals %}
+            {{ render(controller('App\\Frontend\\Controller\\DirectionController::list')) }}
+
+            {% if not app.user %}
+                {% include 'frontend/partials/modals/login.html.twig' %}
+                {% include 'frontend/partials/modals/register.html.twig' %}
+                {% include 'frontend/partials/modals/recovery.html.twig' %}
+            {% endif %}
+        {% endblock %}
+    </body>
+
+    <script type="text/javascript" src="/lib/assets/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/lib/assets/jquery.cookie/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/lib/assets/jquery-validation/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="/lib/assets/jquery-match-height/jquery.matchHeight-min.js"></script>
+    <script type="text/javascript" src="/lib/assets/jquery-masked-input/jquery.maskedinput.js"></script>
+    <script type="text/javascript" src="/lib/assets/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/lib/assets/countdown/countdown.js"></script>
+    <script type="text/javascript" src="/lib/assets/slick/slick.min.js"></script>
+    <script type="text/javascript" src="/lib/assets/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script type="text/javascript" src="/lib/assets/suggestions-jquery/jquery.suggestions.min.js"></script>
+    <script type="text/javascript" src="/lib/scripts/main.js"></script>
+    <script type="text/javascript" src="/lib/scripts/direction.js"></script>
+    <script type="text/javascript" src="/lib/assets/select2/select2.min.js"></script>
+
+    {% if not app.user %}
+        <script type="text/javascript" src="/lib/scripts/register.js"></script>
+        <script type="text/javascript" src="/lib/scripts/city-suggest.js"></script>
+        <script type="text/javascript" src="/lib/scripts/recovery.js"></script>
+    {% endif %}
+
+    {% block javascripts %}{% endblock %}
+</html>

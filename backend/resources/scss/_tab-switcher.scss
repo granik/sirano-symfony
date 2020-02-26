@@ -1,0 +1,82 @@
+/**
+ * Tab switcher
+ **/
+
+.tab-switcher {
+	width: 100%;
+    border: 1px solid $color-violet;
+    font-size: 0;
+}
+
+.tab-switcher a {
+    display: flex;
+    font-size: 16px;
+    color: $color-dark;
+    text-decoration: none !important;
+    font-weight: 600;
+    line-height: 3;
+    padding: 0 1rem;
+    text-align: center;
+    justify-content: center;
+}
+
+.tab-switcher li {
+    width: 50%;
+}
+
+.tab-switcher li a.active {
+    background-color: $color-violet;
+    color: $color-yellow;
+}
+
+@media (min-width: 992px) {
+    .tab-switcher {
+        width: auto;
+    }
+
+    .tab-switcher li {
+        width: auto;
+    }
+
+    .tab-switcher a {
+        font-size: 20px;
+        line-height: 2.4;
+        padding: 0 1.5rem;
+    }
+}
+
+/**
+ * Frontpage switcher tuneup
+ */
+
+@media (min-width: 768px) {
+    .frontpage-events .tab-switcher li {
+        min-width: 150px;
+    }
+}
+
+@media (min-width: 992px) {
+    .frontpage-events .tab-switcher li {
+        min-width: 200px;
+    }
+}
+
+/**
+ * Webinars switcher tuneup
+ */
+
+@media (min-width: 992px) {
+    .page-webinar .tab-switcher li {
+        min-width: 300px;
+    }
+}
+
+/**
+ * Conference switcher tuneup
+ */
+
+@media (min-width: 992px) {
+    .page-conference .tab-switcher li {
+        min-width: 340px;
+    }
+}

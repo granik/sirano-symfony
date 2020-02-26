@@ -1,0 +1,122 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block body %}
+    <nav class="breadcrumb-wrapper">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('index') }}">Главная</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('modules') }}">Модули</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('module', {id: entity.moduleId}) }}">{{ entity.moduleName }}</a>
+                </li>
+                <li class="breadcrumb-item">
+                    {{ entity.name }}
+                </li>
+            </ol>
+        </div>
+    </nav>
+
+    <section class="page-test-item mb-4 mb-lg-5 mt-4 mt-lg-5">
+        <div class="container">
+            <div class="page-test-item__header-meta">Тест</div>
+            <h1>{{ entity.name }}</h1>
+        </div>
+    </section>
+
+    <section class="page-test-item__body mb-3 mb-lg-5">
+        <div class="container">
+            <form id="test-form" type="post">
+                {% if entity.passed != true %}
+                    <div data-progress class="page-test-item__numbering">
+                        {% for key, value in entity.questions %}
+                            <div data-progress="{{ key + 1 }}" class="page-test-item__numbering-item"><span>{{ key + 1 }}</span></div>
+                        {% endfor %}
+                    </div>
+
+                    {% for key, value in entity.questions %}
+                        <div data-question="{{ key + 1 }}" class="d-none">
+                            <div class="page-test-item__question">
+                                <div class="page-test-item__question-title">
+                                    Вопрос №{{ key + 1}}
+                                </div>
+                                <div class="page-test-item__question-text">
+                                    {{ value.question }}
+                                </div>
+                            </div>
+                            <div class="page-test-item__variants">
+                                <div class="row">
+                                    <div class="col-12 col-lg-6 mb-3 mb-lg-4">
+                                        <label for="variant-{{ value.id }}-1">
+                                            <input type="radio" name="answer[{{ key }}]" value="{% if value.rightAnswer == 1 %}1{% else %}0{% endif %}" id="variant-{{ value.id }}-1" />
+                                            <span>{{ value.answer1 }}</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-12 col-lg-6 mb-3 mb-lg-4">
+                                        <label for="variant-{{ value.id }}-2">
+                                            <input type="radio" name="answer[{{ key }}]" value="{% if value.rightAnswer == 2 %}1{% else %}0{% endif %}" id="variant-{{ value.id }}-2" />
+                                            <span>{{ value.answer2 }}</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-12 col-lg-6 mb-3 mb-lg-4">
+                                        <label for="variant-{{ value.id }}-3">
+                                            <input type="radio" name="answer[{{ key }}]" value="{% if value.rightAnswer == 3 %}1{% else %}0{% endif %}" id="variant-{{ value.id }}-3" />
+                                            <span>{{ value.answer3 }}</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-12 col-lg-6 mb-3 mb-lg-4">
+                                        <label for="variant-{{ value.id }}-4">
+                                            <input type="radio" name="answer[{{ key }}]" value="{% if value.rightAnswer == 4 %}1{% else %}0{% endif %}" id="variant-{{ value.id }}-4" />
+                                            <span>{{ value.answer4 }}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <div class="page-test-item-over {% if entity.passed != true %}d-none{% endif %}">
+                    <div class="page-test-item__question">
+                        <div class="page-test-item__question-text">
+                            <p>Тест завершён.</p>
+                            <p><a href="{{ path('module', {id: entity.moduleId}) }}">Вернуться к модулю</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                {% if entity.passed != true %}
+                    <div class="page-test-item__buttons">
+                        <a href="#" class="btn next">Следующий вопрос</a>
+                    </div>
+                {% endif %}
+            </form>
+        </div>
+    </section>
+{% endblock %}
+
+{% block modals %}
+    {{ parent() }}
+
+    {% include 'frontend/partials/modals/test-wrong-answer.html.twig' %}
+    {% include 'frontend/partials/modals/test-success.html.twig' with {'moduleUrl': path('module', {id: entity.moduleId})} %}
+    {% include 'frontend/partials/modals/test-failure.html.twig' with {'moduleUrl': path('module', {id: entity.moduleId})} %}
+    {% include 'frontend/partials/modals/test-reminder.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        var currentQuestion = 1;
+        var test = {
+            id: {{ entity.id }},
+            url: '{{ path('module_check_test') }}',
+        };
+        var moduleItem = {
+            id: {{ entity.moduleId }}
+        }
+    </script>
+    <script type="text/javascript" src="/lib/scripts/test.js"></script>
+{% endblock %}

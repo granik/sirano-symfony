@@ -1,0 +1,161 @@
+/**
+ * Login page
+ **/
+
+#page-login > .container {
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.page-login__wrapper {
+    display: flex;
+    flex-direction: column;
+    background-color: $color-white;
+}
+
+.page-login__image {
+    width: 100%;
+    position: relative;
+}
+
+.page-login__image img {
+    -o-object-fit: cover;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.page-login__image .text {
+    position: absolute;
+    top: 2rem;
+    left: 3rem;
+    right: 3rem;
+    bottom: 2rem;
+}
+
+.page-login__image-subtitle {
+    color: $color-yellow;
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 600;
+}
+
+.page-login__image-title {
+    color: $color-white;
+    font-size: 25px;
+    line-height: 1;
+    font-weight: 600;
+}
+
+.page-login__block {
+    width: 100%;
+    padding: 2rem 1rem;
+}
+
+.page-login__block-title {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.33;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.page-login__block a:not(.btn) {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+@media (min-width: 768px) {
+    .page-login__wrapper {
+        box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    #page-login > .container {
+        max-width: 720px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .page-login__wrapper {
+        flex-direction: row;
+        border-radius: 2px;
+        overflow: hidden;
+    }
+
+    .page-login__image {
+        width: 50%;
+        border-top-left-radius: 2px;
+        border-bottom-left-radius: 2px;
+    }
+
+    .page-login__image .text {
+        top: 2.5rem;
+        left: 2rem;
+        right: 2rem;
+        bottom: 2.5rem;
+    }
+
+    .page-login__image-subtitle {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .page-login__image-title {
+        font-size: 30px;
+        line-height: 1;
+    }
+
+    .page-login__block {
+        width: 50%;
+        border-top-right-radius: 2px;
+        border-bottom-right-radius: 2px;
+        padding: 2.5rem 1.5rem;
+    }
+
+    .page-login__block-title {
+        margin-bottom: 2rem;
+    }
+}
+
+@media (min-width: 992px) {
+    #page-login > .container {
+        max-width: 960px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .page-login__image .text {
+        top: 3rem;
+        left: 4rem;
+        right: 4rem;
+        bottom: 3rem;
+    }
+
+    .page-login__image-subtitle {
+        font-size: 20px;
+        line-height: 1.6;
+    }
+
+    .page-login__image-title {
+        font-size: 44px;
+        line-height: 1;
+    }
+
+    .page-login__block {
+        padding: 3rem 5rem;
+    }
+
+    .page-login__block-title {
+        font-size: 20px;
+        line-height: 1.6;
+        margin-bottom: 3rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    #page-login > .container {
+        max-width: 1140px;
+    }
+}

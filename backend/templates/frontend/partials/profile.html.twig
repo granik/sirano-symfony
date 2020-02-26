@@ -1,0 +1,12 @@
+<div class="additional-menu__name">
+    <span>{{ dto.name }}</span>
+</div>
+<div class="additional-menu__profile">
+    <a href="#">
+        <img class="icon"
+             alt=""
+             src="{% if dto.avatar is empty %}/lib/images/avatar.jpeg{% else %}{{ dto.avatar }}{% endif %}"
+        />
+        <div class="filler"><img alt="" src="/lib/images/icons/arrow-down.svg" width="12" height="8" /></div>
+    </a>
+</div>

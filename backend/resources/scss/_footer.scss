@@ -1,0 +1,102 @@
+/**
+ * Footer
+ **/
+
+#site-footer {
+    display: block;
+    position: relative;
+    border-top: 1px solid $color-gray-light;
+    font-size: 12px;
+    line-height: 1rem;
+    color: $color-gray-dark;
+    background-color: $color-white;
+}
+
+#site-footer .footer-main {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+#site-footer .footer-main .footer-main__title {
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+    letter-spacing: 0;
+    font-size: 20px;
+    line-height: 22px;
+    font-weight: 500;
+    color: $color-dark;
+}
+
+#site-footer .footer-main .footer-main__block {
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 500;
+    color: $color-gray-dark;
+}
+
+#site-footer .footer-main .footer-main__block a {
+    color: $color-gray-dark;
+    text-decoration: none;
+}
+
+#site-footer .footer-main .footer-main__block a:hover {
+    color: $color-gray-dark;
+    text-decoration: underline;
+}
+
+#site-footer .footer-bottom {
+    padding: 1.5rem 0;
+    border-top: 1px solid $color-gray-light;
+}
+
+#site-footer .footer-main .footer-main__contacts .footer-main__title {
+    margin-top: 0;
+}
+
+#site-footer .footer-main .footer-main__contacts .footer-main__secondary {
+    font-size: 12px;
+    line-height: 1.33;
+    font-style: normal;
+    font-stretch: normal;
+}
+
+@media (min-width: 768px) {
+    #site-footer .footer-main {
+        padding-top: 2rem;
+        padding-bottom: 0;
+    }
+
+    #site-footer .footer-main .footer-main__title {
+        min-height: 44px;
+    }
+
+    #site-footer .footer-main .footer-main__contacts {
+        padding: 1rem 1.3rem 2rem 1.3rem;
+        border: 1px solid  $color-gray-light;
+    }
+
+    #site-footer .footer-main .footer-main__contacts .footer-main__title {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    #site-footer .footer-bottom {
+        border-top: none;
+        font-size: 11px;
+    }
+}
+
+@media (min-width: 992px) {
+    #site-footer .footer-main {
+        padding-bottom: 1rem;
+    }
+
+    #site-footer .footer-main .footer-main__contacts .footer-main__title {
+        margin-top: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    #site-footer .footer-bottom {
+        font-size: 12px;
+    }
+}

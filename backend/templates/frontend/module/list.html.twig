@@ -1,0 +1,74 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block body %}
+    <nav class="breadcrumb-wrapper">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('index') }}">Главная</a>
+                </li>
+                <li class="breadcrumb-item">
+                    Модули
+                </li>
+            </ol>
+        </div>
+    </nav>
+
+    <section class="page-modules mt-4 mb-4 mt-md-5 mb-md-5">
+        <div class="container">
+            {% set vars = {
+                'title': 'Модули',
+                'showLimit': true,
+                'showDirections': true,
+                'directions': directions,
+            } %}
+            {% include 'frontend/partials/advanced-header.html.twig' with vars %}
+
+            <div class="row">
+                {% if list|length %}
+                    {% for item in list %}
+                        {% set vars = {
+                            'id': item.id,
+                            'number': item.number,
+                            'url': path('module', {'id': item.id}),
+                            'title': item.name,
+                            'direction': item.directionName,
+                            'category': item.category,
+                            'correctAnswers': item.correctAnswers,
+                            'hasTest': item.hasTest,
+                            'isTested': item.isTested,
+                            'isPassed': item.isPassed,
+                            'class': 'slim',
+                        } %}
+                        <div class="col-12 col-md-6 mb-4">
+                            {% include 'frontend/partials/card/module.html.twig' with vars %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-12">
+                        <div class="page-empty-list">
+                            <div class="page-empty-list__text">
+                                В данный момент по выбранному направлению мы готовим для Вас обучающие материалы и в ближайшее время их опубликуем.
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    {% set query = { limit: limit } %}
+    {% if selectedDirection.id is defined %}
+        {% set query = query|merge({ direction: selectedDirection.id }) %}
+    {% endif %}
+    {% if selectedCategory.id is defined %}
+        {% set query = query|merge({ category: selectedCategory.id }) %}
+    {% endif %}
+    {% set vars = {
+        'nbPages': pages,
+        'currentPage': page,
+        'url': 'modules',
+        'query': query,
+    } %}
+    {% include 'frontend/partials/pagination.html.twig' with vars %}
+{% endblock %}

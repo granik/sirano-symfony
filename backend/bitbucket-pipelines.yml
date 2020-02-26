@@ -1,0 +1,51 @@
+# This is a sample build configuration for Other.
+# Check our guides at https://confluence.atlassian.com/x/5Q4SMw for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: atlassian/default-image:2
+
+pipelines:
+  branches:
+    dev:
+      - step:
+          name: Build dev image
+          script:
+            - pipe: atlassian/trigger-pipeline:4.0.2
+              variables:
+                BITBUCKET_USERNAME: $BITBUCKET_USERNAME
+                BITBUCKET_APP_PASSWORD: $BITBUCKET_APP_PASSWORD
+                REPOSITORY: 'sirano_docker'
+                WAIT: 'true'
+                #BRANCH_NAME: 'dev'
+      - step:
+          name: Deploy to dev
+          deployment: dev
+          script:
+            - echo "Deploying to dev environment"
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: $SSH_USER
+                SERVER: $DEV_SERVER
+                COMMAND: 'cd ~/sirano/ && source .docker.prod && docker-compose pull && docker-compose down && docker volume rm respiratory_symfony && docker-compose up -d'
+    stage:
+      - step:
+          name: Build stage image
+          script:
+            - pipe: atlassian/trigger-pipeline:4.0.2
+              variables:
+                BITBUCKET_USERNAME: $BITBUCKET_USERNAME
+                BITBUCKET_APP_PASSWORD: $BITBUCKET_APP_PASSWORD
+                REPOSITORY: 'sirano_docker'
+                WAIT: 'true'
+                #BRANCH_NAME: 'dev'
+      - step:
+          name: Deploy to stage
+          deployment: staging
+          script:
+            - echo "Deploying to stage environment"
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: $SSH_USER
+                SERVER: $DEV_SERVER
+                COMMAND: 'cd ~/sirano/ && source .docker.prod && docker-compose pull && docker-compose down && docker volume rm respiratory_symfony && docker-compose up -d'

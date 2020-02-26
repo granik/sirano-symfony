@@ -1,0 +1,219 @@
+/**
+ * Frontpage schedule block
+ **/
+
+.conference-schedule__wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: $color-white;
+}
+
+.conference-schedule__image {
+    position: relative;
+    height: 240px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.conference-schedule__image::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(71, 56, 115, 0.6);
+    z-index: 1;
+}
+
+.conference-schedule__image img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.conference-schedule__caption {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    color: $color-white;
+    z-index: 2;
+}
+
+.conference-schedule__label {
+    flex-grow: 0;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 2;
+    text-transform: uppercase;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 1px solid $color-white;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+}
+
+.conference-schedule__direction {
+    flex-grow: 1;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.23;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.conference-schedule__title {
+    position: absolute;
+    z-index: 2;
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+    top: 4rem;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 600;
+}
+
+.conference-schedule__title a,
+.conference-schedule__title span {
+    color: $color-white;
+}
+
+.conference-schedule__list-wrapper {
+    flex-grow: 1;
+    margin: 1rem 0.5rem 1rem 1rem;
+    position: relative;
+    max-height: 114px;
+}
+
+.conference-schedule__list {
+    overflow-y: auto;
+    height: 100%;
+}
+
+.conference-schedule__list li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: 1px dashed $color-gray-light;
+    padding: 0.5rem 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.conference-schedule__list li.past {
+    display: none;
+}
+
+.conference-schedule__list li .date {
+    color: #666;
+    font-weight: 600;
+    min-width: 77px;
+    margin-right: 1rem;
+}
+
+.conference-schedule__list li:last-child {
+    border-bottom: none;
+}
+
+.conference-schedule__list li .name {
+    font-weight: 500;
+}
+
+@media (min-width: 768px) {
+    .conference-schedule__wrapper {
+        flex-direction: row;
+        max-height: 100%;
+    }
+
+    .conference-schedule__caption {
+        top: 1.5rem;
+        left: 1.5rem;
+        right: 1.5rem;
+    }
+
+    .conference-schedule__image {
+        width: 360px;
+        height: auto;
+    }
+
+    .conference-schedule__title {
+        bottom: 1.5rem;
+        left: 1.5rem;
+        right: 1.5rem;
+        font-size: 20px;
+        line-height: 1.2;
+    }
+
+    .conference-schedule__list-wrapper {
+        margin: 1.5rem 1rem 1.5rem 1.5rem;
+        max-height: 344px;
+    }
+
+    .conference-schedule__list li.past {
+        display: flex;
+    }
+
+    .conference-schedule__list li.past .date {
+        color: $color-grayish-red;
+    }
+
+    .conference-schedule__list li.past .name a {
+        color: $color-grayish-red;
+        text-decoration: line-through;
+    }
+
+    .conference-schedule__list li .date {
+        margin-right: 24px;
+    }
+}
+
+@media (min-width: 992px) {
+    .conference-schedule__wrapper {
+        max-height: 100%;
+    }
+
+    .conference-schedule__caption {
+        top: 2rem;
+        left: 2rem;
+        right: 2rem;
+    }
+
+    .conference-schedule__label {
+        margin-right: 24px;
+    }
+
+    .conference-schedule__image {
+        width: 500px;
+        height: auto;
+    }
+
+    .conference-schedule__title {
+        bottom: 2rem;
+        left: 2rem;
+        right: 2rem;
+        font-size: 26px;
+        line-height: 1.13;
+    }
+
+    .conference-schedule__list-wrapper {
+        margin: 2rem 1rem 2rem 2rem;
+        max-height: 342px;
+    }
+}
+
+@media (max-width: 768px) {
+    .conference-schedule__list-wrapper {
+        max-height: 114px !important;
+        height: 114px;
+    }
+}

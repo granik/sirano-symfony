@@ -1,0 +1,96 @@
+{% extends 'backend/base.html.twig' %}
+
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block top %}
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-12">
+            <h2>Изменить пользователя</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('cms') }}">Главная</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('cms_customers') }}">Пользователи</a>
+                </li>
+                <li class="breadcrumb-item active">
+                    <strong>Изменить пользователя</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-12">
+                {% for message in app.flashes('notice') %}
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+
+                <div class="ibox">
+                    <div class="ibox-content">
+                        {{ form(form) }}
+                    </div>
+                </div>
+
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>Баллы за обучение</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Баллы за конференции</th>
+                                    <td>{{ conferenceScore }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Баллы за вебинары</th>
+                                    <td>{{ webinarScore }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Баллы за модули</th>
+                                    <td>{{ moduleScore }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Баллы за очное обучение</th>
+                                    <td>{{ offlineScore }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Баллы за онлайн обучение</th>
+                                    <td>{{ onlineScore }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Oбщая сумма баллов</th>
+                                    <td>{{ score }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        var cityInputId = 'customer_cityName';
+        var dadataToken = '{{ dadata_token }}';
+        var formPrefix = 'customer';
+        var dadataGeoLocation = false;
+    </script>
+    <script type="text/javascript" src="/lib/assets/suggestions-jquery/jquery.suggestions.min.js"></script>
+    <script type="text/javascript" src="/lib/scripts/city-suggest.js"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" id="suggestions" href="/lib/assets/suggestions-jquery/suggestions.min.css" type="text/css" media="all">
+{% endblock %}

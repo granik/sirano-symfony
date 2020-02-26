@@ -1,0 +1,115 @@
+/**
+ * Frontpage events
+ **/
+
+.frontpage-events {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid $color-grayish-yellow;
+}
+
+.frontpage-events__header h2 {
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 600;
+}
+
+@media (min-width: 768px) {
+    .frontpage-events {
+        margin-top: 110px;
+        padding-top: 0;
+        border-top: none;
+    }
+
+    .frontpage-events__header h2 {
+        font-size: 32px;
+    }
+}
+
+@media (min-width: 992px) {
+    .frontpage-events {
+        margin-top: 80px;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 1400px;
+    }
+
+    .frontpage-events__header h2 {
+        font-size: 46px;
+        line-height: 1.04;
+    }
+}
+
+/**
+ * Slick slider tuneup
+ */
+
+#webinar-control-prev,
+#webinar-control-next,
+#conference-control-prev,
+#conference-control-next {
+    display: none !important;
+    z-index: 1;
+}
+
+#webinar-control-prev.slick-control-prev.slick-hidden,
+#webinar-control-next.slick-control-next.slick-hidden,
+#conference-control-prev.slick-control-prev.slick-hidden,
+#conference-control-next.slick-control-next.slick-hidden {
+    display: none !important;
+}
+
+@media (min-width: 992px) {
+    #conference-slider.with-schedule .conference-schedule {
+        width: 800px;
+    }
+
+    #conference-slider.with-schedule .conference-slide {
+        width: 450px;
+    }
+
+    #carouselConference,
+    #carouselWebinar {
+        overflow: hidden;
+    }
+
+    #conference-slider .slick-list,
+    #webinar-slider .slick-list {
+        overflow: visible;
+        clip-path: inset( -100vw -100vw -100vw 0 );
+    }
+
+    #carouselConference::after,
+    #carouselWebinar::after {
+        z-index: 0;
+        content: "";
+        top: 0;
+        right: 0;
+        bottom: 0;
+        position: absolute;
+        width: 50px;
+        background-image: linear-gradient(to left, rgba(236, 234, 227, 1), rgba(236, 234, 227, 0));
+    }
+
+    #webinar-control-prev,
+    #webinar-control-next,
+    #conference-control-prev,
+    #conference-control-next {
+        display: flex !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    #conference-slider.with-schedule .conference-schedule {
+        width: 870px;
+    }
+
+    #conference-slider.with-schedule .conference-slide {
+        width: 570px;
+    }
+
+    #carouselConference::after,
+    #carouselWebinar::after {
+        width: 100px;
+    }
+}

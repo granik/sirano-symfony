@@ -1,0 +1,67 @@
+{#
+    Parameters:
+        * id (int): webinar id
+        * url (string): webinar href link
+        * title (string): webinar title
+        * direction (string): direction title
+        * subject (string): webinar subject
+        * startDate (string): webinar start date
+        * startTime (string): webinar start time
+        * isSubscribed (bool): is user subscribed for webinar
+        * score (int): webinar score
+        * class (string): additional classes
+        * bodyClass (string): additional body classes
+#}
+
+<div
+    id="webinar-card-{{ id }}"
+    class="template-webinar__item-card {{ class|default('') }} {% if isSubscribed is defined and isSubscribed %}active{% endif %}"
+>
+    <div class="template-webinar__caption">
+        <div class="template-webinar__label">Вебинар</div>
+        <div class="template-webinar__direction">{{ direction }}</div>
+    </div>
+    <div class="template-webinar__body {{ bodyClass|default('') }}">
+        <a data-title href="{{ url }}">{{ title }}</a>
+
+        {% if subject is defined %}
+            <div class="template-webinar__body-subject">
+                {{ subject }}
+            </div>
+        {% endif %}
+    </div>
+    <div class="template-webinar__footer">
+        <div class="template-webinar__footer-dates">
+            <span>
+                <img class="calendar" alt="" src="/lib/images/icons/calendar.svg" />
+                {{ startDate }}
+            </span>
+            <span>
+                <img class="clock" alt="" src="/lib/images/icons/clock.svg" />
+                {{ startTime }}
+            </span>
+        </div>
+
+        {% if app.user and isSubscribed is defined %}
+            <div class="template-webinar__footer-buttons">
+                {% if isSubscribed %}
+                    <div class="registered">
+                        Вы зарегистрированы<br />на онлайн-трансляцию
+                    </div>
+                {% else %}
+                    <form method="POST" action="{{ path('webinar_subscribe') }}">
+                        <input type="hidden" name="id" value="{{ id }}">
+                        <a data-type="webinar-subscribe-card" href="#" class="btn d-flex align-items-center {% if score == 0 %}justify-content-center text-center{% endif %}">
+                            <div>Зарегистрироваться на<br />онлайн-трансляцию</div>
+                            {% if score != 0 %}
+                                <div class="score text-center">
+                                    <div>+{{ score }}</div>баллов
+                                </div>
+                            {% endif %}
+                        </a>
+                    </form>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</div>

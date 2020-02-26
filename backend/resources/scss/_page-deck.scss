@@ -1,0 +1,84 @@
+/**
+ * Page deck
+ **/
+
+.page-deck {
+    position: relative;
+    height: 240px;
+    width: 100%;
+    background-color: $color-violet;
+    z-index: 1;
+}
+
+.page-deck__bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin-left: -150px;
+}
+
+.page-deck__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.page-deck__text {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    z-index: 2;
+}
+
+.page-deck__text h2 {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.33;
+    color: $color-white;
+    width: 60%;
+}
+
+.page-deck__text h3 {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.33;
+    color: $color-white;
+    width: 60%;
+}
+
+.page-deck__text .subtitle {
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 600;
+    color: $color-white;
+    opacity: 0.3;
+}
+
+@media (min-width: 768px) {
+    .page-deck {
+        height: 300px;
+    }
+
+    .page-deck__bg {
+        margin-left: 0;
+    }
+}
+
+@media (min-width: 992px) {
+    .page-deck {
+        height: 353px;
+    }
+
+    .page-deck__text h2 {
+        font-size: 64px;
+        line-height: 1;
+    }
+
+    .page-deck__text h3 {
+        font-size: 36px;
+        line-height: 1.33;
+    }
+}

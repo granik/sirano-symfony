@@ -1,0 +1,30 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block body %}
+    <nav class="breadcrumb-wrapper">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('index') }}">Главная</a>
+                </li>
+                <li class="breadcrumb-item">
+                    404
+                </li>
+            </ol>
+        </div>
+    </nav>
+
+    <section class="page-404">
+    	<div class="container">
+    		<div class="page-404-wrapper">
+    			<div class="page-404-text">
+    				<div>
+    					К сожалению,<br />данная страница не найдена.
+    				</div>
+
+    				<a class="btn text-center" href="{{ path('index') }}">На главную</a>
+    			</div>
+    		</div>
+    	</div>
+    </section>
+{% endblock %}

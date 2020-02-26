@@ -1,0 +1,278 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block body %}
+    <nav class="breadcrumb-wrapper">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/">Главная</a>
+                </li>
+                <li class="breadcrumb-item">
+                    Личный кабинет
+                </li>
+            </ol>
+        </div>
+    </nav>
+
+    <section class="page-profile-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6 left">
+                    <div class="d-flex flex-row">
+                        <div class="page-profile-top__avatar mr-4 mr-lg-5 d-flex flex-column align-items-center">
+                            <div class="page-profile-top__avatar-wrapper">
+                                <img alt="" src="{% if customerDto.avatar is empty %}/lib/images/avatar.jpeg{% else %}{{ customerDto.avatar }}{% endif %}" />
+                            </div>
+                            <div class="page-profile-top__avatar-text">
+                                <a href="{{ path('profile') }}">
+                                    Редакт<span class="d-none d-lg-inline">ировать</span><span class="d-inline d-lg-none">.</span><br />профайл
+                                </a>
+                            </div>
+                        </div>
+                        <div class="page-profile-top__person d-flex flex-column justify-content-center">
+                            <h3>{{ customerDto.name }}</h3>
+                            <div class="page-profile-top__specialization">
+                                {{ customerDto.mainSpecialty }}<br>
+                                {{ customerDto.additionalSpecialty }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="d-flex flex-row bordered-grey p-3 p-lg-4 text-center page-profile-top__results">
+                        <div class="w-50 br-dsh-grey">
+                            <div class="d-flex flex-column flex-md-row">
+                                <div class="text d-flex justify-content-center">
+                                    <span>Очное<br />обучение</span>
+                                </div>
+                                <div class="tube d-flex flex-column align-items-center">
+                                    <div class="label">{{ offlineScore }}</div>
+                                    <div class="bar-holder">
+                                        <div style="height: {{ offlinePercentScore }}%;" class="bar"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-50 pl-2 pr-2">
+                            <div class="d-flex flex-column flex-md-row">
+                                <div class="text d-flex justify-content-center">
+                                    <span>Онлайн<br />обучение</span>
+                                </div>
+                                <div class="tube d-flex flex-column align-items-center">
+                                    <div class="label">{{ onlineScore }}</div>
+                                    <div class="bar-holder">
+                                        <div style="height: {{ onlinePercentScore }}%;" class="bar"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page-profile mt-4 mb-4 mt-md-5 mb-md-5">
+        <div class="container">
+            <div class="d-flex flex-row align-items-center mb-3 mb-md-4">
+                <h2>Ваши конференции</h2>
+                <div class="flex-fill"></div>
+                <div class="bl-dark pl-3 button__all {% if conferences|length < 2 %}faded{% endif %}">
+                    <a class="d-block" href="{{ path('profile_conferences') }}">Все&nbsp;<span class="d-none d-md-inline">конференции</span></a>
+                </div>
+            </div>
+            <div class="row">
+                {% if conferences|length %}
+                    {% for item in conferences %}
+                        {% set vars = {
+                            'id': item.id,
+                            'url': path('conference', {'id': item.id}),
+                            'title': item.name,
+                            'startDate': item.startDate,
+                            'startTime': item.startTime,
+                            'direction': item.directionName,
+                            'score': item.score,
+                            'class': 'slim active',
+                            'isSubscribed': item.isSubscribed,
+                        } %}
+                        <div class="col-12 col-md-6 mb-4">
+                            {% include 'frontend/partials/card/conference.html.twig' with vars %}
+                        </div>
+                    {% endfor %}
+
+                    {% if conferences|length < 2 %}
+                        <div class="col-12 col-md-6 mb-4 d-none d-md-block">
+                            <div class="page-profile__empty">&nbsp;</div>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="col-12">
+                        <div class="page-profile__empty">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-12 col-md-6 left d-flex align-items-center justify-content-center">
+                                        <span class="font-weight-bold">
+                                            Вы не зарегистрированы на конференции.
+                                        </span>
+                                    </div>
+                                    <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
+                                        <a href="{{ path('conferences') }}">
+                                            Перейти к конференциям
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+{#    <section class="page-profile mt-4 mb-4 mt-md-5 mb-md-5">#}
+{#        <div class="container">#}
+{#            <div class="d-flex flex-row align-items-center mb-3 mb-md-4">#}
+{#                <h2>Ваши семинары</h2>#}
+{#                <div class="flex-fill"></div>#}
+{#                <div class="bl-dark pl-3 button__all faded">#}
+{#                    <a class="d-block" href="#">Все&nbsp;<span class="d-none d-md-inline">семинары</span></a>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="row">#}
+{#                <div class="col-12">#}
+{#                    <div class="page-profile__empty">#}
+{#                        <div class="container-fluid">#}
+{#                            <div class="row">#}
+{#                                <div class="col-12 col-md-6 left d-flex align-items-center justify-content-center">#}
+{#                                    <span class="font-weight-bold">#}
+{#                                        Вы не зарегистрированы на семинары.#}
+{#                                    </span>#}
+{#                                </div>#}
+{#                                <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">#}
+{#                                    <a href="#">#}
+{#                                        Перейти к семинарам#}
+{#                                    </a>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </section>#}
+
+    <section class="page-profile mt-4 mb-4 mt-md-5 mb-md-5">
+        <div class="container">
+            <div class="d-flex flex-row align-items-center mb-3 mb-md-4">
+                <h2>Ваши вебинары</h2>
+                <div class="flex-fill"></div>
+                <div class="bl-dark pl-3 button__all {% if webinars|length < 2 %}faded{% endif %}">
+                    <a class="d-block" href="{{ path('profile_webinars') }}">Все&nbsp;<span class="d-none d-md-inline">вебинары</span></a>
+                </div>
+            </div>
+            <div class="row">
+                {% if webinars|length %}
+                    {% for item in webinars %}
+                        {% set vars = {
+                            'id': item.id,
+                            'url': path('webinar', {'id': item.id}),
+                            'title': item.name,
+                            'startDate': item.startDate,
+                            'startTime': item.startTime,
+                            'direction': item.directionName,
+                            'score': item.score,
+                            'class': 'slim active',
+                        } %}
+                        <div class="col-12 col-md-6 mb-4">
+                            {% include 'frontend/partials/card/webinar.html.twig' with vars %}
+                        </div>
+                    {% endfor %}
+
+                    {% if webinars|length < 2 %}
+                        <div class="col-12 col-md-6 mb-4 d-none d-md-block">
+                            <div class="page-profile__empty">&nbsp;</div>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="col-12">
+                        <div class="page-profile__empty">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-12 col-md-6 left d-flex align-items-center justify-content-center">
+                                        <span class="font-weight-bold">
+                                            Вы не зарегистрированы на вебинары.
+                                        </span>
+                                    </div>
+                                    <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
+                                        <a href="{{ path('webinars') }}">
+                                            Перейти к вебинарам
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <section class="page-profile mt-4 mb-4 mt-md-5 mb-md-5">
+        <div class="container">
+            <div class="d-flex flex-row align-items-center mb-3 mb-md-4">
+                <h2>Ваши модули</h2>
+                <div class="flex-fill"></div>
+                <div class="bl-dark pl-3 button__all {% if modules|length < 2 %}faded{% endif %}">
+                    <a class="d-block" href="{{ path('profile_modules') }}">Все&nbsp;<span class="d-none d-md-inline">модули</span></a>
+                </div>
+            </div>
+            <div class="row">
+                {% if modules|length %}
+                    {% for item in modules %}
+                        {% set vars = {
+                            'id': item.id,
+                            'number': item.number,
+                            'url': path('module', {'id': item.id}),
+                            'title': item.name,
+                            'direction': item.directionName,
+                            'category': item.category,
+                            'correctAnswers': item.correctAnswers,
+                            'hasTest': item.hasTest,
+                            'isTested': item.isTested,
+                            'isPassed': item.isPassed,
+                            'class': 'slim',
+                        } %}
+                        <div class="col-12 col-md-6 mb-4">
+                            {% include 'frontend/partials/card/module.html.twig' with vars %}
+                        </div>
+                    {% endfor %}
+
+                    {% if modules|length < 2 %}
+                        <div class="col-12 col-md-6 mb-4 d-none d-md-block">
+                            <div class="page-profile__empty">&nbsp;</div>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="col-12">
+                        <div class="page-profile__empty">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-12 col-md-6 left d-flex align-items-center justify-content-center">
+                                        <span class="font-weight-bold">
+                                            Нет доступных модулей.
+                                        </span>
+                                    </div>
+                                    <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
+                                        <a href="{{ path('modules') }}">
+                                            Перейти к модулям
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

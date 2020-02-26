@@ -1,0 +1,20 @@
+<script>
+    jQuery(document).ready(function () {
+        $('a.delete').click(function() {
+            var $this   = $(this);
+            var confirm = window.confirm('Вы действительно хотите удалить эту запись?');
+
+            if (confirm) {
+                $.post(
+                    $this.attr('href'),
+                    { id: $this.data('id') },
+                    function() {
+                        location.reload();
+                    }
+                );
+            }
+
+            return false;
+        });
+    });
+</script>
