@@ -45,7 +45,6 @@ services:
             - ~/sirano-vol/nginx/sirano-prod.conf:/etc/nginx/conf.d/default.conf:ro
             - ~/sirano-vol/logs/nginx:/var/log/nginx
             - ~/sirano-vol/certs:/etc/ssl/certs/:ro
-            - ~/sirano-vol/certs:/etc/ssl/certs/:ro
         networks:
             sirano:
                 ipv4_address: 172.10.0.6

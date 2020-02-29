@@ -50,6 +50,7 @@ services:
 
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
+        restart: unless-stopped
         ports:
             - '8001:80'
         depends_on:
