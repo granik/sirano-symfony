@@ -36,7 +36,7 @@
     "bootstrap": "^4.3.1",
     "countdown": "^2.6.0",
     "dropzone": "^5.5.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jquery-match-height": "^0.7.2",
     "jquery-validation": "^1.19.1",
     "jquery.cookie": "1.4.1",
